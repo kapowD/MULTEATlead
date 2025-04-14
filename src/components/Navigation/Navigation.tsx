@@ -1,35 +1,34 @@
-import { Box, Button, Container, Grid } from '@mui/material';
+import { Button, Container } from '@mui/material';
 import { Flame, Home, Info, Phone, Settings, ShoppingCart } from 'lucide-react';
+import styles from './Navigation.module.scss';
 
 const Navigation = () => {
   const buttons = [
-    { icon: <Home />, label: 'Home' },
-    { icon: <Flame />, label: 'Products' },
-    { icon: <Info />, label: 'About' },
-    { icon: <Settings />, label: 'Services' },
-    { icon: <ShoppingCart />, label: 'Shop' },
-    { icon: <Phone />, label: 'Contact' },
+    { icon: <Home className={styles.buttonIcon} />, label: 'О нас' },
+    { icon: <Flame className={styles.buttonIcon} />, label: 'Продукция' },
+    // { icon: <Info className={styles.buttonIcon} />, label: 'Информация' },
+    { icon: <Settings className={styles.buttonIcon} />, label: 'Купить' },
+    { icon: <ShoppingCart className={styles.buttonIcon} />, label: 'Видео' },
+    { icon: <Phone className={styles.buttonIcon} />, label: 'Контакты' },
   ];
 
   return (
-    <Box py={3} bgcolor="background.paper">
+    <div className={styles.navigation}>
       <Container>
-        <Grid container spacing={2}>
+        <div className={styles.grid}>
           {buttons.map((button) => (
-            <Grid item xs={6} sm={4} md={2} key={button.label}>
-              <Button
-                variant="contained"
-                fullWidth
-                startIcon={button.icon}
-                sx={{ height: '100%' }}
-              >
-                {button.label}
-              </Button>
-            </Grid>
+            <Button
+              key={button.label}
+              variant="contained"
+              className={styles.button}
+              startIcon={button.icon}
+            >
+              {button.label}
+            </Button>
           ))}
-        </Grid>
+        </div>
       </Container>
-    </Box>
+    </div>
   );
 };
 

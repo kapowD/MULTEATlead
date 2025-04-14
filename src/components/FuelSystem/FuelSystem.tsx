@@ -1,6 +1,7 @@
-import { useState } from 'react';
-import { Container, Typography, Box, Grid, Divider } from '@mui/material';
-import Modal from '../Modal/Modal';
+import { useState } from "react";
+import { Container, Typography, Box, Grid, Divider } from "@mui/material";
+import Modal from "../Modal/Modal";
+import fuelSystemImage from "../../assets/images/MULTEAT_klapanKME.png";
 
 const FuelSystem = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -8,41 +9,44 @@ const FuelSystem = () => {
   return (
     <Box py={6} bgcolor="background.paper">
       <Container>
-        <Typography 
-          variant="h4" 
-          component="h2" 
-          gutterBottom
-          textAlign="center"
-        >
-          Fuel Supply System
+        <Typography variant="h4" component="h2" gutterBottom textAlign="center">
+          Система топливоподачи
         </Typography>
         <Divider sx={{ my: 4 }} />
-        
+
         <Grid container spacing={4} alignItems="center">
           <Grid item xs={12} md={7}>
             <Typography variant="body1" paragraph>
-              The fuel supply system in all heaters is based on one principle: keeping the mass of the plate, together with the fuel, at the set value (half-filled plate).
+              Система подачи топлива в всех обогревателях основана на одном
+              принципе: поддержание массы пластины вместе с топливом на заданном
+              значении (половина пластины).
             </Typography>
             <Typography variant="body1" paragraph>
-              When the plate is empty, the CME valve is fully open and fuel flows into the plate. When the set mass is reached, the valve closes. As the fuel burns, the mass decreases and the valve opens. The process is cyclic.
+              При пустой тарелке, клапан КМЕ полностью открыт и топливо
+              поступает в тарелку. По достижению установочной массы клапан
+              закрывается. По мере сгорания топлива, масса уменьшается и клапан
+              открывается. Процесс цикличен.
             </Typography>
             <Typography variant="body1">
-              The CME valve is located in a convenient location for maintenance. It can be easily washed, cleaned and allows draining the sludge when the heater is running. It is enough to unscrew the bottom screw by two turns. Lifetime is unlimited.
+              Клапан КМЕ расположен в удобном для обслуживания месте. Легко
+              промывается, очищается, позволяет производить слив отстоя при
+              работающем отопителе. Достаточно вывернуть на два оборота нижний
+              винт. Срок жизни не ограничен.
             </Typography>
           </Grid>
           <Grid item xs={12} md={5}>
             <Box
               component="img"
-              src="https://images.unsplash.com/photo-1581092160562-40aa08e78837"
+              src={fuelSystemImage}
               alt="Fuel System Diagram"
               sx={{
-                width: '100%',
-                height: 'auto',
+                width: "100%",
+                height: "auto",
                 borderRadius: 2,
-                cursor: 'pointer',
-                transition: 'transform 0.2s ease-in-out',
-                '&:hover': {
-                  transform: 'scale(1.02)',
+                cursor: "pointer",
+                transition: "transform 0.2s ease-in-out",
+                "&:hover": {
+                  transform: "scale(1.02)",
                 },
               }}
               onClick={() => setIsModalOpen(true)}
@@ -50,17 +54,14 @@ const FuelSystem = () => {
           </Grid>
         </Grid>
 
-        <Modal
-          open={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-        >
+        <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)}>
           <img
-            src="https://images.unsplash.com/photo-1581092160562-40aa08e78837"
+            src={fuelSystemImage}
             alt="Fuel System Diagram"
             style={{
-              maxWidth: '90vw',
-              maxHeight: '90vh',
-              objectFit: 'contain',
+              maxWidth: "90vw",
+              maxHeight: "90vh",
+              objectFit: "contain",
             }}
           />
         </Modal>

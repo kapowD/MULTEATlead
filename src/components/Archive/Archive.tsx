@@ -6,7 +6,7 @@ const Archive = () => {
     <Box py={6} bgcolor="background.paper">
       <Container>
         <Typography variant="h4" component="h2" gutterBottom>
-          Archive
+        Все паспорта отопителей, Вы можете найти у нас в архиве.
         </Typography>
         <Button
           variant="contained"
@@ -17,7 +17,7 @@ const Archive = () => {
             padding: '12px 24px',
           }}
         >
-          View Archive
+          Перейти в архив
         </Button>
       </Container>
     </Box>

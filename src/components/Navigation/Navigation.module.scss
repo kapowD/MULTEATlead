@@ -1,0 +1,34 @@
+@import '../../styles/variables/_index.scss';
+
+.navigation {
+  padding: $spacing-lg 0;
+  background-color: $primary-color;
+}
+
+.button {
+  height: 100%;
+  width: 100%;
+  transition: transform $transition-fast;
+  
+  &:hover {
+    transform: translateY(-2px);
+  }
+}
+
+.buttonIcon {
+  margin-right: $spacing-sm;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $spacing-md;
+  
+  @media (min-width: $breakpoint-sm) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  @media (min-width: $breakpoint-md) {
+    grid-template-columns: repeat(6, 1fr);
+  }
+} 

@@ -12,7 +12,7 @@ import Footer from './components/Footer/Footer';
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#1976d2',
+      main: '#FFD700',
     },
     secondary: {
       main: '#dc004e',

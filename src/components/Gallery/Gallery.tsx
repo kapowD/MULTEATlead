@@ -1,46 +1,74 @@
-import { useState } from 'react';
-import { Container, Typography, Box, ImageList, ImageListItem } from '@mui/material';
-import Modal from '../Modal/Modal';
+import { useState } from "react";
+import { Container, Typography, Box } from "@mui/material";
+import Modal from "../Modal/Modal";
+import styles from "./Gallery.module.scss";
 
-const images = [
-  'https://images.unsplash.com/photo-1575336127377-71c59240154f',
-  'https://images.unsplash.com/photo-1617974940637-563073d54857',
-  'https://images.unsplash.com/photo-1542628682-88321d2a4828',
-  'https://images.unsplash.com/photo-1513694203232-719a280e022f',
-  'https://images.unsplash.com/photo-1519834022362-0f0a2ff0a6b2',
+// Импортируем изображения из папки documents
+import rekvizitiipsafronov from "../../assets/documents/index_rekvizitiipsafronov.jpg";
+import aboutsertification from "../../assets/documents/index_aboutsertification.jpg";
+import pat93498 from "../../assets/documents/index_pat93498.jpg";
+import inn from "../../assets/documents/index_inn.jpg";
+import svidetelstvo from "../../assets/documents/index_svidetelstvo.jpg";
+
+const documents = [
+  {
+    id: 1,
+    image: svidetelstvo,
+  },
+  {
+    id: 2,
+    image: inn,
+  },
+  {
+    id: 3,
+    image: pat93498,
+  },
+  {
+    id: 4,
+    image: aboutsertification,
+  },
+  {
+    id: 5,
+    image: rekvizitiipsafronov,
+  },
 ];
 
 const Gallery = () => {
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [selectedImage, setSelectedImage] = useState<{ image: string } | null>(
+    null
+  );
 
   return (
-    <Box py={6}>
+    <Box className={styles.gallery}>
       <Container>
-        <Typography variant="h4" component="h2" gutterBottom>
-          Our Gallery
+        <Typography variant="h6" component="h2" className={styles.title}>
+          Регистрационные документы
         </Typography>
-        <ImageList variant="masonry" cols={3} gap={8}>
-          {images.map((image, index) => (
-            <ImageListItem key={index} onClick={() => setSelectedImage(image)}>
+        <div className={styles.grid}>
+          {documents.map((doc) => (
+            <div
+              key={doc.id}
+              className={styles.documentItem}
+              onClick={() => setSelectedImage({ image: doc.image })}
+            >
               <img
-                src={image}
-                alt={`Gallery image ${index + 1}`}
+                src={doc.image}
+                alt="Документ"
                 loading="lazy"
-                style={{ cursor: 'pointer' }}
+                className={styles.image}
               />
-            </ImageListItem>
+            </div>
           ))}
-        </ImageList>
-        <Modal
-          open={!!selectedImage}
-          onClose={() => setSelectedImage(null)}
-        >
+        </div>
+        <Modal open={!!selectedImage} onClose={() => setSelectedImage(null)}>
           {selectedImage && (
-            <img
-              src={selectedImage}
-              alt="Selected gallery image"
-              style={{ maxWidth: '100%', maxHeight: '90vh' }}
-            />
+            <div className={styles.modalContent}>
+              <img
+                src={selectedImage.image}
+                alt="Документ"
+                className={styles.modalImage}
+              />
+            </div>
           )}
         </Modal>
       </Container>

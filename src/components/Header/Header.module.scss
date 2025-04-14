@@ -1,0 +1,27 @@
+@import '../../styles/variables';
+
+.header {
+  background-color: $background-light;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.container {
+  padding: $spacing-md 0;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  padding: 0;
+}
+
+.logo {
+  height: 50px;
+  margin-right: $spacing-md;
+}
+
+.title {
+  flex-grow: 1;
+  font-size: 1.25rem;
+  font-weight: 500;
+} 

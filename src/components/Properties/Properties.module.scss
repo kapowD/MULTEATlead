@@ -1,0 +1,55 @@
+@import '../../styles/variables/_index.scss';
+
+.section {
+  padding: $spacing-xl 0;
+  background-color: $background-light;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: $spacing-xl;
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+.grid {
+  display: grid;
+  gap: $spacing-lg;
+  grid-template-columns: 1fr;
+  
+  @media (min-width: $breakpoint-sm) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  @media (min-width: $breakpoint-md) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.card {
+  padding: $spacing-lg;
+  display: flex;
+  align-items: flex-start;
+  gap: $spacing-md;
+  transition: transform $transition-fast, box-shadow $transition-fast;
+  
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.iconWrapper {
+  color: $secondary-color;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-sm;
+  border-radius: 4px;
+  background-color: rgba($secondary-color, 0.1);
+}
+
+.text {
+  margin: 0;
+  line-height: 1.6;
+} 
