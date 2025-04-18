@@ -2,19 +2,19 @@ import { useState } from "react";
 import { Container, Typography, Box, Grid, Divider } from "@mui/material";
 import Modal from "../Modal/Modal";
 import fuelSystemImage from "../../assets/images/MULTEAT_klapanKME.png";
+import styles from "./FuelSystem.module.scss";
 
 const FuelSystem = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
-    <Box py={6} bgcolor="background.paper">
+    <Box className={styles.fuelSystem}>
       <Container>
-        <Typography variant="h4" component="h2" gutterBottom textAlign="center">
-          Система топливоподачи
-        </Typography>
-        <Divider sx={{ my: 4 }} />
+        <Box className={styles.title}>Система топливоподачи</Box>
+        <Divider sx={{ my: 2 }} />
 
-        <Grid container spacing={4} alignItems="center">
+        <Grid container spacing={4} alignItems="flex-start">
+          {/* ТЕКСТ */}
           <Grid item xs={12} md={7}>
             <Typography variant="body1" paragraph>
               Система подачи топлива в всех обогревателях основана на одном
@@ -34,22 +34,19 @@ const FuelSystem = () => {
               винт. Срок жизни не ограничен.
             </Typography>
           </Grid>
+
+          {/* ИЗОБРАЖЕНИЕ */}
           <Grid item xs={12} md={5}>
             <Box
               component="img"
               src={fuelSystemImage}
               alt="Fuel System Diagram"
-              sx={{
-                width: "100%",
-                height: "auto",
-                borderRadius: 2,
-                cursor: "pointer",
-                transition: "transform 0.2s ease-in-out",
-                "&:hover": {
-                  transform: "scale(1.02)",
-                },
-              }}
+              className={styles.image}
               onClick={() => setIsModalOpen(true)}
+              sx={{
+                display: "flex",
+                marginX: "auto", // центрирование
+              }}
             />
           </Grid>
         </Grid>
@@ -58,11 +55,7 @@ const FuelSystem = () => {
           <img
             src={fuelSystemImage}
             alt="Fuel System Diagram"
-            style={{
-              maxWidth: "90vw",
-              maxHeight: "90vh",
-              objectFit: "contain",
-            }}
+            className={styles.modalImage}
           />
         </Modal>
       </Container>

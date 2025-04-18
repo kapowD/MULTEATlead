@@ -64,14 +64,16 @@ const Properties = () => {
       <Container>
         <h2 className={styles.title}>Свойства отопителей</h2>
         <Divider sx={{ my: 4}} />
-        <div className={styles.grid}>
+        <ul className={styles.list}>
           {properties.map((property, index) => (
-            <Paper key={index} className={styles.card} elevation={3}>
-              <div className={styles.iconWrapper}>{property.icon}</div>
-              <p className={styles.text}>{property.text}</p>
-            </Paper>
+            <li key={index} className={styles.listItem}>
+              <Paper className={styles.card} elevation={2}>
+                <div className={styles.iconWrapper}>{property.icon}</div>
+                <p className={styles.text}>{property.text}</p>
+              </Paper>
+            </li>
           ))}
-        </div>
+        </ul>
       </Container>
     </section>
   );

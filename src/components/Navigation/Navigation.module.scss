@@ -8,10 +8,12 @@
 .button {
   height: 100%;
   width: 100%;
-  transition: transform $transition-fast;
+  transition: transform $transition-slow; // Указываем transition на сам элемент
+  transform: translateY(0);
   
   &:hover {
     transform: translateY(-2px);
+    transition: $transition-slow;
   }
 }
 

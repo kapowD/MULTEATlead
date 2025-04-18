@@ -1,5 +1,5 @@
 import { Button, Container } from '@mui/material';
-import { Flame, Home, Info, Phone, Settings, ShoppingCart } from 'lucide-react';
+import { Flame, Home, Info, Phone, Settings, ShoppingCart, Video } from 'lucide-react';
 import styles from './Navigation.module.scss';
 
 const Navigation = () => {
@@ -7,8 +7,8 @@ const Navigation = () => {
     { icon: <Home className={styles.buttonIcon} />, label: 'О нас' },
     { icon: <Flame className={styles.buttonIcon} />, label: 'Продукция' },
     // { icon: <Info className={styles.buttonIcon} />, label: 'Информация' },
-    { icon: <Settings className={styles.buttonIcon} />, label: 'Купить' },
-    { icon: <ShoppingCart className={styles.buttonIcon} />, label: 'Видео' },
+    { icon: <ShoppingCart className={styles.buttonIcon} />, label: 'Купить' },
+    { icon: <Video className={styles.buttonIcon} />, label: 'Видео' },
     { icon: <Phone className={styles.buttonIcon} />, label: 'Контакты' },
   ];
 

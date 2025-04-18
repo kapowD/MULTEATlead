@@ -1,0 +1,41 @@
+@import "../../styles/variables/_index.scss";
+
+.fuelSystem {
+  display: flex;
+  padding: $spacing-lg 0;
+  background-color: $background-light;
+  justify-content: space-between;
+}
+
+
+.title {
+  text-align: left;
+  margin-bottom: $spacing-lg;
+  font-weight: bold;
+  font-size: 3rem;
+  font-weight: $font-weight-heading;
+  font-family: $font-family-heading;
+}
+
+.image {
+  max-height: 400px;
+  border-radius: 0px;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+  display: block;
+
+  &:hover {
+    transform: scale(1.02);
+  }
+
+  @media (max-width: 900px) {
+    margin: 0 auto;
+    max-width: 100%;
+    height: auto;
+  }
+}
+.modalImage {
+  max-width: 90vw;
+  max-height: 90vh;
+  object-fit: contain;
+}
