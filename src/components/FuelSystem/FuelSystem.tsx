@@ -14,7 +14,7 @@ const FuelSystem = () => {
         <Divider sx={{ my: 2 }} />
 
         <Grid container spacing={4} alignItems="flex-start">
-          {/* ТЕКСТ */}
+          {/* TEXT */}
           <Grid item xs={12} md={7}>
             <Typography variant="body1" paragraph>
               Система подачи топлива в всех обогревателях основана на одном
@@ -35,7 +35,7 @@ const FuelSystem = () => {
             </Typography>
           </Grid>
 
-          {/* ИЗОБРАЖЕНИЕ */}
+          {/* IMAGE */}
           <Grid item xs={12} md={5}>
             <Box
               component="img"

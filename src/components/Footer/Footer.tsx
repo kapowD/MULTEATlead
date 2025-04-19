@@ -7,7 +7,6 @@ const Footer = () => {
     <footer className={styles.footer}>
       <Container>
         <div className={styles.grid}>
-          {/* Company Info & Contacts Section */}
           <div>
             <section className={styles.section}>
               <h3 className={styles.title}>
@@ -42,7 +41,6 @@ const Footer = () => {
             </section>
           </div>
 
-          {/* Bank Details Section */}
           <div>
             <section className={styles.section}>
               <h3 className={styles.title}>
@@ -66,7 +64,6 @@ const Footer = () => {
             </section>
           </div>
 
-          {/* Question Section */}
           <div>
             <section className={styles.section}>
               <h3 className={styles.questionText}>Остались вопросы?</h3>

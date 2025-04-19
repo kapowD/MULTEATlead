@@ -2,25 +2,25 @@
 
 .archive {
   padding: $spacing-md 0;
-  background-color: $background-second; // Используем переменную для фона
-  display: flex; // Используем flexbox для выравнивания
-  flex-direction: column; // Располагаем элементы вертикально
-  align-items: center; // Центрируем элементы по горизонтали
-  justify-content: center; // Центрируем элементы по вертикали
-  text-align: center; // Центрируем текст
+  background-color: $background-second; 
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  justify-content: center; 
+  text-align: center; 
 }
 
 .title {
-  font-size: 1.25rem; // Соответствует fontSize: '1.0rem'
+  font-size: 1.25rem;
   font-weight: bold;
-  margin-bottom: $spacing-sm; // gutterBottom
+  margin-bottom: $spacing-sm; 
 }
 
 .button {
   align-self: center;
-  font-size: 1rem; // Соответствует fontSize: '1.0rem'
-  padding: 12px 24px; // Соответствует padding: '12px 24px'
-  transition: transform $transition-slow; // Указываем transition на сам элемент
+  font-size: 1rem; 
+  padding: 12px 24px; 
+  transition: transform $transition-slow; 
   transform: translateY(0);
 
   &:hover {
@@ -29,6 +29,6 @@
   }
 
   .icon {
-    margin-right: $spacing-sm; // Отступ для иконки
+    margin-right: $spacing-sm; 
   }
 }

@@ -3,7 +3,7 @@ import { Container, Typography, Box } from "@mui/material";
 import Modal from "../Modal/Modal";
 import styles from "./Gallery.module.scss";
 
-// Импортируем изображения из папки documents
+// folder documents
 import rekvizitiipsafronov from "../../assets/documents/index_rekvizitiipsafronov.jpg";
 import aboutsertification from "../../assets/documents/index_aboutsertification.jpg";
 import pat93498 from "../../assets/documents/index_pat93498.jpg";
