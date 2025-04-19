@@ -5,12 +5,12 @@ import styles from './Header.module.scss';
 const Header = () => {
   return (
     <AppBar position="static" className={styles.header} elevation={0}>
-      <Container className={styles.container}>
+      <Container className={styles.container} >
         <Toolbar className={styles.toolbar}>
           <img src={logo} alt='Logo' className={styles.logo} />
-          <Typography className={styles.title}>
+          {/* <Typography className={styles.title}>
             супер печность
-          </Typography>
+          </Typography> */}
         </Toolbar>
       </Container>
     </AppBar>

@@ -1,4 +1,5 @@
 import { createTheme } from '@mui/material/styles';
+import { Container } from '@mui/material';
 
 const theme = createTheme({
   components: {
@@ -10,7 +11,15 @@ const theme = createTheme({
         },
       },
     },
+    MuiContainer:{
+      styleOverrides: {
+        root: {
+          padding: '0',
+        },
+      },
+    }
   },
+
   palette: {
     primary: {
       main: '#FFD700',
@@ -27,6 +36,7 @@ const theme = createTheme({
       color: '#1a1a1a',
       lineHeight: 1.5,
     },
+   
   },
 });
 

@@ -1,8 +1,13 @@
-@import '../../styles/variables';
+@import "../../styles/variables";
 
 .header {
   background-color: $background-light;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  max-height: 80px;
+  margin: 0;
+  display: flex;
+  // align-items: center;
+  justify-content: center;
 }
 
 .container {
@@ -12,16 +17,18 @@
 .toolbar {
   display: flex;
   align-items: center;
+  align-items: center;
+  justify-content: center;
   padding: 0;
 }
 
 .logo {
-  height: 50px;
-  margin-right: $spacing-md;
+  height: 60px;
+  // margin-right: $spacing-md;
 }
 
 .title {
   flex-grow: 1;
   font-size: 1.25rem;
   font-weight: 500;
-} 
+}

@@ -1,0 +1,34 @@
+@import "../../styles/variables/_index.scss";
+
+.archive {
+  padding: $spacing-md 0;
+  background-color: $background-second; // Используем переменную для фона
+  display: flex; // Используем flexbox для выравнивания
+  flex-direction: column; // Располагаем элементы вертикально
+  align-items: center; // Центрируем элементы по горизонтали
+  justify-content: center; // Центрируем элементы по вертикали
+  text-align: center; // Центрируем текст
+}
+
+.title {
+  font-size: 1.25rem; // Соответствует fontSize: '1.0rem'
+  font-weight: bold;
+  margin-bottom: $spacing-sm; // gutterBottom
+}
+
+.button {
+  align-self: center;
+  font-size: 1rem; // Соответствует fontSize: '1.0rem'
+  padding: 12px 24px; // Соответствует padding: '12px 24px'
+  transition: transform $transition-slow; // Указываем transition на сам элемент
+  transform: translateY(0);
+
+  &:hover {
+    transform: translateY(-2px);
+    transition: $transition-slow;
+  }
+
+  .icon {
+    margin-right: $spacing-sm; // Отступ для иконки
+  }
+}

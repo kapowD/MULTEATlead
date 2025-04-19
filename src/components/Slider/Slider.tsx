@@ -66,25 +66,9 @@ const Slider = () => {
           >
             {slides[currentSlide].title}
           </Typography>
-          {/* <Typography variant="h6">
-            {slides[currentSlide].description}
-          </Typography> */}
         </Container>
       </Box>
-      {/* <IconButton
-        className={`${styles.navButton} ${styles.prev}`}
-        onClick={handlePrevSlide}
-      >
-        <ChevronLeft />
-      </IconButton>
-      <IconButton
-        className={`${styles.navButton} ${styles.next}`}
-        onClick={handleNextSlide}
-      >
-        <ChevronRight />
-      </IconButton> */}
     </Box>
-    
   );
 };
 

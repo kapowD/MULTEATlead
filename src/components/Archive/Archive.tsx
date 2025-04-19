@@ -1,22 +1,19 @@
-import { Container, Typography, Box, Button } from '@mui/material';
-import { Archive as ArchiveIcon } from 'lucide-react';
+import { Container, Typography, Box, Button } from "@mui/material";
+import { Archive as ArchiveIcon } from "lucide-react";
+import styles from "./Archive.module.scss";
 
 const Archive = () => {
   return (
-    <Box py={2} bgcolor="background.paper" >
+    <Box className={styles.archive}>
       <Container>
-        <Typography variant="h5" component="h2" gutterBottom>
-        Все паспорта отопителей, Вы можете найти у нас в архиве.
+        <Typography className={styles.title} component="p">
+          Все паспорта отопителей, Вы можете найти у нас в архиве.
         </Typography>
         <Button
-         
+          className={styles.button}
           variant="contained"
           size="large"
-          startIcon={<ArchiveIcon />}
-          sx={{
-            fontSize: '1.0rem',
-            padding: '12px 24px',
-          }}
+          startIcon={<ArchiveIcon className={styles.icon} />}
         >
           Перейти в архив
         </Button>

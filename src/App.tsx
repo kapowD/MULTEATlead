@@ -11,6 +11,7 @@ import FuelSystem from './components/FuelSystem/FuelSystem';
 import Archive from './components/Archive/Archive';
 import Footer from './components/Footer/Footer';
 import './styles/variables/_index.scss';
+import Banner from './components/PhoneBanner/Banner';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
       <Header />
       <Navigation />
       <Slider />
+      <Banner />
       <AboutUs />
       <Gallery />
       <Properties />
