@@ -35,39 +35,35 @@ const slides: Slide[] = [
 const Slider = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  const handleNextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % slides.length);
-  };
-
-  const handlePrevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
-  };
-
   useEffect(() => {
-    const timer = setInterval(() => {
-      handleNextSlide();
+    const interval = setInterval(() => {
+      setCurrentSlide((prevSlide) => (prevSlide + 1) % slides.length);
     }, 5000);
 
-    return () => clearInterval(timer);
+    return () => clearInterval(interval);
   }, []);
 
   return (
     <Box className={styles.slider}>
-      <Box
-        className={styles.slide}
-        sx={{
-          backgroundImage: `url(${slides[currentSlide].image})`,
-        }}
-      >
-        <Container className={styles.slideContent}>
-          <Typography
-            gutterBottom
-            sx={{ fontWeight: "bold", fontSize: 22 }} // addcustom styles here
-          >
-            {slides[currentSlide].title}
-          </Typography>
-        </Container>
-      </Box>
+      {slides.map((slide, index) => (
+        <Box
+          key={index}
+          className={styles.slide}
+          sx={{
+            transform: `translateX(${(index - currentSlide) * 100}%)`,
+            backgroundImage: `url(${slide.image})`,
+          }}
+        >
+          <Container className={styles.slideContent}>
+            <Typography
+              gutterBottom
+              sx={{ fontWeight: "bold", fontSize: 22 }}
+            >
+              {slide.title}
+            </Typography>
+          </Container>
+        </Box>
+      ))}
     </Box>
   );
 };
