@@ -3,24 +3,33 @@
 .oilPurchase {
   background-color: black;
   margin: 0;
-  height: 30px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 0 $spacing-sm; 
+  text-align: center; 
 
   &__text {
     color: rgba(9, 255, 0, 0.644);
     font-size: 18px;
     margin: 0;
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+
+    @media (max-width: $breakpoint-sm) {
+      font-size: 14px; 
+      white-space: normal; 
+      word-wrap: break-word;
+    }
   }
 
   &__icon {
-    color: rgba(9, 255, 0, 0.644);
-    margin: 0;
+    color: rgba(0, 0, 0, 0.644);
+    margin-left: $spacing-xs; 
     flex-shrink: 0;
     width: 14px;
     height: 14px;
   }
 }
-
-

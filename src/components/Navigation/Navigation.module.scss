@@ -1,40 +1,83 @@
-@import '../../styles/variables/_index.scss';
+@import "../../styles/variables/_index.scss";
 
 .navigation {
-  position: sticky; // Sticky
-  top: 0; 
-  z-index: 1000; 
+  position: sticky;
+  top: 0;
+  z-index: 1000;
   padding: $spacing-lg 0;
-  background-color: $primary-color; 
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+  background-color: $primary-color;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, auto));
+  gap: $spacing-md;
+  justify-content: center;
+
+  @media (max-width: $breakpoint-md) {
+    display: flex;
+    flex-direction: column;
+    background-color: $primary-color;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    padding: 0 $spacing-md;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.4s ease;
+  }
+
+  &.open {
+    max-height: 500px; // достаточно, чтобы влезли все кнопки
+    padding: $spacing-md;
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .button {
-  
-  height: 100%;
   width: 100%;
-  transition: transform $transition-slow; 
-  transform: translateY(0);
+  transition: transform $transition-slow;
+
   &:hover {
     transform: translateY(-2px);
-    transition: $transition-slow;
   }
 }
 
 .buttonIcon {
   margin-right: $spacing-sm;
+  
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: $spacing-md;
-  
-  @media (min-width: $breakpoint-sm) {
-    grid-template-columns: repeat(3, 1fr);
+.burger {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: $secondary-color;
+
+  @media (max-width: $breakpoint-md) {
+    display: flex;
+    align-items: center;
+    justify-content: center; // Центрируем содержимое кнопки
+    position: absolute; // Позволяет позиционировать кнопку
+    top: 50%; // Центрируем по вертикали
+    left: 50%; // Центрируем по горизонтали
+    transform: translate(-50%, -50%); // Смещаем на половину ширины и высоты
+    z-index: 1001;
+
+    // Добавляем отступ между иконкой и текстом
+    gap: $spacing-sm; // Используем переменную для отступа между иконкой и текстом
+    flex-direction: row; // Устанавливаем горизонтальное расположение иконки и текста
   }
-  
-  @media (min-width: $breakpoint-md) {
-    grid-template-columns: repeat(6, 1fr);
-  }
-} 
+}
+
+.burgerLabel {
+  margin: 0; // Убираем лишние отступы
+  font-size: 1rem; // Устанавливаем размер текста
+  line-height: 1; // Убираем лишнее пространство вокруг текста
+}

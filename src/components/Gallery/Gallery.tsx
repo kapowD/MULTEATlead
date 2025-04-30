@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Container, Typography, Box } from "@mui/material";
 import Modal from "../Modal/Modal";
 import styles from "./Gallery.module.scss";
@@ -34,9 +34,44 @@ const documents = [
 ];
 
 const Gallery = () => {
-  const [selectedImage, setSelectedImage] = useState<{ image: string } | null>(
-    null
-  );
+  const [selectedImage, setSelectedImage] = useState<{ image: string } | null>(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
+
+  const openModal = (index: number) => {
+    setSelectedImage({ image: documents[index].image });
+    setCurrentImageIndex(index);
+  };
+
+  const nextImage = () => {
+    setCurrentImageIndex((prev) => (prev + 1) % documents.length);
+    setSelectedImage({ image: documents[(currentImageIndex + 1) % documents.length].image });
+  };
+
+  const prevImage = () => {
+    setCurrentImageIndex((prev) => (prev - 1 + documents.length) % documents.length);
+    setSelectedImage({ image: documents[(currentImageIndex - 1 + documents.length) % documents.length].image });
+  };
+
+  // Обработчик нажатий клавиш стрелок
+  const handleKeyDown = (event: KeyboardEvent) => {
+    if (event.key === "ArrowRight") {
+      nextImage();
+    } else if (event.key === "ArrowLeft") {
+      prevImage();
+    }
+  };
+
+  // Добавление и удаление слушателя события
+  useEffect(() => {
+    if (selectedImage) {
+      window.addEventListener("keydown", handleKeyDown);
+    } else {
+      window.removeEventListener("keydown", handleKeyDown);
+    }
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [selectedImage, currentImageIndex]);
 
   return (
     <Box className={styles.gallery}>
@@ -45,11 +80,11 @@ const Gallery = () => {
           Регистрационные документы
         </Typography>
         <div className={styles.grid}>
-          {documents.map((doc) => (
+          {documents.map((doc, index) => (
             <div
               key={doc.id}
               className={styles.documentItem}
-              onClick={() => setSelectedImage({ image: doc.image })}
+              onClick={() => openModal(index)}
             >
               <img
                 src={doc.image}

@@ -25,6 +25,9 @@
 .logo {
   height: 60px;
   // margin-right: $spacing-md;
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .title {

@@ -10,7 +10,7 @@ import sliderImageThree from "../../assets/images/mini1.jpg";
 interface Slide {
   image: string;
   title: string;
-  description?: string; // Optional object
+  description?: string;
 }
 
 const slides: Slide[] = [
@@ -28,18 +28,23 @@ const slides: Slide[] = [
   {
     image: sliderImageThree,
     title: "Покупаем отработанное масло в Новосибирске",
-    description: " 8-913-928-79-84",
+    description: "8-913-928-79-84",
   },
 ];
 
 const Slider = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentSlide((prevSlide) => (prevSlide + 1) % slides.length);
-    }, 5000);
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % slides.length);
+  };
 
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+  };
+
+  useEffect(() => {
+    const interval = setInterval(nextSlide, 5000);
     return () => clearInterval(interval);
   }, []);
 
@@ -55,15 +60,39 @@ const Slider = () => {
           }}
         >
           <Container className={styles.slideContent}>
-            <Typography
-              gutterBottom
-              sx={{ fontWeight: "bold", fontSize: 22 }}
-            >
+            <Typography sx={{ fontWeight: "bold", fontSize: 22 }}>
               {slide.title}
             </Typography>
           </Container>
         </Box>
       ))}
+
+      {/* Стрелки */}
+{/* 
+      <IconButton
+        className={`${styles.arrow} ${styles.left}`}
+        onClick={prevSlide}
+      >
+        <ChevronLeft color="deepskyblue" size={40} />
+      </IconButton>
+      <IconButton
+        className={`${styles.arrow} ${styles.right}`}
+        onClick={nextSlide}
+      >
+        <ChevronRight color="deepskyblue" size={40} />
+      </IconButton> */}
+      {/* Точки */}
+      <Box className={styles.dots}>
+        {slides.map((_, index) => (
+          <Box
+            key={index}
+            className={`${styles.dot} ${
+              currentSlide === index ? styles.active : ""
+            }`}
+            onClick={() => setCurrentSlide(index)}
+          />
+        ))}
+      </Box>
     </Box>
   );
 };

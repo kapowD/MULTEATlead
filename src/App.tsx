@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import theme from './theme';
 
 import { ThemeProvider, CssBaseline } from '@mui/material';
@@ -14,11 +15,13 @@ import './styles/variables/_index.scss';
 import Banner from './components/PhoneBanner/Banner';
 
 function App() {
+  const footerRef = useRef<HTMLDivElement | null>(null);
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Header />
-      <Navigation />
+      <Navigation scrollToFooter={() => footerRef.current?.scrollIntoView({ behavior: "smooth" })} />
       <Slider />
       <Banner />
       <AboutUs />
@@ -26,7 +29,9 @@ function App() {
       <Properties />
       <FuelSystem />
       <Archive />
-      <Footer />
+      <div ref={footerRef}>
+        <Footer />
+      </div>
     </ThemeProvider>
   );
 }
