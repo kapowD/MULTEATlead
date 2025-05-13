@@ -1,18 +1,11 @@
 import { useRef } from "react";
 import theme from './theme';
-
 import { ThemeProvider, CssBaseline } from '@mui/material';
 import Header from './components/Header/Header';
 import Navigation from './components/Navigation/Navigation';
-import Slider from './components/Slider/Slider';
-import AboutUs from './components/AboutUs/AboutUs';
-import Gallery from './components/Gallery/Gallery';
-import Properties from './components/Properties/Properties';
-import FuelSystem from './components/FuelSystem/FuelSystem';
-import Archive from './components/Archive/Archive';
 import Footer from './components/Footer/Footer';
-import './styles/variables/_index.scss';
-import Banner from './components/PhoneBanner/Banner';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Home, Products, HowToBuy, Videos } from '@/pages';
 
 function App() {
   const footerRef = useRef<HTMLDivElement | null>(null);
@@ -20,18 +13,19 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Header />
-      <Navigation scrollToFooter={() => footerRef.current?.scrollIntoView({ behavior: "smooth" })} />
-      <Slider />
-      <Banner />
-      <AboutUs />
-      <Gallery />
-      <Properties />
-      <FuelSystem />
-      <Archive />
-      <div ref={footerRef}>
-        <Footer />
-      </div>
+      <Router>
+        <Header />
+        <Navigation scrollToFooter={() => footerRef.current?.scrollIntoView({ behavior: "smooth" })} />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/how-to-buy" element={<HowToBuy />} />
+          <Route path="/videos" element={<Videos />} />
+        </Routes>
+        <div ref={footerRef}>
+          <Footer />
+        </div>
+      </Router>
     </ThemeProvider>
   );
 }
