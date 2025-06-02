@@ -1,0 +1,29 @@
+@import "../../styles/variables/_index.scss";
+
+.sidebar {
+    width: 250px;
+    background-color: #000;
+    border-right: 1px solid $border-color;
+    height: 100%;
+    padding: $spacing-md;
+
+    :global {
+        .MuiListItemButton-root {
+            border-radius: $border-radius;
+            margin-bottom: $spacing-xs;
+
+            &.Mui-selected {
+                background-color: $primary-color;
+                color: white;
+
+                &:hover {
+                    background-color: darken($primary-color, 10%);
+                }
+            }
+
+            &:hover {
+                background-color: rgba($primary-color, 0.1);
+            }
+        }
+    }
+} 

@@ -1,37 +1,40 @@
 import { useRef } from "react";
-import theme from './theme';
+import theme from "./theme";
 
-import { ThemeProvider, CssBaseline } from '@mui/material';
-import Header from './components/Header/Header';
-import Navigation from './components/Navigation/Navigation';
-import Slider from './components/Slider/Slider';
-import AboutUs from './components/AboutUs/AboutUs';
-import Gallery from './components/Gallery/Gallery';
-import Properties from './components/Properties/Properties';
-import FuelSystem from './components/FuelSystem/FuelSystem';
-import Archive from './components/Archive/Archive';
-import Footer from './components/Footer/Footer';
-import './styles/variables/_index.scss';
-import Banner from './components/PhoneBanner/Banner';
+import { ThemeProvider, CssBaseline } from "@mui/material";
+import Header from "./components/Header/Header";
+import Navigation from "./components/Navigation/Navigation";
+import Footer from "./components/Footer/Footer";
+import "./styles/variables/_index.scss";
+import Products from "./pages/products/products";
+import HowToBuy from "./pages/how-to-buy/how-to-buy";
+import Home from "./pages/home/home";
+import VideoSection from "./pages/videos/ui/videos";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 function App() {
   const footerRef = useRef<HTMLDivElement | null>(null);
 
+  const scrollToFooter = () => {
+    footerRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Header />
-      <Navigation scrollToFooter={() => footerRef.current?.scrollIntoView({ behavior: "smooth" })} />
-      <Slider />
-      <Banner />
-      <AboutUs />
-      <Gallery />
-      <Properties />
-      <FuelSystem />
-      <Archive />
-      <div ref={footerRef}>
-        <Footer />
-      </div>
+      <Router>
+        <Header />
+        <Navigation scrollToFooter={scrollToFooter} />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/how-to-buy" element={<HowToBuy />} />
+          <Route path="/video" element={<VideoSection />} />
+        </Routes>
+        <div ref={footerRef}>
+          <Footer />
+        </div>
+      </Router>
     </ThemeProvider>
   );
 }

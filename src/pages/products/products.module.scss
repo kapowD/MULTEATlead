@@ -1,0 +1,16 @@
+@import "../../styles/variables/_index.scss";
+
+.container {
+    padding: $spacing-lg 0;
+}
+
+.content {
+    display: flex;
+    gap: $spacing-lg;
+    min-height: calc(100vh - 200px);
+}
+
+.gridContainer {
+    flex: 1;
+    overflow: auto;
+} 

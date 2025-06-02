@@ -1,0 +1,63 @@
+@import "../../styles/variables/_index.scss";
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: $spacing-lg;
+    padding: $spacing-md;
+}
+
+.card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    transition: transform $transition-slow;
+
+    &:hover {
+        transform: translateY(-4px);
+    }
+}
+
+.imageContainer {
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+
+    &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0);
+        transition: background-color $transition-slow;
+    }
+
+    &:hover::after {
+        background: rgba(0, 0, 0, 0.1);
+    }
+}
+
+.image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    transition: transform $transition-slow;
+}
+
+.title {
+    margin-bottom: $spacing-sm;
+    font-weight: 600;
+}
+
+.details {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs;
+}
+
+.price {
+    margin-top: $spacing-sm;
+    font-weight: 600;
+} 
