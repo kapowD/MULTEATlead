@@ -1,29 +1,69 @@
-import React, { useState } from 'react';
-import { Container, Box } from '@mui/material';
-import ProductSidebar from '../../components/ProductSidebar/ProductSidebar';
-import ProductGrid from '../../components/ProductGrid/ProductGrid';
+import React, { useState, useMemo } from 'react';
+import { ProductFilter } from '../../components/ProductFilter/ProductFilter';
+import { ProductGrid } from '../../components/ProductGrid/ProductGrid';
 import { products } from '../../data/products';
 import styles from './products.module.scss';
 
-const Products = () => {
-    const [selectedCategory, setSelectedCategory] = useState('all');
+const Products: React.FC = () => {
+    const [selectedCategory, setSelectedCategory] = useState<string>('all');
+    const [searchTerm, setSearchTerm] = useState<string>('');
 
-    const filteredProducts = selectedCategory === 'all'
-        ? products
-        : products.filter(product => product.category === selectedCategory);
+    const filteredProducts = useMemo(() => {
+        let filtered = products;
+
+        // Filter by category
+        if (selectedCategory !== 'all') {
+            filtered = filtered.filter(product => product.category === selectedCategory);
+        }
+
+        // Filter by search term
+        if (searchTerm.trim()) {
+            const term = searchTerm.toLowerCase().trim();
+            filtered = filtered.filter(product =>
+                product.name.toLowerCase().includes(term) ||
+                product.description.toLowerCase().includes(term)
+            );
+        }
+
+        return filtered;
+    }, [selectedCategory, searchTerm]);
+
+    const handleCategoryChange = (category: string) => {
+        setSelectedCategory(category);  
+    };
+
+    const handleSearchChange = (term: string) => {
+        setSearchTerm(term);
+    };
 
     return (
-        <Container maxWidth="xl" className={styles.container}>
-            <Box className={styles.content}>
-                <ProductSidebar
+        <div className={styles.page}>
+            <div className={styles.container}>
+                <div className={styles.header}>
+                    <h1 className={styles.title}>
+                        Каталог
+                    </h1>
+                    {/* <p className={styles.subtitle}>
+                        Широкий ассортимент скама и товаров от ворь я
+                    </p> */}
+                </div>
+
+                <ProductFilter
                     selectedCategory={selectedCategory}
-                    onCategoryChange={setSelectedCategory}
+                    onCategoryChange={handleCategoryChange}
+                    searchTerm={searchTerm}
+                    onSearchChange={handleSearchChange}
                 />
-                <Box className={styles.gridContainer}>
+
+                <div className={styles.results}>
+                    <h2 className={styles.resultCount}>
+                        Найдено товаров: {filteredProducts.length}
+                    </h2>
+                    
                     <ProductGrid products={filteredProducts} />
-                </Box>
-            </Box>
-        </Container>
+                </div>
+            </div>
+        </div>
     );
 };
 

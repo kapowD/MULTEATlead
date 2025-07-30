@@ -1,0 +1,104 @@
+.wrapper {
+  min-height: 100vh;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  // justify-content: space-between;
+}
+
+.container {
+  // max-width: 900px;
+  margin: 40px auto 0 auto;
+  background: #fff;
+  padding: 0 0 40px 0;
+}
+
+.title {
+  text-align: center;
+  font-size: 48px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  margin-top: 32px;
+}
+
+.line {
+  width: 100%;
+  max-width: 600px;
+  height: 6px;
+  background: #FFD600;
+  margin: 0 auto 32px auto;
+  border-radius: 2px;
+}
+
+.steps {
+  font-size: 18px;
+  line-height: 1.7;
+  margin-bottom: 24px;
+  padding-left: 24px;
+}
+
+.notice {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 32px;
+  span {
+    font-weight: 900;
+    color: #000;
+  }
+}
+
+.deliveryInfo {
+  background: #888;
+  color: #fff;
+  font-size: 16px;
+  padding: 18px 32px;
+  // border-radius: 0 0 8px 8px;
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  li {
+    margin-bottom: 8px;
+  }
+}
+
+.bottomBanner {
+  background: #333;
+  color: #fff;
+  padding: 40px 0 60px 0;
+  text-align: center;
+}
+
+.bottomBannerContent {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.bottomBannerTitle {
+  font-size: 36px;
+  font-weight: 700;
+  color: #FFD600;
+  margin-bottom: 8px;
+}
+
+.bottomBannerSubtitle {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+
+.bottomBannerButton {
+  background: #FFD600;
+  color: #222;
+  font-size: 22px;
+  font-weight: 700;
+  border: none;
+  border-radius: 6px;
+  padding: 12px 36px;
+  cursor: pointer;
+  transition: background 0.2s;
+  &:hover {
+    background: #ffe066;
+  }
+} 

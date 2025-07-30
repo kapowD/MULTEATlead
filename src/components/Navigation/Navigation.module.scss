@@ -81,3 +81,34 @@
   font-size: 1rem; // Устанавливаем размер текста
   line-height: 1; // Убираем лишнее пространство вокруг текста
 }
+
+.cartButtonWrapper {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  z-index: 1002;
+
+  @media (max-width: $breakpoint-md) {
+    position: static;
+    transform: none;
+    margin-top: $spacing-md;
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+
+.cartButton {
+  min-width: 120px;
+  font-weight: 600;
+  background: $secondary-color;
+  color: $primary-color;
+  border: 2px solid $secondary-color;
+  transition: background 0.2s, color 0.2s;
+
+  &:hover {
+    background: $primary-color;
+    color: $secondary-color;
+    border: 2px solid $secondary-color;
+  }
+}

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button, Container } from "@mui/material";
-import { Menu, Home, Flame, Video, Phone, ShoppingCart } from "lucide-react";
+import { Menu, Home, Flame, Video, Phone, MessageCircleQuestion, ShoppingCart } from "lucide-react";
 import { Link } from "react-router-dom";
 import styles from "./Navigation.module.scss";
 
@@ -19,8 +19,8 @@ const Navigation = ({ scrollToFooter }: { scrollToFooter: () => void }) => {
       link: "/products",
     },
     {
-      icon: <ShoppingCart className={styles.buttonIcon} />,
-      label: "Купить",
+      icon: <MessageCircleQuestion className={styles.buttonIcon} />,
+      label: "Как купить?",
       link: "/how-to-buy", // Вернул кнопку "Купить"
     },
     {
@@ -76,6 +76,16 @@ const Navigation = ({ scrollToFooter }: { scrollToFooter: () => void }) => {
             )
           )}
         </div>
+        {/* Кнопка корзины справа */}
+        <Link to="/cart" className={styles.cartButtonWrapper}>
+          <Button
+            variant="outlined"
+            className={styles.cartButton}
+            startIcon={<ShoppingCart />}
+          >
+            Корзина
+          </Button>
+        </Link>
       </Container>
     </div>
   );

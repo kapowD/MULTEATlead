@@ -28,27 +28,27 @@
   border-radius: 6px;
 }
 
-// .arrow {
-//   border: 2px solid blue;
-//   position: absolute;
-//   top: 50%;
-//   transform: translateY(-50%);
-//   z-index: 10;
-//   background: rgba(255, 255, 255, 0.2);
-//   border-radius: 50%;
-//   padding: 0.4rem;
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-// }
+.arrow {
+  border: 2px solid blue;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  padding: 0.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-// .left {
-//   left: 10px;
-// }
+.left {
+  left: 10px;
+}
 
-// .right {
-//   right: 10px;
-// }
+.right {
+  right: 10px;
+}
 
 .dots {
   position: absolute;
