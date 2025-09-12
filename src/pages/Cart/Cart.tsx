@@ -1,8 +1,9 @@
+import { ArrowLeft, Minus, Plus, RussianRuble as Ruble,ShoppingBag, Trash2 } from 'lucide-react';
 import React from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
+
 import { useCart } from '../../context/CartContext';
 import styles from './Cart.module.scss';
-import { ArrowLeft, Plus, Minus, Trash2, ShoppingBag, RussianRuble as Ruble } from 'lucide-react';
 
 
 const Cart: React.FC = () => {

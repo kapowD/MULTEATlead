@@ -1,7 +1,8 @@
+import { Box, Container, Divider,Grid, Typography } from "@mui/material";
 import { useState } from "react";
-import { Container, Typography, Box, Grid, Divider } from "@mui/material";
-import Modal from "../Modal/Modal";
+
 import fuelSystemImage from "../../assets/images/MULTEAT_klapanKME.png";
+import Modal from "../Modal/Modal";
 import styles from "./FuelSystem.module.scss";
 
 const FuelSystem = () => {

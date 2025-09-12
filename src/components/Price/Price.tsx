@@ -1,5 +1,6 @@
-import React from 'react';
 import { RussianRuble as Ruble } from 'lucide-react';
+import React from 'react';
+
 import styles from './Price.module.scss';
 
 interface PriceProps {

@@ -1,4 +1,5 @@
 import { Container, Divider } from "@mui/material";
+
 import styles from "./AboutUs.module.scss";
 
 // import ReactPlayer from "react-player";

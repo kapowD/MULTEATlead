@@ -1,5 +1,6 @@
-import { Container, Typography, Box, Button } from "@mui/material";
+import { Box, Button,Container, Typography } from "@mui/material";
 import { Archive as ArchiveIcon } from "lucide-react";
+
 import styles from "./Archive.module.scss";
 
 const Archive = () => {

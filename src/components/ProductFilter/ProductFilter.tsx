@@ -1,5 +1,6 @@
-import React from 'react';
 import { Search } from 'lucide-react';
+import React from 'react';
+
 import { categories } from '../../data/products';
 import styles from './ProductFilter.module.scss';
 

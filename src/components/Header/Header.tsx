@@ -1,4 +1,5 @@
 import { AppBar, Container, Toolbar, Typography } from '@mui/material';
+
 import logo from '../../assets/images/GalleryLogo.png';
 import styles from './Header.module.scss';
 

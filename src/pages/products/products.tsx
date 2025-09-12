@@ -1,4 +1,5 @@
-import React, { useState, useMemo } from 'react';
+import React, { useMemo,useState } from 'react';
+
 import { ProductFilter } from '../../components/ProductFilter/ProductFilter';
 import { ProductGrid } from '../../components/ProductGrid/ProductGrid';
 import { products } from '../../data/products';

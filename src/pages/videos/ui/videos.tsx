@@ -1,6 +1,7 @@
 import React from "react";
-import VideoSectionBox from "../../../components/VideoSection/VideoSectionBox";
+
 import { videoData } from "../../../components/VideoSection/data";
+import VideoSectionBox from "../../../components/VideoSection/VideoSectionBox";
 const VideoSection = () => {
   return (
     <div>

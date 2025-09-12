@@ -1,4 +1,5 @@
 import React from 'react';
+
 import styles from './how-to-buy.module.scss';
 
 const HowToBuy = () => {

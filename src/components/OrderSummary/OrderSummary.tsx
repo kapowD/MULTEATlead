@@ -1,5 +1,6 @@
-import React from 'react';
 import { Package } from 'lucide-react';
+import React from 'react';
+
 import { CartItem } from '../../context/CartContext';
 import { Price } from '../Price/Price';
 import styles from './OrderSummary.module.scss';

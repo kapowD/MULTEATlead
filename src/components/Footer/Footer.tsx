@@ -1,5 +1,6 @@
-import { Container, Button } from "@mui/material";
-import { Phone, MapPin, CreditCard } from "lucide-react";
+import { Button,Container } from "@mui/material";
+import { CreditCard,MapPin, Phone } from "lucide-react";
+
 import styles from "./Footer.module.scss";
 
 const Footer = () => {

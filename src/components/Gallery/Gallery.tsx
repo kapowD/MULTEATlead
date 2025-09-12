@@ -1,14 +1,14 @@
-import { useState, useEffect } from "react";
-import { Container, Typography, Box } from "@mui/material";
-import Modal from "../Modal/Modal";
-import styles from "./Gallery.module.scss";
+import { Box,Container, Typography } from "@mui/material";
+import { useEffect,useState } from "react";
 
+import aboutsertification from "../../assets/documents/index_aboutsertification.jpg";
+import inn from "../../assets/documents/index_inn.jpg";
+import pat93498 from "../../assets/documents/index_pat93498.jpg";
 // folder documents
 import rekvizitiipsafronov from "../../assets/documents/index_rekvizitiipsafronov.jpg";
-import aboutsertification from "../../assets/documents/index_aboutsertification.jpg";
-import pat93498 from "../../assets/documents/index_pat93498.jpg";
-import inn from "../../assets/documents/index_inn.jpg";
 import svidetelstvo from "../../assets/documents/index_svidetelstvo.jpg";
+import Modal from "../Modal/Modal";
+import styles from "./Gallery.module.scss";
 
 const documents = [
   {

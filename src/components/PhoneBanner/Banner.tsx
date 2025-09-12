@@ -1,6 +1,7 @@
-import styles from "./Banner.module.scss";
-import { Phone } from "lucide-react";
 import { Section } from "@mui/material";
+import { Phone } from "lucide-react";
+
+import styles from "./Banner.module.scss";
 
 const Banner = () => {
   return (

@@ -1,5 +1,6 @@
-import React from 'react';
 import { Package } from 'lucide-react';
+import React from 'react';
+
 import { Product } from '../../types/product';
 import { ProductCard } from '../ProductCard/ProductCard';
 import styles from './ProductGrid.module.scss';

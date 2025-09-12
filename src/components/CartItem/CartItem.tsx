@@ -1,9 +1,10 @@
+import { Trash2 } from 'lucide-react';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Trash2 } from 'lucide-react';
+
 import { CartItem as CartItemType } from '../../context/CartContext';
-import { QuantityControl } from '../QuantityControl/QuantityControl';
 import { Price } from '../Price/Price';
+import { QuantityControl } from '../QuantityControl/QuantityControl';
 import styles from './CartItem.module.scss';
 
 interface CartItemProps {

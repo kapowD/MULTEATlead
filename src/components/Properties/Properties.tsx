@@ -1,19 +1,19 @@
-import { Container, Paper, Divider } from "@mui/material";
-
+import { Container, Divider,Paper } from "@mui/material";
 import {
+  AlertTriangle,
+  Clock,
+  Droplet,
   Factory,
-  Zap,
+  Maximize,
+  Power,
+  ScrollText,
   Settings,
   Shield,
-  Droplet,
-  Star,
-  ScrollText,
-  Maximize,
   Sliders,
-  Clock,
-  AlertTriangle,
-  Power,
+  Star,
+  Zap,
 } from "lucide-react";
+
 import styles from "./Properties.module.scss";
 
 const properties = [

@@ -1,11 +1,11 @@
-import { useState, useEffect } from "react";
-import { Box, Typography, IconButton, Container } from "@mui/material";
+import { Box, Container,IconButton, Typography } from "@mui/material";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import styles from "./Slider.module.scss";
+import { useEffect,useState } from "react";
 
-import sliderImageOne from "../../assets/images/slaid1.png";
 import sliderImageTwo from "../../assets/images/as2_1-800x800-product_popup.jpg";
 import sliderImageThree from "../../assets/images/mini1.jpg";
+import sliderImageOne from "../../assets/images/slaid1.png";
+import styles from "./Slider.module.scss";
 
 interface Slide {
   image: string;

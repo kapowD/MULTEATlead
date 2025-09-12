@@ -1,44 +1,28 @@
-import { useState } from "react";
 import { Button, Container } from "@mui/material";
-import { Menu, Home, Flame, Video, Phone, MessageCircleQuestion, ShoppingCart } from "lucide-react";
+import { Flame, Home, Menu, MessageCircleQuestion, Phone, ShoppingCart,Video } from "lucide-react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
+
+import { useCart } from "../../context/CartContext";
 import styles from "./Navigation.module.scss";
 
 const Navigation = ({ scrollToFooter }: { scrollToFooter: () => void }) => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { state } = useCart();
+  const count = state.itemCount;
 
   const buttons = [
-    {
-      icon: <Home className={styles.buttonIcon} />,
-      label: "О нас",
-      link: "/", // Перенаправление на главную страницу
-    },
-    {
-      icon: <Flame className={styles.buttonIcon} />,
-      label: "Продукция",
-      link: "/products",
-    },
-    {
-      icon: <MessageCircleQuestion className={styles.buttonIcon} />,
-      label: "Как купить?",
-      link: "/how-to-buy", // Вернул кнопку "Купить"
-    },
-    {
-      icon: <Video className={styles.buttonIcon} />,
-      label: "Видео",
-      link: "/video",
-    },
-    {
-      icon: <Phone className={styles.buttonIcon} />,
-      label: "Контакты",
-      onClick: scrollToFooter,
-    },
+    { icon: <Home className={styles.buttonIcon} />, label: "О нас", link: "/" },
+    { icon: <Flame className={styles.buttonIcon} />, label: "Продукция", link: "/products" },
+    { icon: <MessageCircleQuestion className={styles.buttonIcon} />, label: "Как купить?", link: "/how-to-buy" },
+    { icon: <Video className={styles.buttonIcon} />, label: "Видео", link: "/video" },
+    { icon: <Phone className={styles.buttonIcon} />, label: "Контакты", onClick: scrollToFooter },
   ];
 
   return (
     <div className={styles.navigation}>
       <Container sx={{ position: "relative" }}>
-        {/* Бургер-кнопка — только на мобилке */}
+        {/* Бургер — только мобилка */}
         <button
           className={styles.burger}
           onClick={() => setMenuOpen((prev) => !prev)}
@@ -76,14 +60,20 @@ const Navigation = ({ scrollToFooter }: { scrollToFooter: () => void }) => {
             )
           )}
         </div>
+
         {/* Кнопка корзины справа */}
-        <Link to="/cart" className={styles.cartButtonWrapper}>
+        <Link to="/cart" className={styles.cartButtonWrapper} aria-label="Корзина">
           <Button
             variant="outlined"
-            className={styles.cartButton}
+            className={`${styles.cartButton} ${count > 0 ? styles.cartButtonHasItems : ""}`}
             startIcon={<ShoppingCart />}
           >
             Корзина
+            {count > 0 && (
+              <span className={styles.cartBadge} aria-live="polite">
+                {count}
+              </span>
+            )}
           </Button>
         </Link>
       </Container>

@@ -32,7 +32,7 @@
   }
 
   &.open {
-    max-height: 500px; // достаточно, чтобы влезли все кнопки
+    max-height: 500px;
     padding: $spacing-md;
     opacity: 1;
     transform: translateY(0);
@@ -50,7 +50,6 @@
 
 .buttonIcon {
   margin-right: $spacing-sm;
-  
 }
 
 .burger {
@@ -63,23 +62,21 @@
   @media (max-width: $breakpoint-md) {
     display: flex;
     align-items: center;
-    justify-content: center; // Центрируем содержимое кнопки
-    position: absolute; // Позволяет позиционировать кнопку
-    top: 50%; // Центрируем по вертикали
-    left: 50%; // Центрируем по горизонтали
-    transform: translate(-50%, -50%); // Смещаем на половину ширины и высоты
+    justify-content: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     z-index: 1001;
-
-    // Добавляем отступ между иконкой и текстом
-    gap: $spacing-sm; // Используем переменную для отступа между иконкой и текстом
-    flex-direction: row; // Устанавливаем горизонтальное расположение иконки и текста
+    gap: $spacing-sm;
+    flex-direction: row;
   }
 }
 
 .burgerLabel {
-  margin: 0; // Убираем лишние отступы
-  font-size: 1rem; // Устанавливаем размер текста
-  line-height: 1; // Убираем лишнее пространство вокруг текста
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1;
 }
 
 .cartButtonWrapper {
@@ -99,6 +96,7 @@
 }
 
 .cartButton {
+  position: relative; /* нужно для позиционирования бейджа */
   min-width: 120px;
   font-weight: 600;
   background: $secondary-color;
@@ -111,4 +109,27 @@
     color: $secondary-color;
     border: 2px solid $secondary-color;
   }
+}
+
+/* небольшое визуальное усиление, когда есть товары */
+.cartButtonHasItems {
+  box-shadow: 0 0 0 2px rgba(255, 59, 48, 0.12);
+}
+
+/* бейдж количества товаров */
+.cartBadge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: #ff3b30;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 18px;
+  text-align: center;
+  pointer-events: none; /* чтобы не мешал клику по кнопке */
 }

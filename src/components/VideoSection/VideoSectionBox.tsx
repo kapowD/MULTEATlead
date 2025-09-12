@@ -1,7 +1,8 @@
 import React from 'react';
+
 import styles from './styles.module.scss';
-import VideoBlock from './VideoBlock';
 import { VideoSectionProps } from './types';
+import VideoBlock from './VideoBlock';
 
 const VideoSectionBox: React.FC<VideoSectionProps> = ({ title, introText, videos }) => {
   return (

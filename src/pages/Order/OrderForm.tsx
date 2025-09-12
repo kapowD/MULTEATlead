@@ -1,22 +1,31 @@
-import React, { useState } from 'react';
+import emailjs from '@emailjs/browser';
+import { ArrowLeft, Mail,Package, Phone, RussianRuble as Ruble, Upload, User } from 'lucide-react';
+import React, { useRef,useState } from 'react';
+import ReCAPTCHA from 'react-google-recaptcha';
 import { Link, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Send, Upload, RussianRuble as Ruble, Package, User, Phone, Mail } from 'lucide-react';
+
 import { useCart } from '../../context/CartContext';
 import styles from './OrderForm.module.scss';
+
+// Инициализация EmailJS
+emailjs.init(import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'YOUR_PUBLIC_KEY');
 
 const OrderForm: React.FC = () => {
     const { state, clearCart } = useCart();
     const navigate = useNavigate();
+    const recaptchaRef = useRef<ReCAPTCHA>(null);
     
     const [formData, setFormData] = useState({
         contactName: '',
         phone: '',
         email: '',
         message: '',
-        file: null as File | null
+        file: null as File | null,
+        honeypot: '' // скрытое поле для защиты от ботов
     });
     
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [captchaToken, setCaptchaToken] = useState<string | null>(null);
 
     const formatPrice = (price: number) => {
         return new Intl.NumberFormat('ru-RU').format(price);
@@ -36,6 +45,10 @@ const OrderForm: React.FC = () => {
             ...prev,
             file
         }));
+    };
+
+    const handleCaptchaChange = (token: string | null) => {
+        setCaptchaToken(token);
     };
 
     const generateOrderMessage = () => {
@@ -68,30 +81,63 @@ const OrderForm: React.FC = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        
+        // Проверка honeypot
+        if (formData.honeypot) {
+            console.log('Bot detected');
+            return;
+        }
+
+        // Проверка reCAPTCHA
+        if (!captchaToken) {
+            alert('Пожалуйста, подтвердите, что вы не робот');
+            return;
+        }
+
         setIsSubmitting(true);
 
         try {
-            //  логика отправки email
-            // пока  симулируем отправку
-            await new Promise(resolve => setTimeout(resolve, 2000));
-            
-            // чистим корзину
-            clearCart();
-            
-            // успезх
-            alert('ЗАКАЗ ОТПРАВЛЕН.');
-            
-            // Перенаправляем в каталог
-            navigate('/');
+            // Подготовка данных для EmailJS
+            const templateParams = {
+                to_email: 'multeat@mail.ru', // Email получателя
+                from_name: formData.contactName,
+                from_phone: formData.phone,
+                from_email: formData.email,
+                message: generateOrderMessage(),
+                captcha_token: captchaToken
+            };
+
+            // Отправка через EmailJS
+            const result = await emailjs.send(
+                import.meta.env.VITE_EMAILJS_SERVICE_ID || 'YOUR_SERVICE_ID',
+                import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'YOUR_TEMPLATE_ID',
+                templateParams,
+                import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'YOUR_PUBLIC_KEY'
+            );
+
+            if (result.status === 200) {
+                // Очищаем корзину
+                clearCart();
+                
+                // Сбрасываем reCAPTCHA
+                recaptchaRef.current?.reset();
+                setCaptchaToken(null);
+                
+                alert('ЗАКАЗ ОТПРАВЛЕН.');
+                
+                // Перенаправляем в каталог
+                navigate('/');
+            }
             
         } catch (error) {
+            console.error('Email sending error:', error);
             alert('ЗАКАЗ НЕ ОТПРАВЛЕН. ОШИБКА');
         } finally {
             setIsSubmitting(false);
         }
     };
 
-    //  перенаправляем в каталог при пустой корзинке
+    // Перенаправляем в каталог при пустой корзинке
     if (state.items.length === 0) {
         navigate('/products');
         return null;
@@ -111,6 +157,18 @@ const OrderForm: React.FC = () => {
                             <h1 className={styles.title}>Заявка</h1>
                             
                             <form onSubmit={handleSubmit} className={styles.form}>
+                                {/* Honeypot поле - скрытое */}
+                                <input
+                                    type="text"
+                                    name="honeypot"
+                                    value={formData.honeypot}
+                                    onChange={handleInputChange}
+                                    style={{ display: 'none' }}
+                                    tabIndex={-1}
+                                    autoComplete="off"
+                                    aria-label="Скрытое поле для защиты от ботов"
+                                />
+
                                 <div className={styles.formGroup}>
                                     <label className={styles.label}>
                                         <User size={18} />
@@ -207,6 +265,16 @@ const OrderForm: React.FC = () => {
                                     </div>
                                 </div>
 
+                                {/* reCAPTCHA */}
+                                <div className={styles.captchaContainer}>
+                                    <ReCAPTCHA
+                                        ref={recaptchaRef}
+                                        sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY || "YOUR_RECAPTCHA_SITE_KEY"}
+                                        onChange={handleCaptchaChange}
+                                        theme="light"
+                                    />
+                                </div>
+
                                 <div className={styles.paymentInfo}>
                                     <p>Вам будет выставлен счет, который можно оплатить в личном кабинете Вашего банка, либо в любом другом банке.</p>
                                 </div>
@@ -223,9 +291,8 @@ const OrderForm: React.FC = () => {
                                 <button 
                                     type="submit" 
                                     className={styles.submitButton}
-                                    disabled={isSubmitting}
+                                    disabled={isSubmitting || !captchaToken}
                                 >
-                                    {/* <Send size={20} /> */}
                                     {isSubmitting ? 'ОТПРАВЛЯЕТСЯ...' : 'ОТПРАВИТЬ'}
                                 </button>
                             </form>
