@@ -1,20 +1,26 @@
-import { Box, Button,Container, Typography } from "@mui/material";
-import { Archive as ArchiveIcon } from "lucide-react";
 
-import styles from "./Archive.module.scss";
+import { Box, Button, Container, Typography } from '@mui/material';
+import { Archive as ArchiveIcon } from 'lucide-react';
+import { Link as RouterLink } from 'react-router-dom';
 
-const Archive = () => {
+import styles from './Archive.module.scss';
+
+const ArchiveCta = () => {
   return (
     <Box className={styles.archive}>
       <Container>
         <Typography className={styles.title} component="p">
-          Все паспорта отопителей, Вы можете найти у нас в архиве.
+          Все паспорта отопителей вы найдёте в нашем архиве.
         </Typography>
+
         <Button
           className={styles.button}
           variant="contained"
           size="large"
           startIcon={<ArchiveIcon className={styles.icon} />}
+          component={RouterLink}
+          to="/archive"
+          aria-label="Перейти в архив"
         >
           Перейти в архив
         </Button>
@@ -23,4 +29,4 @@ const Archive = () => {
   );
 };
 
-export default Archive;
+export default ArchiveCta;

@@ -8,6 +8,7 @@ import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
 import Navigation from "./components/Navigation/Navigation";
 import { CartProvider } from "./context/CartContext";
+import Archive from "./pages/archive/Archive";
 import Cart from "./pages/Cart/Cart";
 import Home from "./pages/home/home";
 import HowToBuy from "./pages/how-to-buy/how-to-buy";
@@ -17,6 +18,7 @@ import Products from "./pages/products/products";
 import VideoSection from "./pages/videos/ui/videos";
 import ScrollToTop from "./shared/ui/ScrollToTop";
 import theme from "./theme";
+
 function App() {
   const footerRef = useRef<HTMLDivElement | null>(null);
 
@@ -37,6 +39,7 @@ function App() {
             <Route path="/products" element={<Products />} />
             <Route path="/how-to-buy" element={<HowToBuy />} />
             <Route path="/video" element={<VideoSection />} />
+            <Route path="/archive" element={<Archive />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/product/:id" element={<ProductDetail />} />
             <Route path="/order" element={<OrderForm />} />

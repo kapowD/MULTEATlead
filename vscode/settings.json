@@ -1,0 +1,21 @@
+{
+  // Prettier как форматтер по умолчанию
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": { "source.fixAll.eslint": "explicit" },
+  // ESLint-автофикс только по явному запросу (и при сохранении)
+
+  // Подсветка для TS/JS/React-файлов
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+
+  // Использовать ESLint flat-config (у тебя уже он)
+  "eslint.useFlatConfig": true,
+
+  // Использовать локальную версию TypeScript из проекта
+  "typescript.tsdk": "node_modules/typescript/lib"
+}
