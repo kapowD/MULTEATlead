@@ -9,6 +9,7 @@ import Header from "./components/Header/Header";
 import Navigation from "./components/Navigation/Navigation";
 import { CartProvider } from "./context/CartContext";
 import Archive from "./pages/archive/Archive";
+import AskQuestion from "./pages/AskQuestion/AskQuestion";
 import Cart from "./pages/Cart/Cart";
 import Home from "./pages/home/home";
 import HowToBuy from "./pages/how-to-buy/how-to-buy";
@@ -40,6 +41,7 @@ function App() {
             <Route path="/how-to-buy" element={<HowToBuy />} />
             <Route path="/video" element={<VideoSection />} />
             <Route path="/archive" element={<Archive />} />
+            <Route path="/ask" element={<AskQuestion />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/product/:id" element={<ProductDetail />} />
             <Route path="/order" element={<OrderForm />} />

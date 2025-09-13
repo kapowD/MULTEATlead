@@ -73,13 +73,13 @@ const Slider = () => {
         className={`${styles.arrow} ${styles.left}`}
         onClick={prevSlide}
       >
-        <ChevronLeft color="deepskyblue" size={40} />
+        {/* <ChevronLeft color="deepskyblue" size={40} /> */}
       </IconButton>
       <IconButton
         className={`${styles.arrow} ${styles.right}`}
         onClick={nextSlide}
       >
-        <ChevronRight color="deepskyblue" size={40} />
+        {/* <ChevronRight color="deepskyblue" size={40} /> */}
       </IconButton>
       {/* Точки */}
       <Box className={styles.dots}>

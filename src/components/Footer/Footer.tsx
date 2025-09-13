@@ -1,7 +1,8 @@
-import { Button,Container } from "@mui/material";
-import { CreditCard,MapPin, Phone } from "lucide-react";
+import { Button, Container } from '@mui/material';
+import { CreditCard, MapPin, Phone } from 'lucide-react';
+import { Link as RouterLink } from 'react-router-dom';
 
-import styles from "./Footer.module.scss";
+import styles from './Footer.module.scss';
 
 const Footer = () => {
   return (
@@ -28,12 +29,8 @@ const Footer = () => {
               </h3>
               <div className={styles.contactItem}>
                 <div>
-                  <a href="tel:+79139287984" className={styles.link}>
-                    8-913-928-79-84
-                  </a>
-                  <a href="tel:+79139137675" className={styles.link}>
-                    8-913-913-76-75
-                  </a>
+                  <a href="tel:+79139287984" className={styles.link}>8-913-928-79-84</a>
+                  <a href="tel:+79139137675" className={styles.link}>8-913-913-76-75</a>
                   <a href="mailto:multeat@mail.ru" className={styles.link}>
                     multeat@mail.ru, multeat@gmail.com
                   </a>
@@ -49,10 +46,8 @@ const Footer = () => {
                 Платежные реквизиты:
               </h3>
               <div className={styles.bankDetails}>
-                Банк: Сибирский банк ПАО Сбербанк России, г. Новосибирск,
-                <br />
-                Красный проспект, 45,
-                <br />
+                Банк: Сибирский банк ПАО Сбербанк России, г. Новосибирск,<br />
+                Красный проспект, 45,<br />
                 т. (383)220-91-94, 220-99-01, 236-10-84
               </div>
               <ul className={styles.bankInfo}>
@@ -72,6 +67,9 @@ const Footer = () => {
                 variant="contained"
                 size="small"
                 className={styles.button}
+                component={RouterLink}
+                to="/ask"
+                aria-label="Перейти на страницу «Задать вопрос»"
               >
                 Задать вопрос
               </Button>
