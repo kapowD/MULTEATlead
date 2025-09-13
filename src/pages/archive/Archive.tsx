@@ -1,44 +1,22 @@
-// src/pages/Archive/Archive.tsx
-import { ArrowLeft, Download, ExternalLink, FileText, Filter } from 'lucide-react';
-import React, { useMemo, useState } from 'react';
+import { ArrowLeft, Download, ExternalLink, FileText } from 'lucide-react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { pdfArchive } from '../../data/archive';
 import styles from './Archive.module.scss';
 
 const Archive: React.FC = () => {
-  const [query, setQuery] = useState('');
-  const [year, setYear] = useState<number | 'all'>('all');
   const navigate = useNavigate();
-
-  // Список годов строим один раз (pdfArchive статичен)
-  const years = useMemo(() => {
-    const ys = Array.from(new Set(pdfArchive.map(d => d.year).filter(Boolean))) as number[];
-    return ys.sort((a, b) => b - a);
-  }, []);
-
-  // Фильтр по запросу/году
-  const filtered = useMemo(() => {
-    const q = query.trim().toLowerCase();
-    return pdfArchive.filter((d) => {
-      const okYear = year === 'all' || d.year === year;
-      const okQuery =
-        !q ||
-        d.title.toLowerCase().includes(q) ||
-        (d.category?.toLowerCase().includes(q) ?? false);
-      return okYear && okQuery;
-    });
-  }, [query, year]);
 
   const handleBack = () => {
     if (window.history.length > 2) navigate(-1);
-    else navigate('/main');
+    else navigate('/'); // запасной вариант — на главную
   };
 
   return (
     <div className={styles.page}>
       <div className={styles.container}>
-        {/* Кнопка "Назад" */}
+        {/* Назад */}
         <div className={styles.backRow}>
           <button
             type="button"
@@ -54,42 +32,10 @@ const Archive: React.FC = () => {
 
         <header className={styles.header}>
           <h1 className={styles.title}>Архив документов (PDF)</h1>
-
-          <div className={styles.controls}>
-            <div className={styles.search}>
-              <input
-                type="text"
-                placeholder="Поиск по названию или категории…"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                className={styles.searchInput}
-                aria-label="Поиск по PDF"
-              />
-            </div>
-
-            <div className={styles.filter}>
-              <Filter size={18} className={styles.filterIcon} />
-              <select
-                className={styles.select}
-                value={year}
-                onChange={(e) =>
-                  setYear(e.target.value === 'all' ? 'all' : Number(e.target.value))
-                }
-                aria-label="Фильтр по году"
-              >
-                <option value="all">Все годы</option>
-                {years.map((y) => (
-                  <option key={y} value={y}>
-                    {y}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
         </header>
 
         <div className={styles.grid}>
-          {filtered.map((doc) => (
+          {pdfArchive.map((doc) => (
             <article key={doc.id} className={styles.card}>
               <div className={styles.iconWrap}>
                 <FileText size={28} />
@@ -133,10 +79,8 @@ const Archive: React.FC = () => {
           ))}
         </div>
 
-        {filtered.length === 0 && (
-          <div className={styles.empty}>
-            Ничего не найдено. Попробуйте изменить запрос или фильтр по году.
-          </div>
+        {pdfArchive.length === 0 && (
+          <div className={styles.empty}>Архив пока пуст.</div>
         )}
       </div>
     </div>
