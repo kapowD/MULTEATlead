@@ -184,15 +184,31 @@
 }
 
 .priceSection {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    padding: 24px;
-    background: linear-gradient(135deg, #fff8e1 0%, #f3e5ab 100%);
-    border-radius: 16px;
-    border: 2px solid #d8b000;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+  background: linear-gradient(135deg, #fff8e1 0%, #f3e5ab 100%);
+  border-radius: 16px;
+  border: 2px solid #d8b000;
 }
+.buyRow {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-top: 4px;
 
+  /* чтобы на маленьких экранах выглядело столбиком */
+  @media (max-width: 560px) {
+    flex-direction: column;
+    align-items: stretch;
+
+    /* кнопка на всю ширину */
+    .addToCartButton {
+      width: 100%;
+    }
+  }
+}
 .price {
     display: flex;
     align-items: center;
@@ -280,16 +296,27 @@
 }
 
 .addToCartButton {
-    background: linear-gradient(135deg, #d8b000 0%, #b8940a 100%);
-    color: white;
-    
-    &:hover {
-        background: linear-gradient(135deg, #b8940a 0%, #9a7c08 100%);
-        transform: translateY(-2px);
-        box-shadow: 0 8px 24px rgba(216, 176, 0, 0.3);
-    }
-}
+  background: linear-gradient(135deg, #d8b000 0%, #b8940a 100%);
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
 
+  &:hover:enabled {
+    background: linear-gradient(135deg, #b8940a 0%, #9a7c08 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(216, 176, 0, 0.3);
+  }
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: default;
+  }
+}
 .buyNowButton {
     background: white;
     color: #d8b000;
