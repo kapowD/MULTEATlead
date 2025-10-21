@@ -1,4 +1,4 @@
-import { Container, Divider,Paper } from "@mui/material";
+import { Container, Divider } from "@mui/material";
 import {
   AlertTriangle,
   Clock,
@@ -13,7 +13,6 @@ import {
   Star,
   Zap,
 } from "lucide-react";
-
 import styles from "./Properties.module.scss";
 
 const properties = [
@@ -63,14 +62,14 @@ const Properties = () => {
     <section className={styles.section}>
       <Container>
         <h2 className={styles.title}>Свойства отопителей</h2>
-        <Divider sx={{ my: 4}} />
+        <Divider sx={{ my: 4, borderColor: "rgba(255,255,255,0.2)" }} />
         <ul className={styles.list}>
           {properties.map((property, index) => (
-            <li key={index} className={styles.listItem}>
-              <Paper className={styles.card} elevation={2}>
+            <li key={index}>
+              <div className={styles.card}>
                 <div className={styles.iconWrapper}>{property.icon}</div>
                 <p className={styles.text}>{property.text}</p>
-              </Paper>
+              </div>
             </li>
           ))}
         </ul>

@@ -1,56 +1,116 @@
 @import '../../styles/variables/_index.scss';
 
 .section {
-  padding: $spacing-lg 0;
-  // background-color: $background-light;
-  background-color: #858585a9;
+  padding: $spacing-xl 0;
+  background: linear-gradient(145deg, #1a1a1a, #2a2a2a);
   font-family: $font-family-base;
+  color: #eee;
 }
 
 .title {
-  text-align: left;
-  margin-bottom: $spacing-lg;
-  font-size: 3rem;
-  font-weight: $font-weight-heading;
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2.5rem;
+  font-weight: 700;
   font-family: $font-family-heading;
-  color: #ffffff;
+  color: #f8f8f8;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
 }
 
 .list {
   list-style: none;
   padding: 0;
   margin: 0;
-}
-
-.listItem {
-  // margin-bottom: $spacing-sm;
-  margin-bottom: 2px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  gap: 1.2rem;
+  align-items: stretch;
 }
 
 .card {
-  display: flex;
   align-items: center;
-  padding: $spacing-xs;
-  transition: all $transition-fast;
-  background-color: rgb(0, 0, 0);
-  border: 2px solid $secondary-color;
-  height: 50px;
+  display: flex;
+  
+  gap: 1rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  border-radius: 16px;
+  padding: 20px 24px;
+  position: relative;
+  transition: all 0.3s ease;
   overflow: hidden;
-
+  backdrop-filter: blur(6px);
+  height: 100%;
   &:hover {
-    box-shadow: $shadow-md;
+    border-color: #d8b000;
+    background: rgba(255, 215, 0, 0.07);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(216, 176, 0, 0.2);
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 16px;
+    background: radial-gradient(
+      circle at top left,
+      rgba(216, 176, 0, 0.2),
+      transparent 60%
+    );
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  &:hover::before {
+    opacity: 1;
   }
 }
 
 .iconWrapper {
-  margin-right: $spacing-sm;
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: rgba(216, 176, 0, 0.15);
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  color: #ffd700;
+  font-size: 1.8rem;
+  transition: all 0.3s ease;
+
+  svg {
+    stroke-width: 1.8;
+    color: #ffd700;
+  }
+
+  .card:hover & {
+    background: rgba(216, 176, 0, 0.25);
+    transform: scale(1.05);
+  }
 }
 
 .text {
-  flex-grow: 1;
-} 
+  flex: 1;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #ddd;
+    display: flex;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .title {
+    font-size: 1.8rem;
+  }
+
+  .list {
+    grid-template-columns: 1fr;
+  }
+
+  .card {
+    padding: 16px 20px;
+  }
+}

@@ -1,7 +1,7 @@
 @import '../../styles/variables';
 
 .footer {
-  background-color: rgb(54, 54, 54);
+  background: linear-gradient(145deg, #1a1a1af5, #2a2a2af5);
   color: white;
   padding: $spacing-md 0;
   min-height: 280px;
@@ -13,7 +13,7 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: $spacing-md;
-
+  padding: 14px;
   @media (min-width: 1024px) {
     grid-template-columns: 1.2fr 1fr 0.8fr;
     gap: $spacing-lg;
