@@ -7,19 +7,15 @@ import react from "eslint-plugin-react";
 import reactHooks from "eslint-plugin-react-hooks";
 import simpleImportSort from "eslint-plugin-simple-import-sort";
 import globals from "globals";
-import tseslint from "typescript-eslint";
+import parser from "@typescript-eslint/parser";
+import tsPlugin from "@typescript-eslint/eslint-plugin";
 
-export default tseslint.config(
-  // игнорим артефакты сборки/кеша
-  { ignores: ["dist", "build", "node_modules", ".vite", "coverage"] },
-
-  // базовые пресеты JS + TS (без типовых правил, быстро)
+export default [
   js.configs.recommended,
-  ...tseslint.configs.recommended,
-
   {
     files: ["**/*.{js,jsx,ts,tsx}"],
     languageOptions: {
+      parser,
       ecmaVersion: 2020,
       sourceType: "module",
       globals: globals.browser,
@@ -30,10 +26,10 @@ export default tseslint.config(
       "jsx-a11y": jsxA11y,
       import: importPlugin,
       "simple-import-sort": simpleImportSort,
+      "@typescript-eslint": tsPlugin,
     },
     settings: {
       react: { version: "detect" },
-      // чтобы eslint-plugin-import понимал TS-резолвинг
       "import/resolver": { typescript: true, node: true },
     },
     rules: {
@@ -49,15 +45,16 @@ export default tseslint.config(
       "simple-import-sort/imports": "error",
       "simple-import-sort/exports": "error",
 
-      // TS unused vars (вместо core)
+      // TS unused vars
       "no-unused-vars": "off",
       "@typescript-eslint/no-unused-vars": [
         "warn",
         { argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
       ],
+
+      // Prettier интеграция
+      "prettier/prettier": "warn",
     },
   },
-
-  // в самом конце — отключаем конфликтующие с Prettier правила
-  prettier
-);
+  prettier, // отключаем конфликтующие с Prettier правила
+];

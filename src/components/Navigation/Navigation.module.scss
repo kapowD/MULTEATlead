@@ -14,6 +14,7 @@
   grid-template-columns: repeat(auto-fit, minmax(150px, auto));
   gap: $spacing-md;
   justify-content: center;
+  align-items: flex-end;
 
   @media (max-width: $breakpoint-md) {
     display: flex;
@@ -28,7 +29,7 @@
     overflow: hidden;
     opacity: 0;
     transform: translateY(-10px);
-    transition: all 0.4s ease;
+    transition: all 1s ease;
   }
 
   &.open {
@@ -42,14 +43,17 @@
 .button {
   width: 100%;
   transition: transform $transition-slow;
+  font-size: 16 !important;
+  font-weight: 600 !important;;
 
   &:hover {
-    transform: translateY(-2px);
+    transform: translateY(-1px);
   }
 }
 
 .buttonIcon {
   margin-right: $spacing-sm;
+  
 }
 
 .burger {

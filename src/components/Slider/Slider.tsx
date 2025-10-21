@@ -60,7 +60,7 @@ const Slider = () => {
           }}
         >
           <Container className={styles.slideContent}>
-            <Typography sx={{ fontWeight: "bold", fontSize: 22 }}>
+            <Typography sx={{ fontWeight: "bold", fontSize: 22,  margin: 1}}>
               {slide.title}
             </Typography>
           </Container>
