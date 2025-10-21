@@ -1,26 +1,21 @@
-// src/pages/ask/AskQuestion.tsx
-import React, { useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Mail, MessageSquare, Phone, User } from 'lucide-react';
-import ReCAPTCHA from 'react-google-recaptcha';
-import emailjs from '@emailjs/browser';
+import React, { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { ArrowLeft, Mail, MessageSquare, Phone, User } from "lucide-react";
+import ReCAPTCHA from "react-google-recaptcha";
 
-import styles from './AskQuestion.module.scss';
-
-// Инициализируем EmailJS (один раз на странице)
-emailjs.init(import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'YOUR_PUBLIC_KEY');
+import styles from "./AskQuestion.module.scss";
 
 const AskQuestion: React.FC = () => {
   const navigate = useNavigate();
   const recaptchaRef = useRef<ReCAPTCHA>(null);
 
   const [form, setForm] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    subject: '',
-    message: '',
-    honeypot: '',
+    name: "",
+    email: "",
+    phone: "",
+    subject: "",
+    message: "",
+    honeypot: "",
   });
 
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
@@ -30,15 +25,14 @@ const AskQuestion: React.FC = () => {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-    setForm((s) => ({ ...s, [name]: value }));
+    setForm((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleCaptcha = (token: string | null) => setCaptchaToken(token);
 
-  // Назад: если есть история — идём -1, иначе — на главную
   const handleBack = () => {
     if (window.history.length > 2) navigate(-1);
-    else navigate('/');
+    else navigate("/");
   };
 
   const submit = async (e: React.FormEvent) => {
@@ -46,39 +40,48 @@ const AskQuestion: React.FC = () => {
 
     if (form.honeypot) return; // honeypot
     if (!captchaToken) {
-      alert('Пожалуйста, подтвердите, что вы не робот.');
+      alert("Пожалуйста, подтвердите, что вы не робот.");
       return;
     }
 
     setIsSubmitting(true);
     try {
-      const templateParams = {
-        to_email: import.meta.env.VITE_CONTACT_TO_EMAIL || 'your@mail.com',
-        from_name: form.name,
-        from_email: form.email,
-        from_phone: form.phone,
-        subject: form.subject || 'Вопрос с сайта',
-        message: form.message,
-        captcha_token: captchaToken,
-      };
-
-      const res = await emailjs.send(
-        import.meta.env.VITE_EMAILJS_SERVICE_ID || 'YOUR_SERVICE_ID',
-        import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'YOUR_TEMPLATE_ID',
-        templateParams,
-        import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'YOUR_PUBLIC_KEY'
+      const formData = new FormData();
+      formData.append("name", form.name);
+      formData.append("email", form.email);
+      formData.append("phone", form.phone);
+      formData.append(
+        "message",
+        `Вопрос  MULTЕAT\n\nИмя: ${form.name}\nEmail: ${form.email}\nТелефон: ${form.phone}\nТема: ${form.subject}\n\nСообщение:\n${form.message}`
       );
 
-      if (res.status === 200) {
-        alert('Сообщение отправлено. Спасибо!');
-        setForm({ name: '', email: '', phone: '', subject: '', message: '', honeypot: '' });
+      const res = await fetch("https://cr17192.rinethost.ru/send.php", {
+        method: "POST",
+        body: formData,
+      });
+
+      const result = await res.text();
+
+      if (result.trim() === "ok") {
+        alert("✅ Сообщение успешно отправлено!");
+        setForm({
+          name: "",
+          email: "",
+          phone: "",
+          subject: "",
+          message: "",
+          honeypot: "",
+        });
         recaptchaRef.current?.reset();
         setCaptchaToken(null);
-        navigate('/'); // куда вести после отправки — оставил на главную
+        navigate("/");
+      } else {
+        console.error("Server response:", result);
+        alert("❌ Ошибка при отправке: " + result);
       }
     } catch (err) {
-      console.error('Email send error:', err);
-      alert('Не удалось отправить сообщение. Попробуйте позже.');
+      console.error("Fetch error:", err);
+      alert("❌ Ошибка соединения с сервером");
     } finally {
       setIsSubmitting(false);
     }
@@ -115,8 +118,7 @@ const AskQuestion: React.FC = () => {
 
             <div className={styles.row}>
               <label htmlFor="name" className={styles.label}>
-                <User size={18} />
-                Имя*
+                <User size={18} /> Имя*
               </label>
               <input
                 id="name"
@@ -132,8 +134,7 @@ const AskQuestion: React.FC = () => {
 
             <div className={styles.row}>
               <label htmlFor="email" className={styles.label}>
-                <Mail size={18} />
-                Email*
+                <Mail size={18} /> Email*
               </label>
               <input
                 id="email"
@@ -149,8 +150,7 @@ const AskQuestion: React.FC = () => {
 
             <div className={styles.row}>
               <label htmlFor="phone" className={styles.label}>
-                <Phone size={18} />
-                Телефон
+                <Phone size={18} /> Телефон
               </label>
               <input
                 id="phone"
@@ -180,8 +180,7 @@ const AskQuestion: React.FC = () => {
 
             <div className={styles.row}>
               <label htmlFor="message" className={styles.label}>
-                <MessageSquare size={18} />
-                Сообщение*
+                <MessageSquare size={18} /> Сообщение*
               </label>
               <textarea
                 id="message"
@@ -198,7 +197,10 @@ const AskQuestion: React.FC = () => {
             <div className={styles.captcha}>
               <ReCAPTCHA
                 ref={recaptchaRef}
-                sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY || 'YOUR_RECAPTCHA_SITE_KEY'}
+                sitekey={
+                  import.meta.env.VITE_RECAPTCHA_SITE_KEY ||
+                  "YOUR_RECAPTCHA_SITE_KEY"
+                }
                 onChange={handleCaptcha}
                 theme="light"
               />
@@ -209,7 +211,7 @@ const AskQuestion: React.FC = () => {
               className={styles.submit}
               disabled={isSubmitting || !captchaToken}
             >
-              {isSubmitting ? 'Отправка…' : 'Отправить'}
+              {isSubmitting ? "Отправка…" : "Отправить"}
             </button>
           </form>
         </div>

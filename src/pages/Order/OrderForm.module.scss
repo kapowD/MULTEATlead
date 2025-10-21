@@ -419,3 +419,13 @@
         padding: 16px 24px;
     }
 }
+.inputError {
+  border: 1px solid #e53935 !important;
+  background-color: #fff6f6;
+}
+
+.errorText {
+  color: #e53935;
+  font-size: 13px;
+  margin-top: 4px;
+}

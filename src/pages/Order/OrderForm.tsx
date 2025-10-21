@@ -1,63 +1,89 @@
-import emailjs from '@emailjs/browser';
-import { ArrowLeft, Mail,Package, Phone, RussianRuble as Ruble, Upload, User } from 'lucide-react';
-import React, { useRef,useState } from 'react';
-import ReCAPTCHA from 'react-google-recaptcha';
-import { Link, useNavigate } from 'react-router-dom';
-
-import { useCart } from '../../context/CartContext';
-import styles from './OrderForm.module.scss';
-
-// Инициализация EmailJS
-emailjs.init(import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'YOUR_PUBLIC_KEY');
+import { ArrowLeft, Mail, Package, Phone, RussianRuble as Ruble, Upload, User } from "lucide-react";
+import React, { useRef, useState } from "react";
+import ReCAPTCHA from "react-google-recaptcha";
+import { Link, useNavigate } from "react-router-dom";
+import { useCart } from "../../context/CartContext";
+import styles from "./OrderForm.module.scss";
 
 const OrderForm: React.FC = () => {
     const { state, clearCart } = useCart();
     const navigate = useNavigate();
     const recaptchaRef = useRef<ReCAPTCHA>(null);
-    
+
     const [formData, setFormData] = useState({
-        contactName: '',
-        phone: '',
-        email: '',
-        message: '',
+        contactName: "",
+        phone: "",
+        email: "",
+        message: "",
         file: null as File | null,
-        honeypot: '' // скрытое поле для защиты от ботов
+        honeypot: "",
     });
-    
+
+    const [errors, setErrors] = useState<{ email?: string; phone?: string; contactName?: string }>({});
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [captchaToken, setCaptchaToken] = useState<string | null>(null);
 
-    const formatPrice = (price: number) => {
-        return new Intl.NumberFormat('ru-RU').format(price);
+    const formatPrice = (price: number) => new Intl.NumberFormat("ru-RU").format(price);
+
+    // --- Форматирование телефона ---
+    const formatPhoneNumber = (value: string): string => {
+        const digits = value.replace(/\D/g, "").substring(0, 11);
+        if (!digits) return "";
+
+        const normalized = digits[0] === "8" ? "7" + digits.slice(1) : digits;
+        let formatted = "+7";
+
+        if (normalized.length > 1) formatted += " (" + normalized.slice(1, 4);
+        if (normalized.length >= 5) formatted += ") " + normalized.slice(4, 7);
+        if (normalized.length >= 8) formatted += "-" + normalized.slice(7, 9);
+        if (normalized.length >= 10) formatted += "-" + normalized.slice(9, 11);
+
+        return formatted;
     };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
-        setFormData(prev => ({
-            ...prev,
-            [name]: value
-        }));
+        setFormData((prev) => ({ ...prev, [name]: value }));
+        setErrors((prev) => ({ ...prev, [name]: undefined }));
     };
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0] || null;
-        setFormData(prev => ({
-            ...prev,
-            file
-        }));
+        setFormData((prev) => ({ ...prev, file }));
     };
 
-    const handleCaptchaChange = (token: string | null) => {
-        setCaptchaToken(token);
+    const handleCaptchaChange = (token: string | null) => setCaptchaToken(token);
+
+    // --- Валидация полей ---
+    const validateFields = (): boolean => {
+        const newErrors: { email?: string; phone?: string; contactName?: string } = {};
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const phoneRegex = /^\+7\s?\(\d{3}\)\s?\d{3}-\d{2}-\d{2}$/;
+        const nameRegex = /^[А-Яа-яA-Za-zЁё\s'-]{2,}$/;
+
+        if (!nameRegex.test(formData.contactName.trim())) {
+            newErrors.contactName = "Введите корректное имя (только буквы)";
+        }
+        if (!emailRegex.test(formData.email.trim())) {
+            newErrors.email = "Введите корректный email (например, example@mail.ru)";
+        }
+        if (!phoneRegex.test(formData.phone.trim())) {
+            newErrors.phone = "Введите корректный номер телефона (например, +7 (999) 123-45-67)";
+        }
+
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
     };
 
+    // --- Генерация текста заказа ---
     const generateOrderMessage = () => {
         let message = `НОВЫЙ ЗАКАЗ\n\n`;
         message += `Контактная информация:\n`;
         message += `Имя: ${formData.contactName}\n`;
         message += `Телефон: ${formData.phone}\n`;
         message += `Email: ${formData.email}\n\n`;
-        
+
         message += `Заказанные товары:\n`;
         state.items.forEach((item, index) => {
             message += `${index + 1}. ${item.product.name}\n`;
@@ -65,81 +91,65 @@ const OrderForm: React.FC = () => {
             message += `   Цена за единицу: ${formatPrice(item.product.price)} ₽\n`;
             message += `   Сумма: ${formatPrice(item.product.price * item.quantity)} ₽\n\n`;
         });
-        
-        message += `ИТОГО:\n`;
-        message += `Товаров: ${state.itemCount} шт.\n`;
-        message += `Общая сумма: ${formatPrice(state.total)} ₽\n\n`;
-        
+
+        message += `ИТОГО:\nТоваров: ${state.itemCount} шт.\nОбщая сумма: ${formatPrice(state.total)} ₽\n\n`;
+
         if (formData.message) {
-            message += `Дополнительная информация:\n${formData.message}\n\n`;
+            message += `Комментарий:\n${formData.message}\n\n`;
         }
-        
-        message += `Дата заказа: ${new Date().toLocaleString('ru-RU')}`;
-        
+
+        message += `Дата заказа: ${new Date().toLocaleString("ru-RU")}`;
         return message;
     };
 
+    // --- Отправка формы ---
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        
-        // Проверка honeypot
-        if (formData.honeypot) {
-            console.log('Bot detected');
-            return;
-        }
 
-        // Проверка reCAPTCHA
+        if (formData.honeypot) return;
+        if (!validateFields()) return;
+
         if (!captchaToken) {
-            alert('Пожалуйста, подтвердите, что вы не робот');
+            alert("Пожалуйста, подтвердите, что вы не робот");
             return;
         }
 
         setIsSubmitting(true);
-
         try {
-            // Подготовка данных для EmailJS
-            const templateParams = {
-                to_email: 'multeat@mail.ru', // Email получателя
-                from_name: formData.contactName,
-                from_phone: formData.phone,
-                from_email: formData.email,
-                message: generateOrderMessage(),
-                captcha_token: captchaToken
-            };
+            const formDataToSend = new FormData();
+            formDataToSend.append("name", formData.contactName);
+            formDataToSend.append("phone", formData.phone);
+            formDataToSend.append("email", formData.email);
+            formDataToSend.append("message", generateOrderMessage());
+            if (formData.file) formDataToSend.append("file", formData.file);
 
-            // Отправка через EmailJS
-            const result = await emailjs.send(
-                import.meta.env.VITE_EMAILJS_SERVICE_ID || 'YOUR_SERVICE_ID',
-                import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'YOUR_TEMPLATE_ID',
-                templateParams,
-                import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'YOUR_PUBLIC_KEY'
-            );
+            const response = await fetch("https://cr17192.rinethost.ru/send.php", {
+                method: "POST",
+                body: formDataToSend,
+            });
 
-            if (result.status === 200) {
-                // Очищаем корзину
+            const result = await response.text();
+
+            if (result.trim() === "ok") {
                 clearCart();
-                
-                // Сбрасываем reCAPTCHA
                 recaptchaRef.current?.reset();
                 setCaptchaToken(null);
-                
-                alert('ЗАКАЗ ОТПРАВЛЕН.');
-                
-                // Перенаправляем в каталог
-                navigate('/');
+                alert("✅ Заказ успешно отправлен!");
+                navigate("/");
+            } else {
+                console.error("Server response:", result);
+                alert("❌ Ошибка при отправке: " + result);
             }
-            
         } catch (error) {
-            console.error('Email sending error:', error);
-            alert('ЗАКАЗ НЕ ОТПРАВЛЕН. ОШИБКА');
+            console.error("Fetch error:", error);
+            alert("❌ Ошибка соединения с сервером");
         } finally {
             setIsSubmitting(false);
         }
     };
 
-    // Перенаправляем в каталог при пустой корзинке
     if (state.items.length === 0) {
-        navigate('/products');
+        navigate("/products");
         return null;
     }
 
@@ -147,89 +157,81 @@ const OrderForm: React.FC = () => {
         <div className={styles.page}>
             <div className={styles.container}>
                 <Link to="/cart" className={styles.backButton}>
-                    <ArrowLeft size={20} />
-                    Вернуться в корзину
+                    <ArrowLeft size={20} /> Вернуться в корзину
                 </Link>
 
                 <div className={styles.formLayout}>
                     <div className={styles.formSection}>
                         <div className={styles.formCard}>
                             <h1 className={styles.title}>Заявка</h1>
-                            
+
                             <form onSubmit={handleSubmit} className={styles.form}>
-                                {/* Honeypot поле - скрытое */}
                                 <input
                                     type="text"
                                     name="honeypot"
                                     value={formData.honeypot}
                                     onChange={handleInputChange}
-                                    style={{ display: 'none' }}
-                                    tabIndex={-1}
-                                    autoComplete="off"
-                                    aria-label="Скрытое поле для защиты от ботов"
+                                    style={{ display: "none" }}
                                 />
 
+                                {/* Имя */}
                                 <div className={styles.formGroup}>
                                     <label className={styles.label}>
-                                        <User size={18} />
-                                        Контактное лицо*
+                                        <User size={18} /> Контактное лицо*
                                     </label>
                                     <input
                                         type="text"
                                         name="contactName"
                                         value={formData.contactName}
                                         onChange={handleInputChange}
-                                        placeholder="Varg Vikernes"
-                                        className={styles.input}
+                                        placeholder="Иван Иванов"
+                                        className={`${styles.input} ${errors.contactName ? styles.inputError : ""}`}
                                         required
                                     />
+                                    {errors.contactName && <p className={styles.errorText}>{errors.contactName}</p>}
                                 </div>
 
+                                {/* Телефон */}
                                 <div className={styles.formGroup}>
                                     <label className={styles.label}>
-                                        <Phone size={18} />
-                                        Телефон*
+                                        <Phone size={18} /> Телефон*
                                     </label>
                                     <input
                                         type="tel"
                                         name="phone"
                                         value={formData.phone}
-                                        onChange={handleInputChange}
-                                        placeholder="0000000000"
-                                        className={styles.input}
+                                        onChange={(e) => {
+                                            const formatted = formatPhoneNumber(e.target.value);
+                                            setFormData((prev) => ({ ...prev, phone: formatted }));
+                                            setErrors((prev) => ({ ...prev, phone: undefined }));
+                                        }}
+                                        placeholder="+7 (999) 000-00-00"
+                                        className={`${styles.input} ${errors.phone ? styles.inputError : ""}`}
                                         required
                                     />
+                                    {errors.phone && <p className={styles.errorText}>{errors.phone}</p>}
                                 </div>
 
+                                {/* Email */}
                                 <div className={styles.formGroup}>
                                     <label className={styles.label}>
-                                        <Mail size={18} />
-                                        Email*
+                                        <Mail size={18} /> Email*
                                     </label>
                                     <input
                                         type="email"
                                         name="email"
                                         value={formData.email}
                                         onChange={handleInputChange}
-                                        placeholder="Почта"
-                                        className={styles.input}
+                                        placeholder="example@mail.ru"
+                                        className={`${styles.input} ${errors.email ? styles.inputError : ""}`}
                                         required
                                     />
+                                    {errors.email && <p className={styles.errorText}>{errors.email}</p>}
                                 </div>
 
-                                <div className={styles.infoBlock}>
-                                    <p className={styles.infoTitle}>В окне "сообщение" укажите:</p>
-                                    <ul className={styles.infoList}>
-                                        <li>- Необходимые Вам размеры.</li>
-                                        <li>- Для частного лица: Ф.И.О., адрес доставки, № паспорта (для транспортной компании)</li>
-                                        <li>- Для юридического лица: реквизиты организации (можно прикрепить файлом).</li>
-                                    </ul>
-                                </div>
-
+                                {/* Сообщение */}
                                 <div className={styles.formGroup}>
-                                    <label className={styles.label}>
-                                        Сообщение*
-                                    </label>
+                                    <label className={styles.label}>Сообщение*</label>
                                     <textarea
                                         name="message"
                                         value={formData.message}
@@ -241,10 +243,10 @@ const OrderForm: React.FC = () => {
                                     />
                                 </div>
 
+                                {/* Файл */}
                                 <div className={styles.formGroup}>
                                     <label className={styles.label}>
-                                        <Upload size={18} />
-                                        Прикрепить файл
+                                        <Upload size={18} /> Прикрепить файл
                                     </label>
                                     <div className={styles.fileUpload}>
                                         <input
@@ -257,11 +259,7 @@ const OrderForm: React.FC = () => {
                                         <label htmlFor="file" className={styles.fileButton}>
                                             Выбрать файл...
                                         </label>
-                                        {formData.file && (
-                                            <span className={styles.fileName}>
-                                                {formData.file.name}
-                                            </span>
-                                        )}
+                                        {formData.file && <span className={styles.fileName}>{formData.file.name}</span>}
                                     </div>
                                 </div>
 
@@ -275,50 +273,32 @@ const OrderForm: React.FC = () => {
                                     />
                                 </div>
 
-                                <div className={styles.paymentInfo}>
-                                    <p>Вам будет выставлен счет, который можно оплатить в личном кабинете Вашего банка, либо в любом другом банке.</p>
-                                </div>
-
-                                <div className={styles.deliveryInfo}>
-                                    <ul>
-                                        <li>• Отправка товара производится в течении двух рабочих дней с момента поступления денег.</li>
-                                        <li>• Доставка осуществляется транспортной компанией за счет покупателя.</li>
-                                        <li>• По умолчанию транспортная компания "Деловые линии", либо другая удобная Вам.</li>
-                                        <li>• Доставка до терминала транспортной компании - бесплатна.</li>
-                                    </ul>
-                                </div>
-
-                                <button 
-                                    type="submit" 
+                                <button
+                                    type="submit"
                                     className={styles.submitButton}
                                     disabled={isSubmitting || !captchaToken}
                                 >
-                                    {isSubmitting ? 'ОТПРАВЛЯЕТСЯ...' : 'ОТПРАВИТЬ'}
+                                    {isSubmitting ? "ОТПРАВЛЯЕТСЯ..." : "ОТПРАВИТЬ"}
                                 </button>
                             </form>
                         </div>
                     </div>
 
+                    {/* Сводка заказа */}
                     <div className={styles.orderSummary}>
                         <div className={styles.summaryCard}>
                             <h3 className={styles.summaryTitle}>
-                                <Package size={24} />
-                                Ваш заказ
+                                <Package size={24} /> Ваш заказ
                             </h3>
-                            
+
                             <div className={styles.orderItems}>
                                 {state.items.map((item) => (
                                     <div key={item.product.id} className={styles.orderItem}>
                                         <div className={styles.itemImage}>
-                                            <img 
-                                                src={item.product.image} 
-                                                alt={item.product.name}
-                                            />
+                                            <img src={item.product.image} alt={item.product.name} />
                                         </div>
                                         <div className={styles.itemDetails}>
-                                            <h4 className={styles.itemName}>
-                                                {item.product.name}
-                                            </h4>
+                                            <h4 className={styles.itemName}>{item.product.name}</h4>
                                             <div className={styles.itemQuantity}>
                                                 {item.quantity} шт. × {formatPrice(item.product.price)} ₽
                                             </div>
@@ -329,20 +309,6 @@ const OrderForm: React.FC = () => {
                                         </div>
                                     </div>
                                 ))}
-                            </div>
-                            
-                            <div className={styles.summaryTotal}>
-                                <div className={styles.totalRow}>
-                                    <span>Товаров:</span>
-                                    <span>{state.itemCount} шт.</span>
-                                </div>
-                                <div className={styles.totalRow}>
-                                    <span>Итого:</span>
-                                    <div className={styles.totalPrice}>
-                                        <Ruble size={20} />
-                                        <span>{formatPrice(state.total)}</span>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
