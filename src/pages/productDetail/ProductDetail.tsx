@@ -153,7 +153,9 @@ const ProductDetail: React.FC = () => {
 
                     <div className={styles.infoSection}>
                         <h1 className={styles.title}>{product.name}</h1>
-
+                        {product.category && (
+                            <p className={styles.category}>Категория: {product.category}</p>
+                        )}
                         <div className={styles.priceSection}>
                             <div className={styles.price}>
                                 <Ruble size={24} />

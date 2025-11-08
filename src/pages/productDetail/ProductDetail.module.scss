@@ -174,7 +174,7 @@
 .infoSection {
     display: flex;
     flex-direction: column;
-    gap: 32px;
+    gap: 4px;
 }
 
 .title {
@@ -183,7 +183,13 @@
     color: #1a1a1a;
     line-height: 1.2;
 }
-
+.category {
+    margin-top: -6px; // чуть ближе к названию
+    margin-bottom: 2;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #666; // тот же желтоватый оттенок, что и акцент
+}
 .priceSection {
     display: flex;
     flex-direction: column;
