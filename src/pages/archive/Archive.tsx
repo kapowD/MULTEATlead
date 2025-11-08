@@ -1,6 +1,7 @@
 import { ArrowLeft, Download, ExternalLink, FileText } from 'lucide-react';
 import React, { useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { PageMeta } from '@shared/ui/PageMeta/PageMeta'; // 👈 добавь импорт
 
 import { pdfArchive } from '../../data/archive';
 import styles from './Archive.module.scss';
@@ -70,6 +71,12 @@ const Archive: React.FC = () => {
 
   return (
     <div className={`${styles.page} ${eggOn ? styles.scatterOn : ''}`}>
+      {/* 👇 Мета-теги */}
+      <PageMeta
+        title="MULTEAT — Архив"
+        description="Архив старых коллекций и материалов."
+      />
+
       {/* Фон-видео */}
       <div className={`${styles.videoBackdrop} ${eggOn ? styles.show : ''}`} aria-hidden>
         <video
@@ -122,7 +129,6 @@ const Archive: React.FC = () => {
           </h1>
         </header>
 
-        {/* Пасхалка */}
         <button
           type="button"
           className={styles.eggBtn}

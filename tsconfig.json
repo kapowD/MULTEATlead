@@ -1,16 +1,19 @@
 {
-  "files": [],
-  "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" }
-  ],
-  "compilerOptions": {
-    "baseUrl": "./src",
-    "paths": {
-      "@/*": ["*"],
-      "@components/*": ["components/*"]
-    },
-    "forceConsistentCasingInFileNames": true,
-    "strict": true
-  }
+    "files": [],
+    "references": [{ "path": "./tsconfig.app.json" }, { "path": "./tsconfig.node.json" }],
+    "compilerOptions": {
+        "baseUrl": "./src",
+        "paths": {
+            "@/*": ["*"],
+            "@app/*": ["app/*"],
+            "@components/*": ["components/*"],
+            "@pages/*": ["pages/*"],
+            "@shared/*": ["shared/*"],
+            "@context/*": ["context/*"],
+            "@data/*": ["data/*"],
+            "@types/*": ["types/*"]
+        },
+        "forceConsistentCasingInFileNames": true,
+        "strict": true
+    }
 }

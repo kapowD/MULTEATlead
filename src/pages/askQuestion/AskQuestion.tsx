@@ -10,7 +10,8 @@ import React, { useRef, useState } from "react"
 import ReCAPTCHA from "react-google-recaptcha"
 import { useNavigate } from "react-router-dom"
 import { toast } from "sonner"
-import styles from "../Order/OrderForm.module.scss" // 👈 используем те же стили
+import { PageMeta } from "@shared/ui/PageMeta/PageMeta" // ✅ мета-теги
+import styles from "../Order/OrderForm.module.scss"
 
 const AskQuestion: React.FC = () => {
     const navigate = useNavigate()
@@ -31,6 +32,7 @@ const AskQuestion: React.FC = () => {
         phone?: string
         contactName?: string
     }>({})
+
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [captchaToken, setCaptchaToken] = useState<string | null>(null)
 
@@ -50,6 +52,7 @@ const AskQuestion: React.FC = () => {
         return formatted
     }
 
+    // --- Обработчики ввода ---
     const handleInputChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
     ) => {
@@ -96,7 +99,7 @@ const AskQuestion: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
 
-        if (formData.honeypot) return
+        if (formData.honeypot) return // антиспам
         if (!validateFields()) return
         if (!captchaToken) {
             toast.warning("⚠️ Подтвердите, что вы не робот")
@@ -111,7 +114,7 @@ const AskQuestion: React.FC = () => {
             formDataToSend.append("email", formData.email)
             formDataToSend.append(
                 "message",
-                `Вопрос MULTЕAT\n\nИмя: ${formData.contactName}\nТелефон: ${formData.phone}\nEmail: ${formData.email}\nТема: ${formData.subject}\n\nСообщение:\n${formData.message}\n\nДата: ${new Date().toLocaleString(
+                `Вопрос MULTEAT\n\nИмя: ${formData.contactName}\nТелефон: ${formData.phone}\nEmail: ${formData.email}\nТема: ${formData.subject}\n\nСообщение:\n${formData.message}\n\nДата: ${new Date().toLocaleString(
                     "ru-RU"
                 )}`
             )
@@ -143,12 +146,18 @@ const AskQuestion: React.FC = () => {
 
     return (
         <div className={styles.page}>
+            {/* ✅ Мета-теги */}
+            <PageMeta
+                title="MULTEAT — Задать вопрос"
+                description="Форма для обратной связи и вопросов."
+            />
+
             <div className={styles.container}>
                 <button
-                    type='button'
+                    type="button"
                     className={styles.backButton}
                     onClick={handleBack}
-                    aria-label='Назад'
+                    aria-label="Назад"
                 >
                     <ArrowLeft size={20} />
                     Назад
@@ -159,9 +168,10 @@ const AskQuestion: React.FC = () => {
                         <h1 className={styles.title}>Задать вопрос</h1>
 
                         <form onSubmit={handleSubmit} className={styles.form}>
+                            {/* honeypot */}
                             <input
-                                type='text'
-                                name='honeypot'
+                                type="text"
+                                name="honeypot"
                                 value={formData.honeypot}
                                 onChange={handleInputChange}
                                 style={{ display: "none" }}
@@ -173,11 +183,11 @@ const AskQuestion: React.FC = () => {
                                     <User size={18} /> Имя*
                                 </label>
                                 <input
-                                    type='text'
-                                    name='contactName'
+                                    type="text"
+                                    name="contactName"
                                     value={formData.contactName}
                                     onChange={handleInputChange}
-                                    placeholder='Иван Иванов'
+                                    placeholder="Иван Иванов"
                                     className={`${styles.input} ${
                                         errors.contactName ? styles.inputError : ""
                                     }`}
@@ -194,8 +204,8 @@ const AskQuestion: React.FC = () => {
                                     <Phone size={18} /> Телефон
                                 </label>
                                 <input
-                                    type='tel'
-                                    name='phone'
+                                    type="tel"
+                                    name="phone"
                                     value={formData.phone}
                                     onChange={(e) => {
                                         const formatted = formatPhoneNumber(e.target.value)
@@ -205,7 +215,7 @@ const AskQuestion: React.FC = () => {
                                         }))
                                         setErrors((prev) => ({ ...prev, phone: undefined }))
                                     }}
-                                    placeholder='+7 (999) 000-00-00'
+                                    placeholder="+7 (999) 000-00-00"
                                     className={`${styles.input} ${
                                         errors.phone ? styles.inputError : ""
                                     }`}
@@ -221,11 +231,11 @@ const AskQuestion: React.FC = () => {
                                     <Mail size={18} /> Email*
                                 </label>
                                 <input
-                                    type='email'
-                                    name='email'
+                                    type="email"
+                                    name="email"
                                     value={formData.email}
                                     onChange={handleInputChange}
-                                    placeholder='example@mail.ru'
+                                    placeholder="example@mail.ru"
                                     className={`${styles.input} ${
                                         errors.email ? styles.inputError : ""
                                     }`}
@@ -240,12 +250,12 @@ const AskQuestion: React.FC = () => {
                             <div className={styles.formGroup}>
                                 <label className={styles.label}>Тема</label>
                                 <input
-                                    type='text'
-                                    name='subject'
+                                    type="text"
+                                    name="subject"
                                     value={formData.subject}
                                     onChange={handleInputChange}
                                     className={styles.input}
-                                    placeholder='Коротко опишите вопрос'
+                                    placeholder="Коротко опишите вопрос"
                                 />
                             </div>
 
@@ -255,13 +265,13 @@ const AskQuestion: React.FC = () => {
                                     <MessageSquare size={18} /> Сообщение*
                                 </label>
                                 <textarea
-                                    name='message'
+                                    name="message"
                                     value={formData.message}
                                     onChange={handleInputChange}
                                     className={styles.textarea}
                                     rows={6}
                                     required
-                                    placeholder='Опишите ваш вопрос'
+                                    placeholder="Опишите ваш вопрос"
                                 />
                             </div>
 
@@ -272,13 +282,13 @@ const AskQuestion: React.FC = () => {
                                 </label>
                                 <div className={styles.fileUpload}>
                                     <input
-                                        type='file'
-                                        id='file'
+                                        type="file"
+                                        id="file"
                                         onChange={handleFileChange}
                                         className={styles.fileInput}
-                                        accept='.pdf,.doc,.docx,.jpg,.jpeg,.png'
+                                        accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
                                     />
-                                    <label htmlFor='file' className={styles.fileButton}>
+                                    <label htmlFor="file" className={styles.fileButton}>
                                         Выбрать файл...
                                     </label>
                                     {formData.file && (
@@ -298,12 +308,12 @@ const AskQuestion: React.FC = () => {
                                         "YOUR_RECAPTCHA_SITE_KEY"
                                     }
                                     onChange={handleCaptchaChange}
-                                    theme='light'
+                                    theme="light"
                                 />
                             </div>
 
                             <button
-                                type='submit'
+                                type="submit"
                                 className={styles.submitButton}
                                 disabled={isSubmitting || !captchaToken}
                             >

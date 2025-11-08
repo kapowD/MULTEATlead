@@ -11,6 +11,7 @@ import React, { useRef, useState } from "react"
 import ReCAPTCHA from "react-google-recaptcha"
 import { Link, useNavigate } from "react-router-dom"
 import { useCart } from "../../context/CartContext"
+import { PageMeta } from "@shared/ui/PageMeta/PageMeta" // ✅ добавили
 import styles from "./OrderForm.module.scss"
 import { toast } from "sonner"
 
@@ -70,11 +71,9 @@ const OrderForm: React.FC = () => {
 
     const handleCaptchaChange = (token: string | null) => setCaptchaToken(token)
 
-    // --- Валидация полей ---
+    // --- Валидация ---
     const validateFields = (): boolean => {
-        const newErrors: { email?: string; phone?: string; contactName?: string } =
-            {}
-
+        const newErrors: { email?: string; phone?: string; contactName?: string } = {}
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
         const phoneRegex = /^\+7\s?\(\d{3}\)\s?\d{3}-\d{2}-\d{2}$/
         const nameRegex = /^[А-Яа-яA-Za-zЁё\s'-]{2,}$/
@@ -177,8 +176,14 @@ const OrderForm: React.FC = () => {
 
     return (
         <div className={styles.page}>
+            {/* ✅ Мета-теги */}
+            <PageMeta
+                title="MULTEAT — Оформление заказа"
+                description="Страница оформления заказа в магазине MULTEAT. Заполните контактные данные и отправьте заявку."
+            />
+
             <div className={styles.container}>
-                <Link to='/cart' className={styles.backButton}>
+                <Link to="/cart" className={styles.backButton}>
                     <ArrowLeft size={20} /> Вернуться в корзину
                 </Link>
 
@@ -189,8 +194,8 @@ const OrderForm: React.FC = () => {
 
                             <form onSubmit={handleSubmit} className={styles.form}>
                                 <input
-                                    type='text'
-                                    name='honeypot'
+                                    type="text"
+                                    name="honeypot"
                                     value={formData.honeypot}
                                     onChange={handleInputChange}
                                     style={{ display: "none" }}
@@ -202,18 +207,20 @@ const OrderForm: React.FC = () => {
                                         <User size={18} /> Контактное лицо*
                                     </label>
                                     <input
-                                        type='text'
-                                        name='contactName'
+                                        type="text"
+                                        name="contactName"
                                         value={formData.contactName}
                                         onChange={handleInputChange}
-                                        placeholder='Иван Иванов'
+                                        placeholder="Иван Иванов"
                                         className={`${styles.input} ${
                                             errors.contactName ? styles.inputError : ""
                                         }`}
                                         required
                                     />
                                     {errors.contactName && (
-                                        <p className={styles.errorText}>{errors.contactName}</p>
+                                        <p className={styles.errorText}>
+                                            {errors.contactName}
+                                        </p>
                                     )}
                                 </div>
 
@@ -223,8 +230,8 @@ const OrderForm: React.FC = () => {
                                         <Phone size={18} /> Телефон*
                                     </label>
                                     <input
-                                        type='tel'
-                                        name='phone'
+                                        type="tel"
+                                        name="phone"
                                         value={formData.phone}
                                         onChange={(e) => {
                                             const formatted = formatPhoneNumber(e.target.value)
@@ -234,7 +241,7 @@ const OrderForm: React.FC = () => {
                                             }))
                                             setErrors((prev) => ({ ...prev, phone: undefined }))
                                         }}
-                                        placeholder='+7 (999) 000-00-00'
+                                        placeholder="+7 (999) 000-00-00"
                                         className={`${styles.input} ${
                                             errors.phone ? styles.inputError : ""
                                         }`}
@@ -251,11 +258,11 @@ const OrderForm: React.FC = () => {
                                         <Mail size={18} /> Email*
                                     </label>
                                     <input
-                                        type='email'
-                                        name='email'
+                                        type="email"
+                                        name="email"
                                         value={formData.email}
                                         onChange={handleInputChange}
-                                        placeholder='example@mail.ru'
+                                        placeholder="example@mail.ru"
                                         className={`${styles.input} ${
                                             errors.email ? styles.inputError : ""
                                         }`}
@@ -270,13 +277,13 @@ const OrderForm: React.FC = () => {
                                 <div className={styles.formGroup}>
                                     <label className={styles.label}>Сообщение*</label>
                                     <textarea
-                                        name='message'
+                                        name="message"
                                         value={formData.message}
                                         onChange={handleInputChange}
                                         className={styles.textarea}
                                         rows={6}
                                         required
-                                        placeholder='Введите сообщение'
+                                        placeholder="Введите сообщение"
                                     />
                                 </div>
 
@@ -287,13 +294,13 @@ const OrderForm: React.FC = () => {
                                     </label>
                                     <div className={styles.fileUpload}>
                                         <input
-                                            type='file'
-                                            id='file'
+                                            type="file"
+                                            id="file"
                                             onChange={handleFileChange}
                                             className={styles.fileInput}
-                                            accept='.pdf,.doc,.docx,.jpg,.jpeg,.png'
+                                            accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
                                         />
-                                        <label htmlFor='file' className={styles.fileButton}>
+                                        <label htmlFor="file" className={styles.fileButton}>
                                             Выбрать файл...
                                         </label>
                                         {formData.file && (
@@ -313,12 +320,12 @@ const OrderForm: React.FC = () => {
                                             "YOUR_RECAPTCHA_SITE_KEY"
                                         }
                                         onChange={handleCaptchaChange}
-                                        theme='light'
+                                        theme="light"
                                     />
                                 </div>
 
                                 <button
-                                    type='submit'
+                                    type="submit"
                                     className={styles.submitButton}
                                     disabled={isSubmitting || !captchaToken}
                                 >
@@ -339,7 +346,10 @@ const OrderForm: React.FC = () => {
                                 {state.items.map((item) => (
                                     <div key={item.product.id} className={styles.orderItem}>
                                         <div className={styles.itemImage}>
-                                            <img src={item.product.image} alt={item.product.name} />
+                                            <img
+                                                src={item.product.image}
+                                                alt={item.product.name}
+                                            />
                                         </div>
                                         <div className={styles.itemDetails}>
                                             <h4 className={styles.itemName}>

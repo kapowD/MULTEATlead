@@ -1,32 +1,41 @@
-import { ArrowLeft, Minus, Plus, RussianRuble as Ruble,ShoppingBag, Trash2 } from 'lucide-react';
-import React from 'react';
-import { Link,useNavigate } from 'react-router-dom';
-
-import { useCart } from '../../context/CartContext';
-import styles from './Cart.module.scss';
-
+import {
+    ArrowLeft,
+    Minus,
+    Plus,
+    RussianRuble as Ruble,
+    ShoppingBag,
+    Trash2,
+} from "lucide-react"
+import React from "react"
+import { Link, useNavigate } from "react-router-dom"
+import { PageMeta } from "@shared/ui/PageMeta/PageMeta" // ✅ мета-теги
+import { useCart } from "../../context/CartContext"
+import styles from "./Cart.module.scss"
 
 const Cart: React.FC = () => {
-    const { state, updateQuantity, removeItem, clearCart } = useCart();
-    const navigate = useNavigate();
+    const { state, updateQuantity, removeItem, clearCart } = useCart()
+    const navigate = useNavigate()
 
-    const formatPrice = (price: number) => {
-        return new Intl.NumberFormat('ru-RU').format(price);
-    };
+    const formatPrice = (price: number) => new Intl.NumberFormat("ru-RU").format(price)
 
     const handleQuantityChange = (productId: number, newQuantity: number) => {
         if (newQuantity >= 1) {
-            updateQuantity(productId, newQuantity);
+            updateQuantity(productId, newQuantity)
         }
-    };
+    }
 
-    const handleCheckout = () => {
-        navigate('/order');
-    };
+    const handleCheckout = () => navigate("/order")
 
+    // --- Если корзина пуста ---
     if (state.items.length === 0) {
         return (
             <div className={styles.page}>
+                {/* ✅ Мета-теги */}
+                <PageMeta
+                    title="MULTEAT — Корзина"
+                    description="Просмотр и редактирование корзины покупок."
+                />
+
                 <div className={styles.container}>
                     <Link to="/products" className={styles.backButton}>
                         <ArrowLeft size={20} />
@@ -37,7 +46,7 @@ const Cart: React.FC = () => {
                         <ShoppingBag size={80} className={styles.emptyIcon} />
                         <h2 className={styles.emptyTitle}>Корзина пуста</h2>
                         <p className={styles.emptyDescription}>
-                            {/* Добавьте товары из каталога, чтобы оформить заказ */}
+                            Добавьте товары из каталога, чтобы оформить заказ.
                         </p>
                         <Link to="/products" className={styles.shopButton}>
                             Перейти в каталог
@@ -45,11 +54,18 @@ const Cart: React.FC = () => {
                     </div>
                 </div>
             </div>
-        );
+        )
     }
 
+    // --- Если есть товары ---
     return (
         <div className={styles.page}>
+            {/* ✅ Мета-теги */}
+            <PageMeta
+                title="MULTEAT — Корзина"
+                description="Просмотр и редактирование корзины покупок."
+            />
+
             <div className={styles.container}>
                 <Link to="/products" className={styles.backButton}>
                     <ArrowLeft size={20} />
@@ -60,10 +76,7 @@ const Cart: React.FC = () => {
                     <div className={styles.cartItems}>
                         <div className={styles.cartHeader}>
                             <h1 className={styles.title}>Корзина</h1>
-                            <button 
-                                onClick={clearCart}
-                                className={styles.clearButton}
-                            >
+                            <button onClick={clearCart} className={styles.clearButton}>
                                 <Trash2 size={18} />
                                 Очистить корзину
                             </button>
@@ -73,14 +86,14 @@ const Cart: React.FC = () => {
                             {state.items.map((item) => (
                                 <div key={item.product.id} className={styles.cartItem}>
                                     <div className={styles.itemImage}>
-                                        <img 
-                                            src={item.product.image} 
+                                        <img
+                                            src={item.product.image}
                                             alt={item.product.name}
                                         />
                                     </div>
-                                    
+
                                     <div className={styles.itemInfo}>
-                                        <Link 
+                                        <Link
                                             to={`/product/${item.product.id}`}
                                             className={styles.itemName}
                                         >
@@ -94,11 +107,16 @@ const Cart: React.FC = () => {
                                             <span>{formatPrice(item.product.price)}</span>
                                         </div>
                                     </div>
-                                    
+
                                     <div className={styles.itemControls}>
                                         <div className={styles.quantityControls}>
                                             <button
-                                                onClick={() => handleQuantityChange(item.product.id, item.quantity - 1)}
+                                                onClick={() =>
+                                                    handleQuantityChange(
+                                                        item.product.id,
+                                                        item.quantity - 1
+                                                    )
+                                                }
                                                 className={styles.quantityButton}
                                                 disabled={item.quantity <= 1}
                                                 title="Уменьшить количество"
@@ -109,19 +127,28 @@ const Cart: React.FC = () => {
                                                 {item.quantity}
                                             </span>
                                             <button
-                                                onClick={() => handleQuantityChange(item.product.id, item.quantity + 1)}
+                                                onClick={() =>
+                                                    handleQuantityChange(
+                                                        item.product.id,
+                                                        item.quantity + 1
+                                                    )
+                                                }
                                                 className={styles.quantityButton}
                                                 title="Увеличить количество"
                                             >
                                                 <Plus size={16} />
                                             </button>
                                         </div>
-                                        
+
                                         <div className={styles.itemTotal}>
                                             <Ruble size={18} />
-                                            <span>{formatPrice(item.product.price * item.quantity)}</span>
+                                            <span>
+                                                {formatPrice(
+                                                    item.product.price * item.quantity
+                                                )}
+                                            </span>
                                         </div>
-                                        
+
                                         <button
                                             onClick={() => removeItem(item.product.id)}
                                             className={styles.removeButton}
@@ -138,7 +165,7 @@ const Cart: React.FC = () => {
                     <div className={styles.cartSummary}>
                         <div className={styles.summaryCard}>
                             <h3 className={styles.summaryTitle}>Итого</h3>
-                            
+
                             <div className={styles.summaryDetails}>
                                 <div className={styles.summaryRow}>
                                     <span>Товаров:</span>
@@ -152,18 +179,15 @@ const Cart: React.FC = () => {
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div className={styles.summaryActions}>
-                                <button 
+                                <button
                                     onClick={handleCheckout}
                                     className={styles.checkoutButton}
                                 >
                                     Оформить заказ
                                 </button>
-                                <Link 
-                                    to="/" 
-                                    className={styles.continueButton}
-                                >
+                                <Link to="/" className={styles.continueButton}>
                                     Продолжить покупки
                                 </Link>
                             </div>
@@ -172,7 +196,7 @@ const Cart: React.FC = () => {
                 </div>
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default Cart;
+export default Cart

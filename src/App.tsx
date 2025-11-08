@@ -1,24 +1,18 @@
 import "./styles/variables/_index.scss"
 
 import { CssBaseline, ThemeProvider } from "@mui/material"
-import { useRef } from "react"
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
+import { BrowserRouter as Router } from "react-router-dom"
 import { Toaster } from "sonner"
+import { useRef } from "react"
+
 import Footer from "./components/Footer/Footer"
 import Header from "./components/Header/Header"
 import Navigation from "./components/Navigation/Navigation"
 import { CartProvider } from "./context/CartContext"
-import Archive from "./pages/archive/Archive"
-import AskQuestion from "./pages/askQuestion/AskQuestion"
-import Cart from "./pages/Cart/Cart"
-import Home from "./pages/home/home"
-import HowToBuy from "./pages/how-to-buy/how-to-buy"
-import OrderForm from "./pages/Order/OrderForm"
-import ProductDetail from "./pages/productDetail/ProductDetail"
-import Products from "./pages/products/products"
-import VideoSection from "./pages/videos/ui/videos"
-import ScrollToTop from "./shared/ui/ScrollToTop"
+import ScrollToTop from "./shared/ui/ScrollToTop/ScrollToTop"
 import theme from "./theme"
+import { AppRouter } from "./AppRouter"
+import { HelmetProvider } from "react-helmet-async"
 
 function App() {
     const footerRef = useRef<HTMLDivElement | null>(null)
@@ -30,29 +24,20 @@ function App() {
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
-            <Router>
-                <ScrollToTop />
-                <CartProvider>
-                    <Header />
-                    <Navigation scrollToFooter={scrollToFooter} />
-                    <Routes>
-                        <Route path="/" element={<Home />} />
-                        <Route path="/products" element={<Products />} />
-                        <Route path="/how-to-buy" element={<HowToBuy />} />
-                        <Route path="/video" element={<VideoSection />} />
-                        <Route path="/archive" element={<Archive />} />
-                        <Route path="/ask" element={<AskQuestion />} />
-                        <Route path="/cart" element={<Cart />} />
-                        <Route path="/product/:id" element={<ProductDetail />} />
-                        <Route path="/order" element={<OrderForm />} />
-                    </Routes>
-                    <div ref={footerRef}>
-                        <Footer />
-                    </div>
-                    {/* ✅ тостер подключаем глобально */}
-                    <Toaster position="top-center" richColors />
-                </CartProvider>
-            </Router>
+            <HelmetProvider>
+                <Router>
+                    <ScrollToTop />
+                    <CartProvider>
+                        <Header />
+                        <Navigation scrollToFooter={scrollToFooter} />
+                        <AppRouter />
+                        <div ref={footerRef}>
+                            <Footer />
+                        </div>
+                        <Toaster position="top-center" richColors />
+                    </CartProvider>
+                </Router>
+            </HelmetProvider>
         </ThemeProvider>
     )
 }
