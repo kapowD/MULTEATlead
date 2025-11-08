@@ -74,7 +74,7 @@ const Archive: React.FC = () => {
       {/* 👇 Мета-теги */}
       <PageMeta
         title="MULTEAT — Архив"
-        description="Архив старых коллекций и материалов."
+        description="Архив c PDF"
       />
 
       {/* Фон-видео */}

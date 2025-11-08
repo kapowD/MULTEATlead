@@ -35,7 +35,7 @@ const Products: React.FC = () => {
         <div className={styles.page}>
             {/* ✅ Мета-теги */}
             <PageMeta
-                title="MULTEAT — Каталог продукции"
+                title="MULTEAT — Продукция"
                 description="Каталог продукции MULTEAT: топливные системы, фильтры, комплектующие и другие товары. Найдите нужную деталь по категории или названию."
             />
 
