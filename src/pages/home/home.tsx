@@ -26,7 +26,7 @@ const Home = () => {
             <Properties />
             <FuelSystem />
             <Archive />
-            <Footer />
+            {/* <Footer /> */}
         </>
     )
 }

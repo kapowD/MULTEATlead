@@ -1,71 +1,86 @@
-@import '../../styles/variables/_index.scss';
+@import "../../styles/variables/_index.scss";
 
 .section {
-  padding: $spacing-xl 0;
-  background-color: $background-light;
+    background-color: $background-light;
+    padding-top: 1px;
+    // padding-bottom: 0;
+    padding-left: clamp(1rem, 4vw, 3rem); // ✅ динамические боковые отступы
+    padding-right: clamp(1rem, 4vw, 3rem); // от 16px до 48px в зависимости от экрана
 }
 
 .title {
-  text-align: left;
-  // margin-bottom: $spacing-lg;
-  font-size: 4rem;
-  font-weight: $font-weight-heading;
-  font-family: $font-family-heading;
-}
+    text-align: left;
+    font-size: 4rem;
+    font-weight: $font-weight-heading;
+    font-family: $font-family-heading;
+    margin-top: 20px;
+    @media (max-width: $breakpoint-md) {
+        font-size: 2.6rem;
+    }
 
-.description {
-  font-family: $font-family-heading;
-  $font-weight-heading: bold;
-  margin-bottom: 0;
-  line-height: 1.6;
-}
-
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 $spacing-md;
-}
-
-.content {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: $spacing-xl;
-
-  @media (min-width: $breakpoint-md) {
-    grid-template-columns: 2fr 3fr;
-  }
+    @media (max-width: $breakpoint-sm) {
+        text-align: center;
+        font-size: 2rem;
+    }
 }
 
 .textContent {
-  display: flex;
-  flex-direction: column;
-  gap: $spacing-md;
-  justify-content: center;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md; // базовое расстояние между абзацами
+    justify-content: center;
+
+    @media (max-width: $breakpoint-sm) {
+        gap: $spacing-sm; // 👈 меньше отступов на мобильных
+    }
 }
 
-.image {
-  width: 100%;
-  height: auto;
-  border-radius: 8px;
-  box-shadow: $shadow-md;
+.description {
+    font-family: $font-family-heading;
+    font-weight: 500;
+    margin: 0;
+    line-height: 1.6;
+
+    &:last-child {
+        margin-bottom: $spacing-md; // немного воздуха внизу
+    }
+
+    @media (max-width: $breakpoint-sm) {
+        &:last-child {
+            margin-bottom: 0px;
+        }
+    }
+}
+
+.content {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: $spacing-xl;
+
+    @media (min-width: $breakpoint-md) {
+        grid-template-columns: 2fr 3fr;
+    }
+    @media (max-width: $breakpoint-sm) {
+        gap: $spacing-sm;
+    }
 }
 
 .videoContainer {
-  position: relative;
-  width: 100%;
-  padding-top: 56.25%; // 16:9 aspect ratio
-  margin: $spacing-lg 0;
-
-  iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
+    position: relative;
     width: 100%;
-    height: 100%;
-    border: none;
-  }
+    padding-top: 56.25%; // 16:9
+    margin: $spacing-lg 0;
 
-  @media (max-width: $breakpoint-sm) {
-    padding-top: 75%; // 4:3 aspect ratio for mobile
-  }
+    iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: none;
+    }
+
+    @media (max-width: $breakpoint-sm) {
+        padding-top: 75%; // 4:3 на мобильных
+    }
 }

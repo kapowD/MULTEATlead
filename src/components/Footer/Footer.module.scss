@@ -1,152 +1,136 @@
-@import '../../styles/variables';
+@import "../../styles/variables";
 
 .footer {
-  background: linear-gradient(145deg, #1a1a1af5, #2a2a2af5);
-  color: white;
-  padding: $spacing-md 0;
-  min-height: 280px;
-  display: flex;
-  align-items: center;
+    background: linear-gradient(145deg, #1a1a1af5, #2a2a2af5);
+    color: white;
+    padding: $spacing-md 0;
+    min-height: 280px;
+    display: flex;
+    align-items: center;
 }
 
 .grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: $spacing-md;
-  padding: 14px;
-  @media (min-width: 1024px) {
-    grid-template-columns: 1.2fr 1fr 0.8fr;
+    display: grid;
+    grid-template-columns: 1fr;
     gap: $spacing-lg;
-  }
+    padding: 14px;
 
-  @media (min-width: 768px) and (max-width: 1023px) {
-    grid-template-columns: 1fr 1fr;
-    gap: $spacing-md;
-
-    > div:last-child {
-      grid-column: 1 / -1;
-      text-align: center;
+    @media (min-width: 1024px) {
+        grid-template-columns: 1.2fr 1fr 0.8fr;
     }
-  }
+
+    @media (min-width: 768px) and (max-width: 1023px) {
+        grid-template-columns: 1fr 1fr;
+        > div:last-child {
+            grid-column: 1 / -1;
+            text-align: center;
+        }
+    }
 }
 
 .section {
-  margin-bottom: $spacing-sm;
+    margin-bottom: $spacing-md;
 
-  &:last-child {
-    margin-bottom: 0;
-  }
+    &:last-child {
+        margin-bottom: 0;
+    }
 }
 
+/* === Жёлтые заголовки с иконками === */
 .title {
-  font-size: 0.95rem;
-  font-weight: 600;
-  margin-bottom: $spacing-xs;
-  display: flex;
-  align-items: center;
-  gap: $spacing-xs;
-  color: #FFD700;
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: $spacing-xs;
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+    color: #ffd700;
+}
+
+/* === Подзаголовки и всё остальное — белое === */
+.subtitle,
+.contactItem,
+.bankDetails,
+.bankInfo {
+    color: white;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    margin-bottom: $spacing-xs; // 👈 единый вертикальный ритм
 }
 
 .subtitle {
-  font-size: 0.85rem;
-  font-weight: 600;
-  margin-bottom: $spacing-xs;
-  color: #FFD700;
+    font-weight: 600;
+    margin: 4px;
 }
 
 .contactItem {
-  display: flex;
-  align-items: flex-start;
-  margin-bottom: $spacing-xs;
-  font-size: 0.85rem;
+    display: flex;
+    align-items: flex-start;
 
-  &:last-child {
-    margin-bottom: 0;
-  }
+    &:last-child {
+        margin-bottom: 0;
+    }
 }
 
 .icon {
-  margin-right: $spacing-xs;
-  margin-top: 2px;
-  flex-shrink: 0;
-  width: 14px;
-  height: 14px;
+    margin-right: $spacing-xs;
+    flex-shrink: 0;
+    width: 14px;
+    height: 14px;
+    color: #ffd700;
 }
 
+/* Ссылки: аккуратные, белые, с подсветкой */
 .link {
-  color: #FFD700;
-  text-decoration: none;
-  transition: opacity $transition-fast;
-  display: block;
-  line-height: 1.4;
+    color: white;
+    text-decoration: none;
+    display: block;
+    line-height: 1.5;
+    margin-bottom: 2px;
+    transition: opacity $transition-fast;
 
-  &:hover {
-    opacity: 0.8;
-    text-decoration: underline;
-  }
-}
-
-.divider {
-  margin: $spacing-xs 0;
-  border-color: rgba(255, 255, 255, 0.12);
+    &:hover {
+        opacity: 0.8;
+        text-decoration: underline;
+    }
 }
 
 .bankInfo {
-  font-family: monospace;
-  font-size: 0.8rem;
-  line-height: 1.5;
-  color: #FFD700;
+    font-family: monospace;
+    font-size: 0.8rem;
+    line-height: 1.5;
 
-  div {
-    margin-bottom: 4px;
-  }
-}
+    li {
+        margin-bottom: 2px;
 
-.bankDetails {
-  font-size: 0.85rem;
-  line-height: 1.5;
-  margin-bottom: $spacing-sm;
+        &:first-child {
+            margin-bottom: 0px; // 👈 добавляем чуть воздуха сверху
+        }
+    }
 }
 
 .questionText {
-  font-size: 1.1rem;
-  margin-bottom: $spacing-xs;
-  color: white;
-  
-}
-
-.form {
-  display: flex;
-  flex-direction: column;
-  gap: $spacing-xs;
-}
-
-.textField {
-  background-color: white;
-  border-radius: 4px;
-
-  input {
-    font-size: 0.85rem;
-    padding: 6px 8px;
-  }
-
-  textarea {
-    font-size: 0.85rem;
-    padding: 6px 8px;
-    min-height: 60px;
-  }
+    font-size: 1.1rem;
+    margin-bottom: $spacing-sm;
+    color: white;
+    font-weight: 600;
+    text-align: left;
 }
 
 .button {
-  background-color: #FFD700 !important;
-  color: black !important;
-  padding: 8px 16px !important;
-  font-size: 0.9rem !important;
-  border: none !important;
-  font-size: 16 !important;
-  font-weight: 600 !important;;
-  &:hover {
-    background-color: rgba(255, 255, 255, 0.2);
-  }
+    background-color: #ffd700 !important;
+    color: black !important;
+    padding: 8px 16px !important;
+    font-size: 0.9rem !important;
+    font-weight: 600 !important;
+    border: none !important;
+    transition: background-color 0.2s ease;
+
+    transition: transform $transition-slow;
+    transform: translateY(0);
+
+    &:hover {
+        transform: translateY(-2px);
+        transition: $transition-slow;
+    }
 }

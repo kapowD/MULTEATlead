@@ -1,34 +1,34 @@
 @import "../../styles/variables/_index.scss";
 
 .archive {
-  padding: $spacing-md 0;
-  background-color: $background-second; 
-  display: flex; 
-  flex-direction: column; 
-  align-items: center; 
-  justify-content: center; 
-  text-align: center; 
+    padding: $spacing-sm 0;
+    background-color: $background-second;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
 
 .title {
-  font-size: 1.25rem;
-  font-weight: bold;
-  margin-bottom: $spacing-sm; 
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: $spacing-sm;
 }
 
 .button {
-  align-self: center;
-  font-size: 1rem; 
-  padding: 12px 24px; 
-  transition: transform $transition-slow; 
-  transform: translateY(0);
+    align-self: center;
+    font-size: 1rem;
+    padding: 12px 24px;
+    transition: transform $transition-slow;
+    transform: translateY(0);
 
-  &:hover {
-    transform: translateY(-2px);
-    transition: $transition-slow;
-  }
+    &:hover {
+        transform: translateY(-2px);
+        transition: $transition-slow;
+    }
 
-  .icon {
-    margin-right: $spacing-sm; 
-  }
+    .icon {
+        margin-right: $spacing-sm;
+    }
 }

@@ -1,35 +1,36 @@
 @import "../../styles/variables/_index.scss";
 
 .oilPurchase {
-  background-color: black;
-  margin: 0;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 $spacing-sm; 
-  text-align: center; 
-
-  &__text {
-    color: rgba(9, 255, 0, 0.644);
-    font-size: 18px;
+    background-color: black;
     margin: 0;
-    white-space: nowrap; 
-    overflow: hidden; 
-    text-overflow: ellipsis; 
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 $spacing-sm;
+    text-align: center;
 
-    @media (max-width: $breakpoint-sm) {
-      font-size: 14px; 
-      white-space: normal; 
-      word-wrap: break-word;
+    &__text {
+        color: #9acd32;
+        font-size: 14px;
+        margin: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        @media (max-width: $breakpoint-sm) {
+            font-size: 10px;
+            white-space: normal;
+            word-wrap: break-word;
+        }
     }
-  }
+    &__phone {
+       white-space: nowrap;
+    }
 
-  &__icon {
-    color: rgba(0, 0, 0, 0.644);
-    margin-left: $spacing-xs; 
-    flex-shrink: 0;
-    width: 14px;
-    height: 14px;
-  }
+    &__icon {
+        color: rgba(0, 0, 0, 0.644);
+        margin-left: $spacing-xs;
+        flex-shrink: 0;
+        width: 14px;
+        height: 14px;
+    }
 }
