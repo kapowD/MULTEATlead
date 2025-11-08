@@ -1,139 +1,167 @@
+/* === Бургер для мобилки — в виде кнопки как корзина === */
 @import "../../styles/variables/_index.scss";
 
 .navigation {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  padding: $spacing-lg 0;
-  background: linear-gradient(145deg, #1a1a1afb, #2a2a2afa);;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: linear-gradient(145deg, #1a1a1afb, #2a2a2afa);
+    padding: $spacing-md 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    .container {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center; // ✅ центрируем меню
+    }
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, auto));
-  gap: $spacing-md;
-  justify-content: center;
-  align-items: flex-end;
-
-  @media (max-width: $breakpoint-md) {
+/* === Центральный блок меню === */
+.centerBlock {
     display: flex;
-    flex-direction: column;
-    background-color: $primary-color;
-    position: absolute;
-    top: 100%;
-    left: 0;
+    justify-content: center;
+    align-items: center;
     width: 100%;
-    padding: 0 $spacing-md;
-    max-height: 0;
-    overflow: hidden;
-    opacity: 0;
-    transform: translateY(-10px);
-    transition: all 1s ease;
-  }
 
-  &.open {
-    max-height: 500px;
-    padding: $spacing-md;
-    opacity: 1;
-    transform: translateY(0);
-  }
+    @media (max-width: 1199px) {
+        padding-left: 20px;
+        justify-content: start;
+    }
 }
 
-.button {
-  width: 100%;
-  transition: transform $transition-slow;
-  font-size: 16 !important;
-  font-weight: 600 !important;;
-
-  &:hover {
-    transform: translateY(-1px);
-  }
-}
-
-.buttonIcon {
-  margin-right: $spacing-sm;
-  
-}
-
-.burger {
-  display: none;
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: $secondary-color;
-
-  @media (max-width: $breakpoint-md) {
+/* === Десктопное меню === */
+.menu {
     display: flex;
     align-items: center;
     justify-content: center;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 1001;
-    gap: $spacing-sm;
-    flex-direction: row;
-  }
+    gap: clamp(6px, 1.5vw, $spacing-md);
 }
 
-.burgerLabel {
-  margin: 0;
-  font-size: 1rem;
-  line-height: 1;
-}
-
-.cartButtonWrapper {
-  position: absolute;
-  top: 50%;
-  right: 0;
-  transform: translateY(-50%);
-  z-index: 1002;
-
-  @media (max-width: $breakpoint-md) {
-    position: static;
-    transform: none;
-    margin-top: $spacing-md;
+.button {
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    text-transform: none !important;
+    height: 38px;
+    padding: 0 14px;
+    min-width: 150px !important;
     display: flex;
-    justify-content: flex-end;
-  }
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+        transform: translateY(-1px);
+    }
+}
+
+/* === Бургер для мобилки — в виде кнопки как корзина === */
+.burger {
+    display: none !important;
+
+    @media (max-width: 1200px) {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        gap: $spacing-sm;
+        font-size: 1rem !important;
+        font-weight: 600 !important;
+        text-transform: none !important;
+        cursor: pointer;
+        color: $secondary-color !important;
+        border: 1px solid $secondary-color !important;
+        border-radius: 6px;
+        padding: 6px 16px !important;
+        height: 40px;
+        min-width: 120px;
+        transition: all 0.2s ease-in-out;
+
+        &:hover {
+            background: $primary-color !important;
+            color: $secondary-color !important;
+        }
+    }
+}
+
+/* === Корзина (правый угол, не влияет на центр) === */
+.cartButtonWrapper {
+    position: absolute;
+    right: $spacing-sm;
+    top: 50%;
+    transform: translateY(-50%);
+    text-decoration: none !important;
+    outline: none !important;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .cartButton {
-  position: relative; /* нужно для позиционирования бейджа */
-  min-width: 120px;
-  font-weight: 600;
-  background: $secondary-color;
-  color: $primary-color;
-  border: 2px solid $secondary-color;
-  transition: background 0.2s, color 0.2s;
-
-  &:hover {
-    background: $primary-color;
-    color: $secondary-color;
+    position: relative;
+    font-weight: 600;
+    background: $secondary-color;
+    color: $primary-color;
     border: 2px solid $secondary-color;
-  }
+    border-radius: 6px;
+    height: 40px;
+    padding: 6px 16px;
+    transition:
+        background 0.2s,
+        color 0.2s;
+
+    &:hover {
+        background: $primary-color;
+        color: $secondary-color;
+    }
 }
 
-/* небольшое визуальное усиление, когда есть товары */
 .cartButtonHasItems {
-  box-shadow: 0 0 0 2px rgba(255, 59, 48, 0.12);
+    box-shadow: 0 0 0 2px rgba(255, 59, 48, 0.12);
 }
 
-/* бейдж количества товаров */
 .cartBadge {
-  position: absolute;
-  top: -6px;
-  right: -6px;
-  min-width: 18px;
-  height: 18px;
-  padding: 0 5px;
-  border-radius: 999px;
-  background: #ff3b30;
-  color: #fff;
-  font-size: 11px;
-  font-weight: 700;
-  line-height: 18px;
-  text-align: center;
-  pointer-events: none; /* чтобы не мешал клику по кнопке */
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    border-radius: 999px;
+    background: #ff3b30;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 18px;
+    text-align: center;
+}
+
+/* === Прячем меню на мобилке === */
+@media (max-width: 1199px) {
+    .menu {
+        display: none;
+    }
+}
+
+.cartButtonHasItems {
+    box-shadow: 0 0 0 2px rgba(255, 59, 48, 0.12);
+}
+
+.cartBadge {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    border-radius: 999px;
+    background: #ff3b30;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 18px;
+    text-align: center;
+}
+
+/* === Прячем меню на мобилке === */
+@media (max-width: 1000px) {
+    .menu {
+        display: none;
+    }
 }

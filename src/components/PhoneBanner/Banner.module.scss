@@ -3,7 +3,7 @@
 .oilPurchase {
     background-color: black;
     margin: 0;
-    height: 30px;
+    height: 36px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -17,13 +17,13 @@
         overflow: hidden;
         text-overflow: ellipsis;
         @media (max-width: $breakpoint-sm) {
-            font-size: 10px;
+            font-size: 12px;
             white-space: normal;
             word-wrap: break-word;
         }
     }
     &__phone {
-       white-space: nowrap;
+        white-space: nowrap;
     }
 
     &__icon {

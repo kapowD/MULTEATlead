@@ -17,7 +17,7 @@
     justify-content: center;
     min-height: 60vh;
     text-align: center;
-    
+
     h1 {
         font-size: 2rem;
         color: #666;
@@ -25,7 +25,8 @@
     }
 }
 
-.backButton, .backLink {
+.backButton,
+.backLink {
     display: inline-flex;
     align-items: center;
     gap: 8px;
@@ -38,7 +39,7 @@
     background: white;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     transition: all 0.2s ease;
-    
+
     &:hover {
         transform: translateY(-2px);
         box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
@@ -93,7 +94,7 @@
     cursor: pointer;
     transition: all 0.2s ease;
     color: #333;
-    
+
     &:hover {
         background: white;
         transform: translateY(-50%) scale(1.1);
@@ -124,11 +125,11 @@
     font-size: 0.875rem;
     font-weight: 500;
     color: white;
-    
+
     &.inStock {
         background: linear-gradient(135deg, #4caf50 0%, #388e3c 100%);
     }
-    
+
     &.outOfStock {
         background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
     }
@@ -152,18 +153,18 @@
     transition: all 0.2s ease;
     background: none;
     padding: 0;
-    
+
     img {
         width: 100%;
         height: 100%;
         object-fit: cover;
     }
-    
+
     &:hover {
         border-color: #d8b000;
         transform: scale(1.05);
     }
-    
+
     &.activeThumbnail {
         border-color: #d8b000;
         box-shadow: 0 0 0 2px rgba(216, 176, 0, 0.2);
@@ -184,30 +185,30 @@
 }
 
 .priceSection {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  padding: 24px;
-  background: linear-gradient(135deg, #fff8e1 0%, #f3e5ab 100%);
-  border-radius: 16px;
-  border: 2px solid #d8b000;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 24px;
+    background: linear-gradient(135deg, #fff8e1 0%, #f3e5ab 100%);
+    border-radius: 16px;
+    border: 2px solid #d8b000;
 }
 .buyRow {
-  display: flex;
-  gap: 16px;
-  align-items: center;
-  margin-top: 4px;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    margin-top: 4px;
 
-  /* чтобы на маленьких экранах выглядело столбиком */
-  @media (max-width: 560px) {
-    flex-direction: column;
-    align-items: stretch;
+    /* чтобы на маленьких экранах выглядело столбиком */
+    @media (max-width: 560px) {
+        flex-direction: column;
+        align-items: stretch;
 
-    /* кнопка на всю ширину */
-    .addToCartButton {
-      width: 100%;
+        /* кнопка на всю ширину */
+        .addToCartButton {
+            width: 100%;
+        }
     }
-  }
 }
 .price {
     display: flex;
@@ -218,30 +219,107 @@
     color: #d8b000;
 }
 
+.warrantyWrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    border: #c3cfe2 1;
+}
+
 .warranty {
     display: flex;
     align-items: center;
     gap: 8px;
     font-size: 1rem;
     color: #666;
-    
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: color 0.2s ease;
+    align-items: flex-start;
+    background: linear-gradient(145deg, #fffef9, #fdf6d7);
+    border: 1px solid rgba(216, 176, 0, 0.3);
+    border-radius: 30px; /* вот она — “капсула” */
+    padding: 14px 20px;
+    box-shadow:
+        0 4px 10px rgba(216, 176, 0, 0.1),
+        inset 0 1px 3px rgba(255, 255, 255, 0.7);
+    transition: all 0.25s ease;
     svg {
         color: #4caf50;
+        transition: transform 0.3s ease;
+    }
+
+    &:hover {
+        color: #d8b000;
+    }
+}
+
+.warrantyDropdown {
+    background: #fffdf5;
+    border: 1px solid rgba(255, 208, 0, 0.4);
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    padding: 16px 20px;
+    margin-top: 10px;
+    font-size: 0.95rem;
+    line-height: 1.45;
+    color: #444;
+    max-width: 480px;
+    animation: fadeSlideDown 0.25s ease forwards;
+
+    h4 {
+        margin: 0 0 8px 0;
+        color: #d8b000;
+        font-weight: 600;
+    }
+
+    p {
+        margin: 0 0 10px 0;
+    }
+
+    .warning {
+        font-weight: 500;
+        color: #a33;
+        margin-top: 8px;
+
+        a {
+            color: #d8b000;
+            text-decoration: none;
+            margin-left: 4px;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+}
+
+@keyframes fadeSlideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
 
 .description {
     h3 {
         font-size: 1.5rem;
-        font-weight: 600;
+        font-weight: 500;
         margin-bottom: 16px;
         color: #1a1a1a;
     }
-    
+
     p {
         font-size: 1.125rem;
-        line-height: 1.6;
+        line-height: 1.2;
         color: #555;
+        font-weight: 400;
     }
 }
 
@@ -284,7 +362,8 @@
     margin-top: auto;
 }
 
-.addToCartButton, .buyNowButton {
+.addToCartButton,
+.buyNowButton {
     flex: 1;
     padding: 16px 24px;
     border: none;
@@ -296,32 +375,32 @@
 }
 
 .addToCartButton {
-  background: linear-gradient(135deg, #d8b000 0%, #b8940a 100%);
-  color: white;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 12px;
-  font-size: 1.0625rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
+    background: linear-gradient(135deg, #d8b000 0%, #b8940a 100%);
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.0625rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
 
-  &:hover:enabled {
-    background: linear-gradient(135deg, #b8940a 0%, #9a7c08 100%);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(216, 176, 0, 0.3);
-  }
+    &:hover:enabled {
+        background: linear-gradient(135deg, #b8940a 0%, #9a7c08 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(216, 176, 0, 0.3);
+    }
 
-  &:disabled {
-    opacity: 0.7;
-    cursor: default;
-  }
+    &:disabled {
+        opacity: 0.7;
+        cursor: default;
+    }
 }
 .buyNowButton {
     background: white;
     color: #d8b000;
     border: 2px solid #d8b000;
-    
+
     &:hover {
         background: #d8b000;
         color: white;
@@ -336,11 +415,11 @@
         gap: 40px;
         padding: 24px;
     }
-    
+
     .title {
         font-size: 2rem;
     }
-    
+
     .price {
         font-size: 1.75rem;
     }
@@ -350,28 +429,28 @@
     .page {
         padding: 20px 0;
     }
-    
+
     .container {
         padding: 0 16px;
     }
-    
+
     .productLayout {
         padding: 20px;
         gap: 24px;
     }
-    
+
     .title {
         font-size: 1.75rem;
     }
-    
+
     .actions {
         flex-direction: column;
     }
-    
+
     .thumbnails {
         gap: 8px;
     }
-    
+
     .thumbnail {
         width: 60px;
         height: 60px;
@@ -383,7 +462,7 @@
         grid-template-columns: 1fr;
         gap: 4px;
     }
-    
+
     .specValue {
         text-align: left;
         font-weight: 500;

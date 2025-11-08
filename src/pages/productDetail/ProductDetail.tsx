@@ -1,4 +1,5 @@
 import {
+    FileText,
     ArrowLeft,
     ChevronLeft,
     ChevronRight,
@@ -6,6 +7,7 @@ import {
     RussianRuble as Ruble,
     Shield,
 } from "lucide-react"
+
 import React, { useMemo, useState } from "react"
 import { Link, useParams } from "react-router-dom"
 import { QuantityControl } from "../../components/QuantityControl/QuantityControl"
@@ -18,6 +20,7 @@ const ProductDetail: React.FC = () => {
     const { id } = useParams<{ id: string }>()
     const [currentImageIndex, setCurrentImageIndex] = useState(0)
     const { state, addItem, updateQuantity } = useCart()
+    const [isWarrantyOpen, setWarrantyOpen] = useState(false)
 
     const product = products.find((p) => p.id === Number(id))
 
@@ -45,19 +48,14 @@ const ProductDetail: React.FC = () => {
         )
     }
 
-    const formatPrice = (price: number) =>
-        new Intl.NumberFormat("ru-RU").format(price)
+    const formatPrice = (price: number) => new Intl.NumberFormat("ru-RU").format(price)
 
     const nextImage = () => {
-        setCurrentImageIndex((prev) =>
-            prev === product.images.length - 1 ? 0 : prev + 1
-        )
+        setCurrentImageIndex((prev) => (prev === product.images.length - 1 ? 0 : prev + 1))
     }
 
     const prevImage = () => {
-        setCurrentImageIndex((prev) =>
-            prev === 0 ? product.images.length - 1 : prev - 1
-        )
+        setCurrentImageIndex((prev) => (prev === 0 ? product.images.length - 1 : prev - 1))
     }
 
     const increase = () => {
@@ -146,10 +144,7 @@ const ProductDetail: React.FC = () => {
                                         }`}
                                         onClick={() => setCurrentImageIndex(index)}
                                     >
-                                        <img
-                                            src={image}
-                                            alt={`${product.name} ${index + 1}`}
-                                        />
+                                        <img src={image} alt={`${product.name} ${index + 1}`} />
                                     </button>
                                 ))}
                             </div>
@@ -164,9 +159,40 @@ const ProductDetail: React.FC = () => {
                                 <Ruble size={24} />
                                 <span>{formatPrice(product.price)}</span>
                             </div>
-                            <div className={styles.warranty}>
-                                <Shield size={18} />
-                                <span>Гарантия: {product.warranty}</span>
+                            <div className={styles.warrantyWrapper}>
+                                <button
+                                    className={styles.warranty}
+                                    onClick={() => setWarrantyOpen((prev) => !prev)}
+                                    aria-expanded={isWarrantyOpen}
+                                    aria-controls="warranty-info"
+                                >
+                                    <Shield size={18} />
+                                    <span>Гарантия: {product.warranty}</span>
+                                </button>
+
+                                {isWarrantyOpen && (
+                                    <div id="warranty-info" className={styles.warrantyDropdown}>
+                                        <h4>Гарантийные обязательства</h4>
+                                        <p>
+                                            Производитель гарантирует работу прибора в течение
+                                            указанного срока со дня приобретения. Гарантийное
+                                            обслуживание осуществляется при условии правильной
+                                            установки и эксплуатации устройства, а также отсутствия
+                                            внешних повреждений.
+                                        </p>
+                                        <p className={styles.warning}>
+                                            На тарелки и дефлектор гарантия не распространяется!
+                                            Тарелку и дефлектор всегда можно заказать на сайте:
+                                            <a
+                                                href="https://www.multeat.ru"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                            >
+                                                www.multeat.ru
+                                            </a>
+                                        </p>
+                                    </div>
+                                )}
                             </div>
 
                             <div className={styles.buyRow}>
@@ -182,16 +208,14 @@ const ProductDetail: React.FC = () => {
                                     disabled={inCart}
                                     aria-pressed={inCart}
                                     aria-label={
-                                        inCart
-                                            ? "Товар уже в корзине"
-                                            : "Добавить в корзину"
+                                        inCart ? "Товар уже в корзине" : "Добавить в корзину"
                                     }
                                 >
                                     {inCart
                                         ? "В корзине"
                                         : product.inStock
-                                        ? "Добавить в корзину"
-                                        : "Заказать"}
+                                          ? "Добавить в корзину"
+                                          : "Заказать"}
                                 </button>
                             </div>
                         </div>
@@ -209,7 +233,15 @@ const ProductDetail: React.FC = () => {
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
-                                Скачать архив
+                                <span>
+                                    PDF-Инструкция MULTEAT - зачем винрар если вот такая по идее для
+                                    пдф?{" "}
+                                </span>
+                                <FileText
+                                    size={20}
+                                    // style={{ fontWeight: 200 }}
+                                    className={styles.pdfIcon}
+                                />
                             </a>
                         )}
 
