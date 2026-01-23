@@ -337,12 +337,19 @@
         color: #1a1a1a;
     }
 }
-
+.downloadButton {
+    display: inline-flex;
+    align-items: center; // 👈 ВАЖНО
+    gap: 8px; // расстояние между текстом и иконкой
+    font-size: 1rem;
+}
 .specGrid {
     display: grid;
     gap: 12px;
 }
-
+.pdfIcon {
+    display: block; // убирает baseline-артефакты
+}
 .specItem {
     display: grid;
     grid-template-columns: 1fr 1fr;

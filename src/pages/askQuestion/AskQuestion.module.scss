@@ -1,159 +1,166 @@
 .page {
-  min-height: 100vh;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-  padding: 40px 0;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    padding: 40px 0;
 }
 
 .container {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 0 20px;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 20px;
 }
 
 .backButton {
-  border: none !important;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  color: #d8b000;
-  text-decoration: none;
-  font-weight: 500;
-  margin-bottom: 32px;
-  padding: 12px 20px;
-  border-radius: 8px;
-  background: white;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transition: all 0.2s ease;
-  outline: none;
+    border: none !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #d8b000;
+    text-decoration: none;
+    font-weight: 500;
+    margin-bottom: 32px;
+    padding: 12px 20px;
+    border-radius: 8px;
+    background: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+    outline: none;
 
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-    background: #d8b000;
-    color: #fff;
-  }
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+        background: #d8b000;
+        color: #fff;
+    }
 }
 
 .card {
-  background: white;
-  border-radius: 20px;
-  padding: 32px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  border: 2px solid #d8b000;
+    background: white;
+    border-radius: 20px;
+    padding: 32px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    border: 2px solid #d8b000;
 }
 
 .title {
-  font-size: 2rem;
-  font-weight: 700;
-  color: #1a1a1a;
-  margin-bottom: 24px;
-  text-align: center;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 24px;
+    text-align: center;
 }
 
 .form {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 }
 
 .row {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
 .label {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-weight: 600;
-  color: #333;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    color: #333;
 
-  svg {
-    color: #d8b000;
-  }
+    svg {
+        color: #d8b000;
+    }
 }
 
 .input,
 .textarea {
-  padding: 14px 16px;
-  border: 2px solid #e0e0e0;
-  border-radius: 12px;
-  background: #fafafa;
-  font-size: 1rem;
-  transition: all 0.2s ease;
+    padding: 14px 16px;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    background: #fafafa;
+    font-size: 1rem;
+    transition: all 0.2s ease;
 
-  &:focus {
-    outline: none;
-    border-color: #d8b000;
-    background: #fff;
-    box-shadow: 0 0 0 3px rgba(216, 176, 0, 0.1);
-  }
+    &:focus {
+        outline: none;
+        border-color: #d8b000;
+        background: #fff;
+        box-shadow: 0 0 0 3px rgba(216, 176, 0, 0.1);
+    }
 
-  &::placeholder {
-    color: #999;
-  }
+    &::placeholder {
+        color: #999;
+    }
 }
 
 .textarea {
-  resize: vertical;
-  min-height: 120px;
-  font-family: inherit;
+    resize: vertical;
+    min-height: 120px;
+    font-family: inherit;
 }
 
 .captcha {
-  display: flex;
-  justify-content: center;
-  margin: 8px 0 4px;
+    display: flex;
+    justify-content: center;
+    margin: 8px 0 4px;
 }
 
 .submit {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 16px 24px;
-  background: linear-gradient(135deg, #d8b000 0%, #b8940a 100%);
-  color: #fff;
-  border: none;
-  border-radius: 12px;
-  font-size: 1.125rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 24px;
+    background: linear-gradient(135deg, #d8b000 0%, #b8940a 100%);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.125rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
 
-  &:hover:not(:disabled) {
-    background: linear-gradient(135deg, #b8940a 0%, #9a7c08 100%);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(216, 176, 0, 0.3);
-  }
+    &:hover:not(:disabled) {
+        background: linear-gradient(135deg, #b8940a 0%, #9a7c08 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(216, 176, 0, 0.3);
+    }
 
-  &:disabled {
-    opacity: 0.7;
-    cursor: not-allowed;
-  }
+    &:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+    }
 }
 
 .honeypot {
-  display: none;
+    display: none;
 }
 
 /* ✅ Валидация из OrderForm */
 .inputError {
-  border: 1px solid #e53935 !important;
-  background-color: #fff6f6;
+    border: 1px solid #e53935 !important;
+    background-color: #fff6f6;
 }
-
+.subtitle {
+    text-align: center;
+    margin-top: -20px;
+    margin-bottom: 32px;
+    font-size: 0.9rem;
+    color: #777;
+    line-height: 1.4;
+}
 .errorText {
-  color: #e53935;
-  font-size: 13px;
-  margin-top: 4px;
+    color: #e53935;
+    font-size: 13px;
+    margin-top: 4px;
 }
 
 @media (max-width: 768px) {
-  .card {
-    padding: 20px;
-  }
-  .title {
-    font-size: 1.5rem;
-  }
+    .card {
+        padding: 20px;
+    }
+    .title {
+        font-size: 1.5rem;
+    }
 }

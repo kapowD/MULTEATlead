@@ -1,5 +1,5 @@
 import {
-    FileText,
+    Archive,
     ArrowLeft,
     ChevronLeft,
     ChevronRight,
@@ -7,7 +7,7 @@ import {
     RussianRuble as Ruble,
     Shield,
 } from "lucide-react"
-
+import WinIcon from "../../assets/images/icons/icons8-winrar.svg"
 import React, { useMemo, useState } from "react"
 import { Link, useParams } from "react-router-dom"
 import { QuantityControl } from "../../components/QuantityControl/QuantityControl"
@@ -235,13 +235,12 @@ const ProductDetail: React.FC = () => {
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
-                                <span>
-                                    PDF-Инструкция MULTEAT - зачем винрар если вот такая по идее для
-                                    пдф?{" "}
-                                </span>
-                                <FileText
-                                    size={20}
-                                    // style={{ fontWeight: 200 }}
+                                PDF-Инструкция MULTEAT
+                                <img
+                                    src={WinIcon}
+                                    alt="WinRAR"
+                                    width={32}
+                                    height={32}
                                     className={styles.pdfIcon}
                                 />
                             </a>

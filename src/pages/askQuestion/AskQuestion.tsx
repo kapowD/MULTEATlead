@@ -1,11 +1,5 @@
-import {
-    ArrowLeft,
-    Mail,
-    MessageSquare,
-    Phone,
-    User,
-    Upload,
-} from "lucide-react"
+import { ArrowLeft, Mail, MessageSquare, Phone, User, Upload } from "lucide-react"
+import { Link } from "react-router-dom"
 import React, { useRef, useState } from "react"
 import ReCAPTCHA from "react-google-recaptcha"
 import { useNavigate } from "react-router-dom"
@@ -53,9 +47,7 @@ const AskQuestion: React.FC = () => {
     }
 
     // --- Обработчики ввода ---
-    const handleInputChange = (
-        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-    ) => {
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target
         setFormData((prev) => ({ ...prev, [name]: value }))
         setErrors((prev) => ({ ...prev, [name]: undefined }))
@@ -87,8 +79,7 @@ const AskQuestion: React.FC = () => {
             newErrors.email = "Введите корректный email (например, example@mail.ru)"
         }
         if (formData.phone && !phoneRegex.test(formData.phone.trim())) {
-            newErrors.phone =
-                "Введите корректный номер телефона (например, +7 (999) 123-45-67)"
+            newErrors.phone = "Введите корректный номер телефона (например, +7 (999) 123-45-67)"
         }
 
         setErrors(newErrors)
@@ -110,7 +101,7 @@ const AskQuestion: React.FC = () => {
         try {
             const formDataToSend = new FormData()
             formDataToSend.append("name", formData.contactName)
-            formDataToSend.append("phone", formData.phone)
+            formDataToSend.append("phone", formData.phone.trim() ? formData.phone : "Не указан")
             formDataToSend.append("email", formData.email)
             formDataToSend.append(
                 "message",
@@ -130,7 +121,7 @@ const AskQuestion: React.FC = () => {
             if (result.trim() === "ok") {
                 recaptchaRef.current?.reset()
                 setCaptchaToken(null)
-                toast.success("✅ Сообщение успешно отправлено!")
+                toast.success("Вопрос успешно отправлен!")
                 navigate("/")
             } else {
                 console.error("Server response:", result)
@@ -153,20 +144,17 @@ const AskQuestion: React.FC = () => {
             />
 
             <div className={styles.container}>
-                <button
-                    type="button"
-                    className={styles.backButton}
-                    onClick={handleBack}
-                    aria-label="Назад"
-                >
+                <Link to="/" className={styles.backButton} aria-label="Назад">
                     <ArrowLeft size={20} />
                     Назад
-                </button>
+                </Link>
 
                 <div className={styles.formSection}>
                     <div className={styles.formCard}>
                         <h1 className={styles.title}>Задать вопрос</h1>
-
+                        <p className={styles.subtitle}>
+                            Поля, отмеченные «*», обязательны для заполнения.
+                        </p>
                         <form onSubmit={handleSubmit} className={styles.form}>
                             {/* honeypot */}
                             <input
@@ -220,9 +208,7 @@ const AskQuestion: React.FC = () => {
                                         errors.phone ? styles.inputError : ""
                                     }`}
                                 />
-                                {errors.phone && (
-                                    <p className={styles.errorText}>{errors.phone}</p>
-                                )}
+                                {errors.phone && <p className={styles.errorText}>{errors.phone}</p>}
                             </div>
 
                             {/* Email */}
@@ -241,9 +227,7 @@ const AskQuestion: React.FC = () => {
                                     }`}
                                     required
                                 />
-                                {errors.email && (
-                                    <p className={styles.errorText}>{errors.email}</p>
-                                )}
+                                {errors.email && <p className={styles.errorText}>{errors.email}</p>}
                             </div>
 
                             {/* Тема */}

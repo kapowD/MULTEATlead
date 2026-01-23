@@ -1,11 +1,4 @@
-import {
-    ArrowLeft,
-    Minus,
-    Plus,
-    RussianRuble as Ruble,
-    ShoppingBag,
-    Trash2,
-} from "lucide-react"
+import { ArrowLeft, Minus, Plus, RussianRuble as Ruble, ShoppingBag, Trash2 } from "lucide-react"
 import React from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { PageMeta } from "@shared/ui/PageMeta/PageMeta" // ✅ мета-теги
@@ -86,10 +79,7 @@ const Cart: React.FC = () => {
                             {state.items.map((item) => (
                                 <div key={item.product.id} className={styles.cartItem}>
                                     <div className={styles.itemImage}>
-                                        <img
-                                            src={item.product.image}
-                                            alt={item.product.name}
-                                        />
+                                        <img src={item.product.image} alt={item.product.name} />
                                     </div>
 
                                     <div className={styles.itemInfo}>
@@ -123,9 +113,7 @@ const Cart: React.FC = () => {
                                             >
                                                 <Minus size={16} />
                                             </button>
-                                            <span className={styles.quantity}>
-                                                {item.quantity}
-                                            </span>
+                                            <span className={styles.quantity}>{item.quantity}</span>
                                             <button
                                                 onClick={() =>
                                                     handleQuantityChange(
@@ -143,9 +131,7 @@ const Cart: React.FC = () => {
                                         <div className={styles.itemTotal}>
                                             <Ruble size={18} />
                                             <span>
-                                                {formatPrice(
-                                                    item.product.price * item.quantity
-                                                )}
+                                                {formatPrice(item.product.price * item.quantity)}
                                             </span>
                                         </div>
 
@@ -181,13 +167,10 @@ const Cart: React.FC = () => {
                             </div>
 
                             <div className={styles.summaryActions}>
-                                <button
-                                    onClick={handleCheckout}
-                                    className={styles.checkoutButton}
-                                >
+                                <button onClick={handleCheckout} className={styles.checkoutButton}>
                                     Оформить заказ
                                 </button>
-                                <Link to="/" className={styles.continueButton}>
+                                <Link to="/Products" className={styles.continueButton}>
                                     Продолжить покупки
                                 </Link>
                             </div>

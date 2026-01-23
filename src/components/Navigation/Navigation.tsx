@@ -1,4 +1,4 @@
-import { Button, Container, Menu as MuiMenu, MenuItem, useMediaQuery, Fade } from "@mui/material"
+import { Button, Container, useMediaQuery } from "@mui/material"
 import {
     Flame,
     Home,
@@ -15,7 +15,7 @@ import { useCart } from "../../context/CartContext"
 import styles from "./Navigation.module.scss"
 
 const Navigation = ({ scrollToFooter }: { scrollToFooter: () => void }) => {
-    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+    const [open, setOpen] = useState(false)
     const isMobile = useMediaQuery("(max-width:1199px)")
     const { state } = useCart()
     const count = state.itemCount
@@ -28,90 +28,22 @@ const Navigation = ({ scrollToFooter }: { scrollToFooter: () => void }) => {
         { icon: <Phone />, label: "Контакты", onClick: scrollToFooter },
     ]
 
-    const handleOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
-        if (anchorEl) {
-            // если меню уже открыто — просто закрываем
-            setAnchorEl(null)
-        } else {
-            setAnchorEl(event.currentTarget)
-        }
-    }
-
-    const handleClose = () => setAnchorEl(null)
-    const open = Boolean(anchorEl)
+    const handleToggle = () => setOpen((prev) => !prev)
+    const handleClose = () => setOpen(false)
 
     return (
         <div className={styles.navigation}>
-            <Container className={styles.container}>
-                {/* === Центр: меню или бургер === */}
+            <Container maxWidth={false} className={styles.container}>
+                {/* === Центр === */}
                 <div className={styles.centerBlock}>
                     {isMobile ? (
-                        <>
-                            <Button
-                                startIcon={open ? <X /> : <Menu />} // 👈 меняем иконку
-                                onClick={handleOpen}
-                                className={styles.burger}
-                                aria-controls={open ? "nav-menu" : undefined}
-                                aria-haspopup="true"
-                                aria-expanded={open ? "true" : undefined}
-                            >
-                                {open ? "Закрыть" : "Меню"}{" "}
-                                {/* 👈 можно оставить просто иконку, если хочешь */}
-                            </Button>
-
-                            <MuiMenu
-                                id="nav-menu"
-                                anchorEl={anchorEl}
-                                open={open}
-                                onClose={handleClose}
-                                TransitionComponent={Fade}
-                                PaperProps={{
-                                    sx: {
-                                        background: "linear-gradient(145deg, #1a1a1a, #2a2a2a)",
-                                        borderRadius: 2,
-                                        boxShadow: "0 6px 12px rgba(0,0,0,0.3)",
-                                        minWidth: 360,
-                                    },
-                                }}
-                            >
-                                {buttons.map((btn) =>
-                                    btn.link ? (
-                                        <MenuItem
-                                            key={btn.label}
-                                            onClick={handleClose}
-                                            component={Link}
-                                            to={btn.link}
-                                            sx={{
-                                                display: "flex",
-                                                alignItems: "center",
-                                                gap: 1,
-                                                color: "#d8b000",
-                                            }}
-                                        >
-                                            {btn.icon}
-                                            {btn.label}
-                                        </MenuItem>
-                                    ) : (
-                                        <MenuItem
-                                            key={btn.label}
-                                            onClick={() => {
-                                                btn.onClick?.()
-                                                handleClose()
-                                            }}
-                                            sx={{
-                                                display: "flex",
-                                                alignItems: "center",
-                                                gap: 1,
-                                                color: "#d8b000",
-                                            }}
-                                        >
-                                            {btn.icon}
-                                            {btn.label}
-                                        </MenuItem>
-                                    )
-                                )}
-                            </MuiMenu>
-                        </>
+                        <Button
+                            startIcon={open ? <X /> : <Menu />}
+                            onClick={handleToggle}
+                            className={styles.navButton}
+                        >
+                            {open ? "Закрыть" : "Меню"}
+                        </Button>
                     ) : (
                         <nav className={styles.menu}>
                             {buttons.map((btn) =>
@@ -141,11 +73,11 @@ const Navigation = ({ scrollToFooter }: { scrollToFooter: () => void }) => {
                     )}
                 </div>
 
-                {/* === Справа: корзина === */}
+                {/* === Корзина === */}
                 <Link to="/cart" className={styles.cartButtonWrapper}>
                     <Button
                         variant="outlined"
-                        className={`${styles.cartButton} ${
+                        className={`${styles.navButton} ${
                             count > 0 ? styles.cartButtonHasItems : ""
                         }`}
                         startIcon={<ShoppingCart />}
@@ -155,6 +87,37 @@ const Navigation = ({ scrollToFooter }: { scrollToFooter: () => void }) => {
                     </Button>
                 </Link>
             </Container>
+
+            {/* === МОБИЛЬНАЯ ШТОРКА === */}
+            {isMobile && (
+                <div className={`${styles.mobileMenu} ${open ? styles.open : ""}`}>
+                    {buttons.map((btn) =>
+                        btn.link ? (
+                            <Link
+                                key={btn.label}
+                                to={btn.link}
+                                onClick={handleClose}
+                                className={styles.mobileItem}
+                            >
+                                {btn.icon}
+                                {btn.label}
+                            </Link>
+                        ) : (
+                            <button
+                                key={btn.label}
+                                onClick={() => {
+                                    btn.onClick?.()
+                                    handleClose()
+                                }}
+                                className={styles.mobileItem}
+                            >
+                                {btn.icon}
+                                {btn.label}
+                            </button>
+                        )
+                    )}
+                </div>
+            )}
         </div>
     )
 }

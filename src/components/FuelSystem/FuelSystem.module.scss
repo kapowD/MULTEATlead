@@ -5,7 +5,7 @@
     padding-top: $spacing-sm;
     padding-bottom: $spacing-xl;
 
-    // ✅ динамические боковые отступы для планшетов и мобилок
+    // динамические боковые отступы для планшетов и мобилок
     padding-left: clamp(1rem, 4vw, 3rem);
     padding-right: clamp(1rem, 4vw, 3rem);
 }
@@ -22,7 +22,7 @@
     }
 
     @media (max-width: $breakpoint-sm) {
-        text-align: center;
+        text-align: left;
         font-size: 2rem;
     }
 }

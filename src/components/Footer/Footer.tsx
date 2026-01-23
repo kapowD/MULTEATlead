@@ -36,7 +36,10 @@ const Footer = () => {
                                         8-913-913-76-75
                                     </a>
                                     <a href="mailto:multeat@mail.ru" className={styles.link}>
-                                        multeat@mail.ru, multeat@gmail.com
+                                        multeat@mail.ru
+                                    </a>
+                                    <a href="mailto:multeat@gmail.com" className={styles.link}>
+                                        multeat@gmail.com
                                     </a>
                                 </div>
                             </div>

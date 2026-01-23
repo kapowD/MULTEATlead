@@ -1,20 +1,14 @@
-import MulteatCubImg from '../assets/images/Multeat_cub.png';
-import MulteatCubImgBig from '../assets/images/slaid1.png';
-import { Product } from './types/product';
+import MulteatCubImg from "../assets/images/Multeat_cub.png"
+import MulteatCubImgBig from "../assets/images/slaid1.png"
+import { Product } from "./types/product"
 
 export const products: Product[] = [
     {
         id: 1,
         name: "MULTEAT CUB 40",
-        category: "heaters",
+        category: "отопители",
         image: MulteatCubImg,
-        images: [
-            MulteatCubImg,
-            MulteatCubImgBig,
-            MulteatCubImg,
-            MulteatCubImgBig,
-            MulteatCubImg
-        ],
+        images: [MulteatCubImg, MulteatCubImgBig, MulteatCubImg, MulteatCubImgBig, MulteatCubImg],
         inStock: true,
         warranty: "5 лет",
         price: 45000,
@@ -28,26 +22,20 @@ export const products: Product[] = [
 Опора регулятора тяги надежно фиксирует выхлопную трубу.
 Применение навесных и потолочных вентиляторов позволит выравнивать температуру даже при высоких потолках.`,
         specifications: {
-            "Топиво": "000кВт",
+            Топиво: "000кВт",
             "Тепловая мощность": "кВт/ч:",
             "Габаритные размеры": "222",
-            "Масса": "18 кг",
-            "Размеры": "450x350x200 мм",
-            "Рабочая температура": "-40°C до +85°C"
-        }
+            Масса: "18 кг",
+            Размеры: "450x350x200 мм",
+            "Рабочая температура": "-40°C до +85°C",
+        },
     },
-        {
+    {
         id: 2,
         name: "MULTEAT CUB 40 Вентилятор",
         category: "fans",
         image: MulteatCubImg,
-        images: [
-            MulteatCubImg,
-            MulteatCubImgBig,
-            MulteatCubImg,
-            MulteatCubImgBig,
-            MulteatCubImg
-        ],
+        images: [MulteatCubImg, MulteatCubImgBig, MulteatCubImg, MulteatCubImgBig, MulteatCubImg],
         inStock: true,
         warranty: "5 лет",
         price: 5000,
@@ -61,26 +49,20 @@ export const products: Product[] = [
 Опора регулятора тяги надежно фиксирует выхлопную трубу.
 Применение навесных и потолочных вентиляторов позволит выравнивать температуру даже при высоких потолках.`,
         specifications: {
-            "Топиво": "000кВт",
+            Топиво: "000кВт",
             "Тепловая мощность": "кВт/ч:",
             "Габаритные размеры": "222",
-            "Масса": "18 кг",
-            "Размеры": "450x350x200 мм",
-            "Рабочая температура": "-40°C до +85°C"
-        }
+            Масса: "18 кг",
+            Размеры: "450x350x200 мм",
+            "Рабочая температура": "-40°C до +85°C",
+        },
     },
-        {
+    {
         id: 3,
         name: "MULTEAT CUB 40 теплообменник",
         category: "heat-exchangers",
         image: MulteatCubImg,
-        images: [
-            MulteatCubImg,
-            MulteatCubImg,
-            MulteatCubImg,
-            MulteatCubImg,
-            MulteatCubImg
-        ],
+        images: [MulteatCubImg, MulteatCubImg, MulteatCubImg, MulteatCubImg, MulteatCubImg],
         inStock: true,
         warranty: "5 лет",
         price: 5222000,
@@ -94,26 +76,20 @@ export const products: Product[] = [
 Опора регулятора тяги надежно фиксирует выхлопную трубу.
 Применение навесных и потолочных вентиляторов позволит выравнивать температуру даже при высоких потолках.`,
         specifications: {
-            "Топиво": "000кВт",
+            Топиво: "000кВт",
             "Тепловая мощность": "кВт/ч:",
             "Габаритные размеры": "222",
-            "Масса": "18 кг",
-            "Размеры": "450x350x200 мм",
-            "Рабочая температура": "-40°C до +85°C"
-        }
+            Масса: "18 кг",
+            Размеры: "450x350x200 мм",
+            "Рабочая температура": "-40°C до +85°C",
+        },
     },
-        {
+    {
         id: 4,
         name: "MULTEAT CUB 40 деталь",
         category: "heat-exchangers",
         image: MulteatCubImg,
-        images: [
-            MulteatCubImg,
-            MulteatCubImg,
-            MulteatCubImg,
-            MulteatCubImg,
-            MulteatCubImg
-        ],
+        images: [MulteatCubImg, MulteatCubImg, MulteatCubImg, MulteatCubImg, MulteatCubImg],
         inStock: false,
         warranty: "5 лет",
         price: 0,
@@ -126,13 +102,13 @@ export const products: Product[] = [
 Опора регулятора тяги надежно фиксирует выхлопную трубу.
 Применение навесных и потолочных вентиляторов позволит выравнивать температуру даже при высоких потолках.`,
         specifications: {
-            "Топиво": "000кВт",
+            Топиво: "000кВт",
             "Тепловая мощность": "кВт/ч:",
             "Габаритные размеры": "222",
-            "Масса": "18 кг",
-            "Размеры": "450x350x200 мм",
-            "Рабочая температура": "-40°C до +85°C"
-        }
+            Масса: "18 кг",
+            Размеры: "450x350x200 мм",
+            "Рабочая температура": "-40°C до +85°C",
+        },
     },
     // {
     //     id: 2,
@@ -296,12 +272,28 @@ export const products: Product[] = [
     //         "Защита": "IP67"
     //     }
     // }
-];
+]
 
 export const categories = [
-    { id: 'all', name: 'Все товары', count: products.length },
-    { id: 'heaters', name: 'Отопители', count: products.filter(p => p.category === 'heaters').length },
-    { id: 'fans', name: 'Вентиляторы', count: products.filter(p => p.category === 'fans').length },
-    { id: 'heat-exchangers', name: 'Теплообменники', count: products.filter(p => p.category === 'heat-exchangers').length },
-    { id: 'parts-', name: 'Запчасти', count: products.filter(p => p.category === 'parts').length }
-];
+    { id: "all", name: "Все товары", count: products.length },
+    {
+        id: "heaters",
+        name: "Отопители",
+        count: products.filter((p) => p.category === "отопители").length,
+    },
+    {
+        id: "fans",
+        name: "Вентиляторы",
+        count: products.filter((p) => p.category === "fans").length,
+    },
+    {
+        id: "heat-exchangers",
+        name: "Теплообменники",
+        count: products.filter((p) => p.category === "heat-exchangers").length,
+    },
+    {
+        id: "parts-",
+        name: "Запчасти",
+        count: products.filter((p) => p.category === "parts").length,
+    },
+]

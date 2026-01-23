@@ -1,37 +1,38 @@
 @import "../../styles/variables";
 
 .header {
-  background-color: $background-light;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  max-height: 80px;
-  margin: 0;
-  display: flex;
-  // align-items: center;
-  justify-content: center;
+    background-color: $background-light;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    max-height: 80px;
+    margin: 0;
+    display: flex;
+    // align-items: center;
+    justify-content: center;
+    padding: 12px;
 }
 
 .container {
-  padding: $spacing-md 0;
+    padding: $spacing-md 0;
 }
 
 .toolbar {
-  display: flex;
-  align-items: center;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
+    display: flex;
+    align-items: center;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
 }
 
 .logo {
-  height: 60px;
-  // margin-right: $spacing-md;
-  &:hover {
-    cursor: pointer;
-  }
+    height: 60px;
+    // margin-right: $spacing-md;
+    &:hover {
+        cursor: pointer;
+    }
 }
 
 .title {
-  flex-grow: 1;
-  font-size: 1.25rem;
-  font-weight: 500;
+    flex-grow: 1;
+    font-size: 1.25rem;
+    font-weight: 500;
 }

@@ -1,12 +1,4 @@
-import {
-    ArrowLeft,
-    Mail,
-    Package,
-    Phone,
-    RussianRuble as Ruble,
-    Upload,
-    User,
-} from "lucide-react"
+import { ArrowLeft, Mail, Package, Phone, RussianRuble as Ruble, Upload, User } from "lucide-react"
 import React, { useRef, useState } from "react"
 import ReCAPTCHA from "react-google-recaptcha"
 import { Link, useNavigate } from "react-router-dom"
@@ -37,8 +29,7 @@ const OrderForm: React.FC = () => {
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [captchaToken, setCaptchaToken] = useState<string | null>(null)
 
-    const formatPrice = (price: number) =>
-        new Intl.NumberFormat("ru-RU").format(price)
+    const formatPrice = (price: number) => new Intl.NumberFormat("ru-RU").format(price)
 
     // --- Форматирование телефона ---
     const formatPhoneNumber = (value: string): string => {
@@ -56,9 +47,7 @@ const OrderForm: React.FC = () => {
         return formatted
     }
 
-    const handleInputChange = (
-        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-    ) => {
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target
         setFormData((prev) => ({ ...prev, [name]: value }))
         setErrors((prev) => ({ ...prev, [name]: undefined }))
@@ -85,8 +74,7 @@ const OrderForm: React.FC = () => {
             newErrors.email = "Введите корректный email (например, example@mail.ru)"
         }
         if (!phoneRegex.test(formData.phone.trim())) {
-            newErrors.phone =
-                "Введите корректный номер телефона (например, +7 (999) 123-45-67)"
+            newErrors.phone = "Введите корректный номер телефона (например, +7 (999) 123-45-67)"
         }
 
         setErrors(newErrors)
@@ -106,9 +94,7 @@ const OrderForm: React.FC = () => {
             message += `${index + 1}. ${item.product.name}\n`
             message += `   Количество: ${item.quantity} шт.\n`
             message += `   Цена за единицу: ${formatPrice(item.product.price)} ₽\n`
-            message += `   Сумма: ${formatPrice(
-                item.product.price * item.quantity
-            )} ₽\n\n`
+            message += `   Сумма: ${formatPrice(item.product.price * item.quantity)} ₽\n\n`
         })
 
         message += `ИТОГО:\nТоваров: ${state.itemCount} шт.\nОбщая сумма: ${formatPrice(
@@ -155,7 +141,7 @@ const OrderForm: React.FC = () => {
                 clearCart()
                 recaptchaRef.current?.reset()
                 setCaptchaToken(null)
-                toast.success("✅ Заказ успешно отправлен!")
+                toast.success(" Заявка успешно отправлена!")
                 navigate("/")
             } else {
                 console.error("Server response:", result)
@@ -176,7 +162,7 @@ const OrderForm: React.FC = () => {
 
     return (
         <div className={styles.page}>
-            {/* ✅ Мета-теги */}
+            {/* Мета-теги */}
             <PageMeta
                 title="MULTEAT — Оформление заказа"
                 description="Страница оформления заказа в магазине MULTEAT. Заполните контактные данные и отправьте заявку."
@@ -191,6 +177,9 @@ const OrderForm: React.FC = () => {
                     <div className={styles.formSection}>
                         <div className={styles.formCard}>
                             <h1 className={styles.title}>Заявка</h1>
+                            <p className={styles.subtitle}>
+                                Поля, отмеченные «*», обязательны для заполнения.
+                            </p>
 
                             <form onSubmit={handleSubmit} className={styles.form}>
                                 <input
@@ -218,9 +207,7 @@ const OrderForm: React.FC = () => {
                                         required
                                     />
                                     {errors.contactName && (
-                                        <p className={styles.errorText}>
-                                            {errors.contactName}
-                                        </p>
+                                        <p className={styles.errorText}>{errors.contactName}</p>
                                     )}
                                 </div>
 
@@ -283,7 +270,7 @@ const OrderForm: React.FC = () => {
                                         className={styles.textarea}
                                         rows={6}
                                         required
-                                        placeholder="Введите сообщение"
+                                        placeholder="- Напишите здесь адрес доставки, желаемую транспортную компанию и прочую информацию, которая относится к заявке. О том, какая транспортная компания используется стандартно для доставки указано в разделе «Как купить»"
                                     />
                                 </div>
 
@@ -346,24 +333,17 @@ const OrderForm: React.FC = () => {
                                 {state.items.map((item) => (
                                     <div key={item.product.id} className={styles.orderItem}>
                                         <div className={styles.itemImage}>
-                                            <img
-                                                src={item.product.image}
-                                                alt={item.product.name}
-                                            />
+                                            <img src={item.product.image} alt={item.product.name} />
                                         </div>
                                         <div className={styles.itemDetails}>
-                                            <h4 className={styles.itemName}>
-                                                {item.product.name}
-                                            </h4>
+                                            <h4 className={styles.itemName}>{item.product.name}</h4>
                                             <div className={styles.itemQuantity}>
                                                 {item.quantity} шт. ×{" "}
                                                 {formatPrice(item.product.price)} ₽
                                             </div>
                                             <div className={styles.itemTotal}>
                                                 <Ruble size={16} />
-                                                {formatPrice(
-                                                    item.product.price * item.quantity
-                                                )}
+                                                {formatPrice(item.product.price * item.quantity)}
                                             </div>
                                         </div>
                                     </div>
