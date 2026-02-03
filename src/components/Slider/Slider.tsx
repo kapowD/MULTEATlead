@@ -1,6 +1,5 @@
-import { Box, Container,IconButton, Typography } from "@mui/material";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useEffect,useState } from "react";
+import { Box, Container, IconButton, Typography } from "@mui/material";
+import { useEffect, useMemo, useState } from "react";
 
 import sliderImageTwo from "../../assets/images/as2_1-800x800-product_popup.jpg";
 import sliderImageThree from "../../assets/images/mini1.jpg";
@@ -34,6 +33,15 @@ const slides: Slide[] = [
 
 const Slider = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [loadedSlides, setLoadedSlides] = useState<number[]>([0]);
+
+  const prevIndex = (currentSlide - 1 + slides.length) % slides.length;
+  const nextIndex = (currentSlide + 1) % slides.length;
+
+  const visibleSlides = useMemo(
+    () => new Set([currentSlide, prevIndex, nextIndex]),
+    [currentSlide, prevIndex, nextIndex]
+  );
 
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % slides.length);
@@ -48,6 +56,16 @@ const Slider = () => {
     return () => clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+    setLoadedSlides((prev) => {
+      const next = new Set(prev);
+      next.add(currentSlide);
+      next.add(prevIndex);
+      next.add(nextIndex);
+      return Array.from(next);
+    });
+  }, [currentSlide, prevIndex, nextIndex]);
+
   return (
     <Box className={styles.slider}>
       {slides.map((slide, index) => (
@@ -55,8 +73,11 @@ const Slider = () => {
           key={index}
           className={styles.slide}
           sx={{
-            transform: `translateX(${(index - currentSlide) * 100}%)`,
-            backgroundImage: `url(${slide.image})`,
+            transform: `translate3d(${(index - currentSlide) * 100}%, 0, 0)`,
+            backgroundImage: loadedSlides.includes(index)
+              ? `url(${slide.image})`
+              : "none",
+            opacity: visibleSlides.has(index) ? 1 : 0,
           }}
         >
           <Container className={styles.slideContent}>

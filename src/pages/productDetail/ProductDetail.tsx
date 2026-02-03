@@ -7,13 +7,13 @@ import {
     RussianRuble as Ruble,
     Shield,
 } from "lucide-react"
-import WinIcon from "../../assets/images/icons/icons8-winrar.svg"
+import WinIcon from "../../assets/images/icons/rar.png"
 import React, { useMemo, useState } from "react"
 import { Link, useParams } from "react-router-dom"
 import { QuantityControl } from "../../components/QuantityControl/QuantityControl"
 import { useCart } from "../../context/CartContext"
 import { products } from "../../data/products"
-import { PageMeta } from "@shared/ui/PageMeta/PageMeta" // ✅ добавлено
+import { PageMeta } from "@shared/ui/PageMeta/PageMeta"
 import styles from "./ProductDetail.module.scss"
 
 const ProductDetail: React.FC = () => {
@@ -234,13 +234,14 @@ const ProductDetail: React.FC = () => {
                                 download
                                 target="_blank"
                                 rel="noopener noreferrer"
+                                title="Скачать инструкцию в формате PDF (архив)"
                             >
                                 PDF-Инструкция MULTEAT
                                 <img
                                     src={WinIcon}
                                     alt="WinRAR"
-                                    width={32}
-                                    height={32}
+                                    width={20}
+                                    height={20}
                                     className={styles.pdfIcon}
                                 />
                             </a>

@@ -1,4 +1,4 @@
-import { Phone } from "lucide-react"
+// import { Phone } from "lucide-react"
 
 import styles from "./Banner.module.scss"
 
@@ -9,7 +9,7 @@ const Banner = () => {
                 Покупаем отработанное масло в Новосибирске{" "}
                 <span className={styles.oilPurchase__phone}>8-913-928-79-84</span>
             </p>
-            <Phone size={14} className={styles.oilPurchase__icon} fill="#9acd32" />
+            {/* <Phone size={14} className={styles.oilPurchase__icon} fill="#9acd32" /> */}
         </div>
     )
 }

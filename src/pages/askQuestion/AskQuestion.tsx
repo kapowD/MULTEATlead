@@ -29,6 +29,15 @@ const AskQuestion: React.FC = () => {
 
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [captchaToken, setCaptchaToken] = useState<string | null>(null)
+    type FieldName = "contactName" | "phone" | "email"
+
+    const scrollToFieldWithError = (fieldName: FieldName) => {
+        const field = document.querySelector<HTMLElement>(`[name="${fieldName}"]`)
+        if (!field) return
+
+        field.scrollIntoView({ behavior: "smooth", block: "center" })
+        field.focus({ preventScroll: true })
+    }
 
     // --- Форматирование телефона ---
     const formatPhoneNumber = (value: string): string => {
@@ -83,6 +92,11 @@ const AskQuestion: React.FC = () => {
         }
 
         setErrors(newErrors)
+        const firstErrorField = (["contactName", "phone", "email"] as FieldName[]).find(
+            (field) => Boolean(newErrors[field])
+        )
+        if (firstErrorField) scrollToFieldWithError(firstErrorField)
+
         return Object.keys(newErrors).length === 0
     }
 

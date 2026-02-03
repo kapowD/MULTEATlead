@@ -28,6 +28,15 @@ const OrderForm: React.FC = () => {
     }>({})
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [captchaToken, setCaptchaToken] = useState<string | null>(null)
+    type FieldName = "contactName" | "phone" | "email"
+
+    const scrollToFieldWithError = (fieldName: FieldName) => {
+        const field = document.querySelector<HTMLElement>(`[name="${fieldName}"]`)
+        if (!field) return
+
+        field.scrollIntoView({ behavior: "smooth", block: "center" })
+        field.focus({ preventScroll: true })
+    }
 
     const formatPrice = (price: number) => new Intl.NumberFormat("ru-RU").format(price)
 
@@ -78,6 +87,11 @@ const OrderForm: React.FC = () => {
         }
 
         setErrors(newErrors)
+        const firstErrorField = (["contactName", "phone", "email"] as FieldName[]).find(
+            (field) => Boolean(newErrors[field])
+        )
+        if (firstErrorField) scrollToFieldWithError(firstErrorField)
+
         return Object.keys(newErrors).length === 0
     }
 
