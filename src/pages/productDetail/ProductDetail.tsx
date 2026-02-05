@@ -198,12 +198,14 @@ const ProductDetail: React.FC = () => {
                             </div>
 
                             <div className={styles.buyRow}>
-                                <QuantityControl
-                                    quantity={displayQty}
-                                    onIncrease={increase}
-                                    onDecrease={decrease}
-                                    min={1}
-                                />
+                                <div className={styles.quantityWrap}>
+                                    <QuantityControl
+                                        quantity={displayQty}
+                                        onIncrease={increase}
+                                        onDecrease={decrease}
+                                        min={1}
+                                    />
+                                </div>
                                 <button
                                     className={styles.addToCartButton}
                                     onClick={handleAddToCart}
