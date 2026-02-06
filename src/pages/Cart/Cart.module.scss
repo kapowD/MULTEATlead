@@ -141,7 +141,7 @@
 
 .cartItem {
     display: grid;
-    grid-template-columns: 120px 1fr auto;
+    grid-template-columns: 120px minmax(0, 1fr) auto;
     gap: 20px;
     padding: 20px;
     border: 1px solid #e0e0e0;
@@ -172,6 +172,7 @@
     display: flex;
     flex-direction: column;
     gap: 8px;
+    min-width: 0;
 }
 
 .itemName {
@@ -180,6 +181,7 @@
     color: #1a1a1a;
     text-decoration: none;
     line-height: 1.3;
+    overflow-wrap: anywhere;
     
     &:hover {
         color: #d8b000;
@@ -191,6 +193,7 @@
     font-size: 0.875rem;
     line-height: 1.4;
     margin-bottom: 8px;
+    overflow-wrap: anywhere;
 }
 
 .itemPrice {
@@ -207,6 +210,7 @@
     flex-direction: column;
     align-items: flex-end;
     gap: 16px;
+    min-width: 0;
 }
 
 .quantityControls {
@@ -401,7 +405,7 @@
     }
     
     .cartItem {
-        grid-template-columns: 80px 1fr;
+        grid-template-columns: 80px minmax(0, 1fr);
         grid-template-rows: auto auto;
         gap: 16px;
     }
@@ -436,5 +440,46 @@
     
     .clearButton {
         align-self: center;
+    }
+
+    .cartItem {
+        grid-template-columns: 64px minmax(0, 1fr);
+        padding: 16px;
+    }
+
+    .itemImage {
+        width: 64px;
+        height: 64px;
+    }
+
+    .itemControls {
+        grid-column: 1 / -1;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        grid-template-areas:
+            "qty remove"
+            "total total";
+        align-items: center;
+        gap: 8px;
+        width: 100%;
+    }
+
+    .quantityControls {
+        grid-area: qty;
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .itemTotal {
+        grid-area: total;
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .removeButton {
+        grid-area: remove;
+        width: 36px;
+        height: 36px;
+        border-width: 1.5px;
     }
 }

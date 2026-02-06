@@ -101,7 +101,7 @@
     font-size: 1rem;
     transition: all 0.2s ease;
     background: #fafafa;
-
+    font-size: 12px;
     &:focus {
         outline: none;
         border-color: #d8b000;
@@ -111,6 +111,10 @@
 
     &::placeholder {
         color: #999;
+    }
+    @media (max-width: 460px) {
+        font-size: 12px;
+        padding: 8px;
     }
 }
 
