@@ -1,7 +1,7 @@
 export type Product = {
     id: number
     name: string
-    category: "all" | "отопители" | "fans" | "Теплообменники" | "parts"
+    category: "all" | "отопители" | "Вентиляторы" | "Теплообменники" | "parts"
     image: string
     images: string[]
     imageDescriptions?: string[]

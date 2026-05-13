@@ -8,7 +8,7 @@ import { PageMeta } from "@shared/ui/PageMeta/PageMeta" // ✅ добавлен�
 import styles from "./products.module.scss"
 
 const categoryDetails = {
-    fans: {
+    Вентиляторы: {
         title: "Вентиляторы",
         intro: "Вентиляторы предназначены для быстрого и равномерного прогрева воздуха в помещении.",
         items: [

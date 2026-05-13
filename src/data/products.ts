@@ -11,6 +11,13 @@ import Mjtt20Shtucer from "../assets/images/teplo/MZhTT-20/Multeat_teplo_shtucer
 import Mjtt20Upakovka from "../assets/images/teplo/MZhTT-20/Multeat_teplo_upakovka.jpg"
 import Mjtt20Vbitu from "../assets/images/teplo/MZhTT-20/Multeat_teplo_vbitu.jpg"
 import Mjtt20Thumb from "../assets/images/teplo/MZhTT-20/tn_Multeat_teplo20.png"
+import Vmu230Passport from "../assets/documents/VMU 230-16/PassportVMU230.pdf"
+import Vmu230Main from "../assets/images/fans/VMU 230-16/Multeat_VMU230-16.png"
+import Vmu230Photo1 from "../assets/images/fans/VMU 230-16/Multeat_VMU230-16_1.jpg"
+import Vmu230Photo2 from "../assets/images/fans/VMU 230-16/Multeat_VMU230-16_2.jpg"
+import Vmu230Photo3 from "../assets/images/fans/VMU 230-16/Multeat_VMU230-16_3.jpg"
+import Vmu230Photo4 from "../assets/images/fans/VMU 230-16/Multeat_VMU230-16_4.jpg"
+import Vmu230Photo5 from "../assets/images/fans/VMU 230-16/Multeat_VMU230-16_5.jpg"
 import { Product } from "./types/product"
 
 export const products: Product[] = [
@@ -23,7 +30,7 @@ export const products: Product[] = [
         inStock: true,
         warranty: "5 лет",
         price: 45000,
-        description: "Мощный отопитель для коммерческого транспорта с высокой эффективностью",
+        description: "Придумай дескрипошон Боря",
         archiveUrl: "/archive",
         fullDescription: `Отопитель MULTEAT CUB 40 работает на любом отработанном масле, обеспечивая его бездымное сгорание. Он не потребляет электроэнергии и предназначен для отопления нежилых, взрывобезопасных помещений объёмом до 800 м3, таких как CТО, гаражи, склады, теплицы, бытовки, мобильные постройки.
 Устройство оснащено системой аварийной остановки при нештатных ситуациях.
@@ -43,29 +50,33 @@ export const products: Product[] = [
     },
     {
         id: 2,
-        name: "MULTEAT CUB 40 Вентилятор",
-        category: "fans",
-        image: MulteatCubImg,
-        images: [MulteatCubImg, MulteatCubImgBig, MulteatCubImg, MulteatCubImgBig, MulteatCubImg],
+        name: "MULTEAT ВМУ 230-16",
+        category: "Вентиляторы",
+        image: Vmu230Main,
+        images: [Vmu230Main, Vmu230Photo1, Vmu230Photo2, Vmu230Photo3, Vmu230Photo4, Vmu230Photo5],
+        imageDescriptions: [
+            "Общий вид навесного вентилятора MULTEAT ВМУ 230-16.",
+            "Вентилятор ВМУ 230-16, установленный на отопителе.",
+            "Пример установки двух вентиляторов на отопителе.",
+            "Вентилятор на отопителе, боковой вид.",
+            "Задняя часть вентилятора и электродвигатель.",
+            "Вентилятор ВМУ 230-16 в работе.",
+        ],
         inStock: true,
         warranty: "5 лет",
-        price: 5000,
-        description: "Мощный отопитель для коммерческого транспорта с высокой эффективностью",
-        archiveUrl: "/archive",
-        fullDescription: `Отопитель MULTEAT CUB 40 работает на любом отработанном масле, обеспечивая его бездымное сгорание. Он не потребляет электроэнергии и предназначен для отопления нежилых, взрывобезопасных помещений объёмом до 800 м3, таких как CТО, гаражи, склады, теплицы, бытовки, мобильные постройки.
-Устройство оснащено системой аварийной остановки при нештатных ситуациях.
-Отопитель быстро и эффективно создает комфортную атмосферу, легко устанавливается и обслуживается.
-Плавная регулировка мощности во всём диапазоне.
-Верхняя подвеска тарелки упрощает обслуживание и повышает стабильность работы.
-Опора регулятора тяги надежно фиксирует выхлопную трубу.
-Применение навесных и потолочных вентиляторов позволит выравнивать температуру даже при высоких потолках.`,
+        price: 6480,
+        description: "Навесной вентилятор для всех моделей отопителей MULTEAT",
+        archiveUrl: Vmu230Passport,
+        fullDescription: `Навесной вентилятор на все модели отопителей MULTEAT.
+
+Вентилятор предназначен для быстрого и равномерного прогрева воздуха в помещении. Он располагается непосредственно на отопителе и направленно подаёт разогретый воздух в помещение.`,
         specifications: {
-            Топиво: "000кВт",
-            "Тепловая мощность": "кВт/ч:",
-            "Габаритные размеры": "222",
-            Масса: "18 кг",
-            Размеры: "450x350x200 мм",
-            "Рабочая температура": "-40°C до +85°C",
+            Назначение: "Навесной вентилятор на все модели отопителей MULTEAT",
+            "Напряжение питания": "220/50 Гц",
+            "Мощность двигателя": "16 Вт",
+            Производительность: "450 м³/ч",
+            "Габаритные размеры": "430x265x180 мм",
+            Масса: "3,5 кг",
         },
     },
     {
@@ -100,7 +111,8 @@ export const products: Product[] = [
         inStock: false,
         warranty: "2 года",
         price: 0,
-        description: "Жаротрубный теплообменник для передачи тепла от выхлопных газов к теплоносителю",
+        description:
+            "Жаротрубный теплообменник для передачи тепла от выхлопных газов к теплоносителю",
         archiveUrl: Mjtt20Manual,
         fullDescription: `Теплообменник МЖТТ-20 адаптирован к использованию с отопителями MULTEAT TEX 20, MULTEAT NEXT 20, MULTEAT NEXT 20P. Также может быть использован и с другими устройствами.
 
@@ -156,7 +168,7 @@ export const products: Product[] = [
     // {
     //     id: 2,
     //     name: "Вентилятор ВК-12",
-    //     category: "fans",
+    //     category: "Вентиляторы",
     //     image: "https://images.pexels.com/photos/5691651/pexels-photo-5691651.jpeg?auto=compress&cs=tinysrgb&w=400",
     //     images: [
     //         "https://images.pexels.com/photos/5691651/pexels-photo-5691651.jpeg?auto=compress&cs=tinysrgb&w=800",
@@ -250,7 +262,7 @@ export const products: Product[] = [
     // {
     //     id: 6,
     //     name: "Вентилятор ВК-24 Профи",
-    //     category: "fans",
+    //     category: "Вентиляторы",
     //     image: "https://images.pexels.com/photos/5691652/pexels-photo-5691652.jpeg?auto=compress&cs=tinysrgb&w=400",
     //     images: [
     //         "https://images.pexels.com/photos/5691652/pexels-photo-5691652.jpeg?auto=compress&cs=tinysrgb&w=800",
@@ -325,9 +337,9 @@ export const categories = [
         count: products.filter((p) => p.category === "отопители").length,
     },
     {
-        id: "fans",
+        id: "Вентиляторы",
         name: "Вентиляторы",
-        count: products.filter((p) => p.category === "fans").length,
+        count: products.filter((p) => p.category === "Вентиляторы").length,
     },
     {
         id: "Теплообменники",
