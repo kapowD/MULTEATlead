@@ -1,5 +1,16 @@
 import MulteatCubImg from "../assets/images/Multeat_cub.png"
 import MulteatCubImgBig from "../assets/images/slaid1.png"
+import Mjtt20Manual from "../assets/documents/MZhTT-20/manual_MJTT (1).pdf"
+import Mjtt20Boiler from "../assets/images/teplo/MZhTT-20/Multeat_teplo20_boiler.jpg"
+import Mjtt20LukRevizii from "../assets/images/teplo/MZhTT-20/Multeat_teplo20_lukrevizii.jpg"
+import Mjtt20Vrazbore from "../assets/images/teplo/MZhTT-20/Multeat_teplo20_vrazbore.jpg"
+import Mjtt20Kronshtein from "../assets/images/teplo/MZhTT-20/Multeat_teplo_kronshteinkrepleniya.jpg"
+import Mjtt20KronshteinShiber from "../assets/images/teplo/MZhTT-20/Multeat_teplo_kronshteinkrepleniyasshibernoizaslonkoi.jpg"
+import Mjtt20RabotaShiber from "../assets/images/teplo/MZhTT-20/Multeat_teplo_rabotashibernayazaslonka.jpg"
+import Mjtt20Shtucer from "../assets/images/teplo/MZhTT-20/Multeat_teplo_shtucer.jpg"
+import Mjtt20Upakovka from "../assets/images/teplo/MZhTT-20/Multeat_teplo_upakovka.jpg"
+import Mjtt20Vbitu from "../assets/images/teplo/MZhTT-20/Multeat_teplo_vbitu.jpg"
+import Mjtt20Thumb from "../assets/images/teplo/MZhTT-20/tn_Multeat_teplo20.png"
 import { Product } from "./types/product"
 
 export const products: Product[] = [
@@ -59,35 +70,66 @@ export const products: Product[] = [
     },
     {
         id: 3,
-        name: "MULTEAT CUB 40 теплообменник",
-        category: "heat-exchangers",
-        image: MulteatCubImg,
-        images: [MulteatCubImg, MulteatCubImg, MulteatCubImg, MulteatCubImg, MulteatCubImg],
-        inStock: true,
-        warranty: "5 лет",
-        price: 5222000,
-        description: "Мощный отопитель для коммерческого транспорта с высокой эффективностью",
-        archiveUrl: "/archive",
-        fullDescription: `Отопитель MULTEAT CUB 40 работает на любом отработанном масле, обеспечивая его бездымное сгорание. Он не потребляет электроэнергии и предназначен для отопления нежилых, взрывобезопасных помещений объёмом до 800 м3, таких как CТО, гаражи, склады, теплицы, бытовки, мобильные постройки.
-Устройство оснащено системой аварийной остановки при нештатных ситуациях.
-Отопитель быстро и эффективно создает комфортную атмосферу, легко устанавливается и обслуживается.
-Плавная регулировка мощности во всём диапазоне.
-Верхняя подвеска тарелки упрощает обслуживание и повышает стабильность работы.
-Опора регулятора тяги надежно фиксирует выхлопную трубу.
-Применение навесных и потолочных вентиляторов позволит выравнивать температуру даже при высоких потолках.`,
+        name: "Жаротрубный теплообменник МЖТТ-20",
+        category: "Теплообменники",
+        image: Mjtt20Thumb,
+        images: [
+            Mjtt20Thumb,
+            Mjtt20Boiler,
+            Mjtt20LukRevizii,
+            Mjtt20Vrazbore,
+            Mjtt20Kronshtein,
+            Mjtt20KronshteinShiber,
+            Mjtt20RabotaShiber,
+            Mjtt20Shtucer,
+            Mjtt20Upakovka,
+            Mjtt20Vbitu,
+        ],
+        imageDescriptions: [
+            "Общий вид теплообменника МЖТТ-20.",
+            "Корпус теплообменника, вид на жаровые трубы.",
+            "Люк ревизии теплообменника.",
+            "Теплообменник в разборе.",
+            "Кронштейн крепления.",
+            "Кронштейн крепления с шиберной заслонкой.",
+            "Работа шиберной заслонки.",
+            "Штуцер отвода конденсата.",
+            "Упаковка теплообменника.",
+            "Пример установки в бытовом помещении.",
+        ],
+        inStock: false,
+        warranty: "2 года",
+        price: 0,
+        description: "Жаротрубный теплообменник для передачи тепла от выхлопных газов к теплоносителю",
+        archiveUrl: Mjtt20Manual,
+        fullDescription: `Теплообменник МЖТТ-20 адаптирован к использованию с отопителями MULTEAT TEX 20, MULTEAT NEXT 20, MULTEAT NEXT 20P. Также может быть использован и с другими устройствами.
+
+Теплообменник предназначен для передачи части тепла от выхлопных газов теплогенератора к теплоносителю. В качестве теплогенератора может быть любая печь на любом виде топлива, в качестве теплоносителя — вода или антифриз.
+
+При необходимости усилить тягу нужно удлинить и утеплить выхлопную трубу или установить дымосос. Если помещение, в котором расположен теплообменник, не нуждается в дополнительном тепле, целесообразно экранировать источник тепла и теплоизолировать сам теплообменник.`,
         specifications: {
-            Топиво: "000кВт",
-            "Тепловая мощность": "кВт/ч:",
-            "Габаритные размеры": "222",
-            Масса: "18 кг",
-            Размеры: "450x350x200 мм",
-            "Рабочая температура": "-40°C до +85°C",
+            "Тепловая мощность": "20 кВт/ч",
+            "Площадь рубашки при открытом шибере": "0,1 м²",
+            "Площадь рубашки при закрытом шибере": "0,9 м²",
+            "Рабочее давление": "0,63 бар",
+            "Проверено на давление": "1 бар",
+            "Резьба патрубков теплоносителя": '1"',
+            "Диаметр входной трубы": "120 мм",
+            "Диаметр выходной трубы": "120 мм",
+            "Жаропрочное покрытие": "есть",
+            "Возможность ревизии": "есть",
+            "Максимальная температура теплоносителя": "90 °C",
+            "Штуцер отвода конденсата": "есть",
+            "Материал корпуса": "сталь, 1,2 мм",
+            "Объём контура теплоносителя": "18 л",
+            "Размеры (ДхВхШ)": "550x1080x160 мм",
+            Масса: "29 кг",
         },
     },
     {
         id: 4,
         name: "MULTEAT CUB 40 деталь",
-        category: "heat-exchangers",
+        category: "Теплообменники",
         image: MulteatCubImg,
         images: [MulteatCubImg, MulteatCubImg, MulteatCubImg, MulteatCubImg, MulteatCubImg],
         inStock: false,
@@ -278,7 +320,7 @@ export const products: Product[] = [
 export const categories = [
     { id: "all", name: "Все товары", count: products.length },
     {
-        id: "heaters",
+        id: "отопители",
         name: "Отопители",
         count: products.filter((p) => p.category === "отопители").length,
     },
@@ -288,12 +330,12 @@ export const categories = [
         count: products.filter((p) => p.category === "fans").length,
     },
     {
-        id: "heat-exchangers",
+        id: "Теплообменники",
         name: "Теплообменники",
-        count: products.filter((p) => p.category === "heat-exchangers").length,
+        count: products.filter((p) => p.category === "Теплообменники").length,
     },
     {
-        id: "parts-",
+        id: "parts",
         name: "Запчасти",
         count: products.filter((p) => p.category === "parts").length,
     },

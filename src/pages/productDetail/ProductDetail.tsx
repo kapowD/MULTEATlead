@@ -21,6 +21,7 @@ const ProductDetail: React.FC = () => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0)
     const { state, addItem, updateQuantity } = useCart()
     const [isWarrantyOpen, setWarrantyOpen] = useState(false)
+    const [expandedImageIndex, setExpandedImageIndex] = useState<number | null>(null)
 
     const product = products.find((p) => p.id === Number(id))
 
@@ -49,6 +50,14 @@ const ProductDetail: React.FC = () => {
     }
 
     const formatPrice = (price: number) => new Intl.NumberFormat("ru-RU").format(price)
+    const isPdfLink = (url: string) => /\.pdf($|\?)/i.test(url)
+    const currentImageDescription =
+        product.imageDescriptions?.[currentImageIndex] ?? `${product.name}: фото ${currentImageIndex + 1}`
+    const expandedImageDescription =
+        expandedImageIndex === null
+            ? ""
+            : product.imageDescriptions?.[expandedImageIndex] ??
+              `${product.name}: фото ${expandedImageIndex + 1}`
 
     const nextImage = () => {
         setCurrentImageIndex((prev) => (prev === product.images.length - 1 ? 0 : prev + 1))
@@ -93,11 +102,18 @@ const ProductDetail: React.FC = () => {
                 <div className={styles.productLayout}>
                     <div className={styles.imageSection}>
                         <div className={styles.mainImageWrapper}>
-                            <img
-                                src={product.images[currentImageIndex]}
-                                alt={product.name}
-                                className={styles.mainImage}
-                            />
+                            <button
+                                type="button"
+                                className={styles.mainImageButton}
+                                onClick={() => setExpandedImageIndex(currentImageIndex)}
+                                aria-label="Открыть изображение крупнее"
+                            >
+                                <img
+                                    src={product.images[currentImageIndex]}
+                                    alt={currentImageDescription}
+                                    className={styles.mainImage}
+                                />
+                            </button>
 
                             {product.images.length > 1 && (
                                 <>
@@ -132,6 +148,8 @@ const ProductDetail: React.FC = () => {
                             </div>
                         </div>
 
+                        <p className={styles.imageCaption}>{currentImageDescription}</p>
+
                         {product.images.length > 1 && (
                             <div className={styles.thumbnails}>
                                 {product.images.map((image, index) => (
@@ -143,8 +161,18 @@ const ProductDetail: React.FC = () => {
                                                 : ""
                                         }`}
                                         onClick={() => setCurrentImageIndex(index)}
+                                        aria-label={
+                                            product.imageDescriptions?.[index] ??
+                                            `${product.name}: фото ${index + 1}`
+                                        }
                                     >
-                                        <img src={image} alt={`${product.name} ${index + 1}`} />
+                                        <img
+                                            src={image}
+                                            alt={
+                                                product.imageDescriptions?.[index] ??
+                                                `${product.name} ${index + 1}`
+                                            }
+                                        />
                                     </button>
                                 ))}
                             </div>
@@ -158,8 +186,10 @@ const ProductDetail: React.FC = () => {
                         )}
                         <div className={styles.priceSection}>
                             <div className={styles.price}>
-                                <Ruble size={24} />
-                                <span>{formatPrice(product.price)}</span>
+                                {product.price > 0 && <Ruble size={24} />}
+                                <span>
+                                    {product.price > 0 ? formatPrice(product.price) : "Под заказ"}
+                                </span>
                             </div>
                             <div className={styles.warrantyWrapper}>
                                 <button
@@ -229,39 +259,85 @@ const ProductDetail: React.FC = () => {
                             <p>{product.fullDescription}</p>
                         </div>
 
-                        {product.archiveUrl && (
-                            <Link
-                                to={product.archiveUrl}
-                                className={styles.downloadButton}
-                                title="Перейти в архив документов PDF"
-                            >
-                                Перейти в архив PDF
-                                <img
-                                    src={WinIcon}
-                                    alt="WinRAR"
-                                    width={20}
-                                    height={20}
-                                    className={styles.pdfIcon}
-                                />
-                            </Link>
-                        )}
+                        {product.archiveUrl &&
+                            (isPdfLink(product.archiveUrl) ? (
+                                <a
+                                    href={product.archiveUrl}
+                                    className={styles.downloadButton}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    title="Открыть PDF-инструкцию"
+                                >
+                                    PDF-инструкция {product.name}
+                                    <img
+                                        src={WinIcon}
+                                        alt="WinRAR"
+                                        width={20}
+                                        height={20}
+                                        className={styles.pdfIcon}
+                                    />
+                                </a>
+                            ) : (
+                                <Link
+                                    to={product.archiveUrl}
+                                    className={styles.downloadButton}
+                                    title="Перейти в архив документов PDF"
+                                >
+                                    Перейти в архив PDF
+                                    <img
+                                        src={WinIcon}
+                                        alt="WinRAR"
+                                        width={20}
+                                        height={20}
+                                        className={styles.pdfIcon}
+                                    />
+                                </Link>
+                            ))}
 
+                    </div>
+
+                    {product.specifications && (
                         <div className={styles.specifications}>
                             <h3>Технические характеристики</h3>
                             <div className={styles.specGrid}>
-                                {Object.entries(product.specifications ?? {}).map(
-                                    ([key, value]) => (
-                                        <div key={key} className={styles.specItem}>
-                                            <span className={styles.specKey}>{key}:</span>
-                                            <span className={styles.specValue}>{value}</span>
-                                        </div>
-                                    )
-                                )}
+                                {Object.entries(product.specifications).map(([key, value]) => (
+                                    <div key={key} className={styles.specItem}>
+                                        <span className={styles.specKey}>{key}:</span>
+                                        <span className={styles.specValue}>{value}</span>
+                                    </div>
+                                ))}
                             </div>
                         </div>
-                    </div>
+                    )}
                 </div>
             </div>
+
+            {expandedImageIndex !== null && (
+                <div
+                    className={styles.imageOverlay}
+                    role="dialog"
+                    aria-modal="true"
+                    aria-label="Просмотр изображения товара"
+                    onClick={() => setExpandedImageIndex(null)}
+                >
+                    <div className={styles.imageModal} onClick={(event) => event.stopPropagation()}>
+                        <button
+                            type="button"
+                            className={styles.imageModalClose}
+                            onClick={() => setExpandedImageIndex(null)}
+                            aria-label="Закрыть изображение"
+                        >
+                            ×
+                        </button>
+                        <img
+                            src={product.images[expandedImageIndex]}
+                            alt={expandedImageDescription}
+                            className={styles.expandedImage}
+                        />
+                        <p className={styles.expandedImageCaption}>{expandedImageDescription}</p>
+                    </div>
+                </div>
+            )}
         </div>
     )
 }

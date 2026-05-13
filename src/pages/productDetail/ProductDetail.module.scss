@@ -72,15 +72,37 @@
     position: relative;
     border-radius: 16px;
     overflow: hidden;
-    background: #f8f9fa;
+    background: #fff;
     aspect-ratio: 4/3;
+}
+
+.mainImageButton {
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    cursor: zoom-in;
 }
 
 .mainImage {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     transition: transform 0.3s ease;
+}
+
+.mainImageButton:hover .mainImage {
+    transform: scale(1.03);
+}
+
+.imageCaption {
+    margin: -8px 0 0;
+    color: #555;
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1.35;
 }
 
 .navButton {
@@ -161,7 +183,8 @@
     img {
         width: 100%;
         height: 100%;
-        object-fit: cover;
+        object-fit: contain;
+        background: #fff;
     }
 
     &:hover {
@@ -180,6 +203,62 @@
     flex-direction: column;
     gap: 4px;
     min-width: 0;
+}
+
+.imageOverlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1500;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+    background: rgba(0, 0, 0, 0.78);
+}
+
+.imageModal {
+    position: relative;
+    width: min(980px, 92vw);
+    max-height: 92vh;
+    padding: 18px;
+    background: #242424;
+    border: 1px solid #d8b000;
+    border-radius: 14px;
+    box-shadow: 0 22px 54px rgba(0, 0, 0, 0.38);
+}
+
+.imageModalClose {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1;
+    width: 36px;
+    height: 36px;
+    color: #1a1a1a;
+    background: #ffd600;
+    border: 0;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.expandedImage {
+    display: block;
+    width: 100%;
+    max-height: 76vh;
+    object-fit: contain;
+    background: #f8f4e5;
+    border-radius: 10px;
+}
+
+.expandedImageCaption {
+    margin: 12px 0 0;
+    color: #f4f4f4;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.35;
+    text-align: center;
 }
 
 .title {
@@ -341,10 +420,13 @@
 }
 
 .specifications {
+    grid-column: 1 / -1;
+    margin-top: 8px;
+
     h3 {
         font-size: 1.5rem;
         font-weight: 600;
-        margin-bottom: 20px;
+        margin-bottom: 14px;
         color: #1a1a1a;
         overflow-wrap: anywhere;
     }
@@ -357,7 +439,8 @@
 }
 .specGrid {
     display: grid;
-    gap: 12px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 8px;
     min-width: 0;
 }
 .pdfIcon {
@@ -365,17 +448,22 @@
 }
 .specItem {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    padding: 16px;
+    grid-template-columns: minmax(0, 1.25fr) minmax(72px, 0.75fr);
+    align-items: center;
+    gap: 10px;
+    min-height: 48px;
+    padding: 10px 12px;
     background: #f8f9fa;
     border-radius: 8px;
-    border-left: 4px solid #d8b000;
+    border-left: 3px solid #d8b000;
     min-width: 0;
 }
 
 .specKey {
     font-weight: 600;
     color: #333;
+    font-size: 0.9rem;
+    line-height: 1.25;
     min-width: 0;
     overflow-wrap: anywhere;
 }
@@ -383,6 +471,9 @@
 .specValue {
     color: #666;
     text-align: right;
+    font-size: 0.92rem;
+    font-weight: 700;
+    line-height: 1.25;
     min-width: 0;
     overflow-wrap: anywhere;
 }

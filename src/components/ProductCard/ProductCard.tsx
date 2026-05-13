@@ -86,8 +86,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
               <span>Гарантия: {product.warranty}</span>
             </div>
             <div className={styles.price}>
-              <Ruble size={18} />
-              <span>{formatPrice(product.price)}</span>
+              {product.price > 0 && <Ruble size={18} />}
+              <span>{product.price > 0 ? formatPrice(product.price) : 'Под заказ'}</span>
             </div>
           </div>
 
