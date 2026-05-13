@@ -230,15 +230,12 @@ const ProductDetail: React.FC = () => {
                         </div>
 
                         {product.archiveUrl && (
-                            <a
-                                href={product.archiveUrl}
+                            <Link
+                                to={product.archiveUrl}
                                 className={styles.downloadButton}
-                                download
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                title="Скачать инструкцию в формате PDF (архив)"
+                                title="Перейти в архив документов PDF"
                             >
-                                PDF-Инструкция MULTEAT
+                                Перейти в архив PDF
                                 <img
                                     src={WinIcon}
                                     alt="WinRAR"
@@ -246,7 +243,7 @@ const ProductDetail: React.FC = () => {
                                     height={20}
                                     className={styles.pdfIcon}
                                 />
-                            </a>
+                            </Link>
                         )}
 
                         <div className={styles.specifications}>

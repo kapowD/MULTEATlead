@@ -1,5 +1,6 @@
 import { Button, Container, useMediaQuery } from "@mui/material"
 import {
+    Archive as ArchiveIcon,
     Flame,
     Home,
     Menu,
@@ -26,6 +27,7 @@ const Navigation = ({ scrollToFooter }: { scrollToFooter: () => void }) => {
         { icon: <MessageCircleQuestion />, label: "Как купить?", link: "/how-to-buy" },
         { icon: <Video />, label: "Видео", link: "/video" },
         { icon: <Phone />, label: "Контакты", onClick: scrollToFooter },
+        { icon: <ArchiveIcon />, label: "Архив", link: "/archive" },
     ]
 
     const handleToggle = () => setOpen((prev) => !prev)
