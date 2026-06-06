@@ -109,6 +109,7 @@ export const products: Product[] = [
             "Упаковка теплообменника.",
             "Пример установки в бытовом помещении.",
         ],
+        modelOptions: ["MULTEAT", "MULTEAT", "MULTEAT", "MULTEAT"],
         inStock: false,
         warranty: "2 года",
         price: 0,

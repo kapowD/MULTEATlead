@@ -51,7 +51,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
                 <div className={styles.content}>
                     <h3 className={styles.title}>{product.name}</h3>
-                    <p className={styles.description}>{product.description}</p>
+                    {/* <p className={styles.description}>{product.description}</p> BORYA */}
 
                     <div className={styles.details}>
                         <div className={styles.warranty}>
