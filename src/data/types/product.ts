@@ -13,12 +13,14 @@ export type Product = {
     specifications?: Record<string, string>
     archiveUrl?: string
     constructorType?: "chimney"
+    modelOptions?: string[]
+    modelSelectLabel?: string
     cartKey?: string
     configuration?: ProductConfiguration
 }
 
 export type ProductConfiguration = {
-    type: "chimney"
+    type: "chimney" | "model"
     title: string
     details: {
         name: string

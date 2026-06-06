@@ -268,11 +268,40 @@
     line-height: 1.2;
 }
 .category {
-    margin-top: -6px; // чуть ближе к названию
-    margin-bottom: 2;
-    font-size: 1rem;
-    font-weight: 600;
-    color: #666; // тот же желтоватый оттенок, что и акцент
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    width: fit-content;
+    margin: 4px 0 10px;
+    padding: 8px 14px;
+    color: #4f4a34;
+    background: linear-gradient(145deg, #fffef8, #fff5cd);
+    border: 1px solid rgba(216, 176, 0, 0.34);
+    border-radius: 999px;
+    box-shadow:
+        0 4px 12px rgba(155, 126, 0, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    font-size: 0.95rem;
+    font-weight: 800;
+
+    span {
+        color: #8a7b45;
+        font-size: 0.75rem;
+        font-weight: 900;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+
+        &::after {
+            content: "";
+            display: inline-block;
+            width: 5px;
+            height: 5px;
+            margin-left: 8px;
+            vertical-align: 2px;
+            background: #4caf50;
+            border-radius: 50%;
+        }
+    }
 }
 .priceSection {
     display: flex;
@@ -284,14 +313,17 @@
     border: 2px solid #d8b000;
 }
 .buyRow {
-    display: flex;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
     gap: 16px;
     align-items: center;
+    width: 100%;
+    max-width: 520px;
     margin-top: 4px;
 
     /* чтобы на маленьких экранах выглядело столбиком */
     @media (max-width: 560px) {
-        flex-direction: column;
+        grid-template-columns: 1fr;
         align-items: stretch;
 
         /* кнопка на всю ширину */
@@ -383,6 +415,82 @@
                 text-decoration: underline;
             }
         }
+    }
+}
+
+.modelSelectWrap {
+    display: grid;
+    gap: 10px;
+    width: 100%;
+    max-width: 520px;
+    padding: 14px;
+    background: rgba(255, 255, 255, 0.62);
+    border: 1px solid rgba(216, 176, 0, 0.34);
+    border-left: 4px solid #d8b000;
+    border-radius: 14px;
+    box-shadow:
+        0 8px 18px rgba(155, 126, 0, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.modelSelectLabel {
+    color: #2f2f2f;
+    font-size: 0.86rem;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+}
+
+.modelSelectShell {
+    position: relative;
+    display: block;
+
+    &::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        right: 18px;
+        width: 10px;
+        height: 10px;
+        border-right: 2px solid #9a7c08;
+        border-bottom: 2px solid #9a7c08;
+        pointer-events: none;
+        transform: translateY(-65%) rotate(45deg);
+    }
+}
+
+.modelSelect {
+    width: 100%;
+    min-height: 54px;
+    padding: 0 50px 0 18px;
+    color: #1a1a1a;
+    background: linear-gradient(180deg, #ffffff 0%, #fffdf5 100%);
+    border: 1px solid rgba(216, 176, 0, 0.38);
+    border-radius: 12px;
+    font: inherit;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    appearance: none;
+    box-shadow:
+        0 5px 14px rgba(0, 0, 0, 0.06),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+
+    &:hover {
+        border-color: rgba(216, 176, 0, 0.68);
+        background: #fffdf8;
+    }
+
+    &:focus {
+        outline: none;
+        border-color: #d8b000;
+        box-shadow:
+            0 0 0 4px rgba(216, 176, 0, 0.18),
+            0 8px 18px rgba(155, 126, 0, 0.12);
     }
 }
 
@@ -497,6 +605,8 @@
 }
 
 .addToCartButton {
+    width: 100%;
+    min-width: 0;
     background: linear-gradient(135deg, #d8b000 0%, #b8940a 100%);
     color: white;
     padding: 12px 20px;

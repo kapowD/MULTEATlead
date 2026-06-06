@@ -12,8 +12,10 @@ import React, { useMemo, useState } from "react"
 import { Link, useParams } from "react-router-dom"
 import { ChimneyConstructor } from "../../components/ChimneyConstructor/ChimneyConstructor"
 import { QuantityControl } from "../../components/QuantityControl/QuantityControl"
-import { useCart } from "../../context/CartContext"
+import { getCartItemKey, useCart } from "../../context/CartContext"
 import { products } from "../../data/products"
+import { getCategoryLabel } from "../../utils/categoryLabels"
+import { buildModelConfiguredProduct, getModelSelectLabel } from "../../utils/productOptions"
 import { PageMeta } from "@shared/ui/PageMeta/PageMeta"
 import styles from "./ProductDetail.module.scss"
 
@@ -23,12 +25,22 @@ const ProductDetail: React.FC = () => {
     const { state, addItem, updateQuantity } = useCart()
     const [isWarrantyOpen, setWarrantyOpen] = useState(false)
     const [expandedImageIndex, setExpandedImageIndex] = useState<number | null>(null)
+    const [selectedModel, setSelectedModel] = useState("")
 
     const product = products.find((p) => p.id === Number(id))
+    const hasModelOptions = Boolean(product?.modelOptions?.length)
+    const configuredProduct =
+        product && hasModelOptions && selectedModel
+            ? buildModelConfiguredProduct(product, selectedModel)
+            : product
+    const configuredProductKey = configuredProduct ? getCartItemKey(configuredProduct) : ""
 
     const cartItem = useMemo(
-        () => state.items.find((i) => i.product.id === Number(id)),
-        [state.items, id]
+        () =>
+            hasModelOptions
+                ? state.items.find((i) => getCartItemKey(i.product) === configuredProductKey)
+                : state.items.find((i) => i.product.id === Number(id)),
+        [configuredProductKey, hasModelOptions, id, state.items]
     )
     const inCart = !!cartItem
     const [localQty, setLocalQty] = useState<number>(1)
@@ -70,19 +82,21 @@ const ProductDetail: React.FC = () => {
     }
 
     const increase = () => {
-        if (inCart) updateQuantity(product.id, cartItem!.quantity + 1)
+        if (inCart) updateQuantity(configuredProductKey, cartItem!.quantity + 1)
         else setLocalQty((q) => q + 1)
     }
 
     const decrease = () => {
-        if (inCart) updateQuantity(product.id, Math.max(1, cartItem!.quantity - 1))
+        if (inCart) updateQuantity(configuredProductKey, Math.max(1, cartItem!.quantity - 1))
         else setLocalQty((q) => Math.max(1, q - 1))
     }
 
     const handleAddToCart = () => {
+        if (!configuredProduct) return
+        if (hasModelOptions && !selectedModel) return
         if (inCart) return
-        addItem(product)
-        if (localQty > 1) updateQuantity(product.id, localQty)
+        addItem(configuredProduct)
+        if (localQty > 1) updateQuantity(getCartItemKey(configuredProduct), localQty)
     }
 
     return (
@@ -184,18 +198,25 @@ const ProductDetail: React.FC = () => {
                     <div className={styles.infoSection}>
                         <h1 className={styles.title}>{product.name}</h1>
                         {product.category && (
-                            <p className={styles.category}>Категория: {product.category}</p>
+                            <p className={styles.category}>
+                                {/* <span>Категория</span> */}
+                                {getCategoryLabel(product.category)}
+                            </p>
                         )}
                         <div className={styles.priceSection}>
                             <div className={styles.price}>
-                                {product.price > 0 && <Ruble size={24} />}
-                                <span>
-                                    {product.constructorType === "chimney"
-                                        ? "Расчет в конструкторе"
-                                        : product.price > 0
-                                          ? formatPrice(product.price)
-                                          : "Под заказ"}
-                                </span>
+                                {product.constructorType === "chimney" ? (
+                                    <span>Расчет в конструкторе</span>
+                                ) : (
+                                    <>
+                                        {product.price > 0 && <Ruble size={24} />}
+                                        <span>
+                                            {product.price > 0
+                                                ? formatPrice(product.price)
+                                                : "Под заказ"}
+                                        </span>
+                                    </>
+                                )}
                             </div>
                             <div className={styles.warrantyWrapper}>
                                 <button
@@ -233,6 +254,30 @@ const ProductDetail: React.FC = () => {
                                 )}
                             </div>
 
+                            {hasModelOptions && (
+                                <label className={styles.modelSelectWrap}>
+                                    <span className={styles.modelSelectLabel}>
+                                        {getModelSelectLabel(product)}
+                                    </span>
+                                    <span className={styles.modelSelectShell}>
+                                        <select
+                                            value={selectedModel}
+                                            onChange={(event) =>
+                                                setSelectedModel(event.target.value)
+                                            }
+                                            className={styles.modelSelect}
+                                        >
+                                            <option value="">Не выбрана</option>
+                                            {product.modelOptions?.map((option) => (
+                                                <option key={option} value={option}>
+                                                    {option}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </span>
+                                </label>
+                            )}
+
                             {product.constructorType !== "chimney" && (
                                 <div className={styles.buyRow}>
                                     <div className={styles.quantityWrap}>
@@ -246,7 +291,7 @@ const ProductDetail: React.FC = () => {
                                     <button
                                         className={styles.addToCartButton}
                                         onClick={handleAddToCart}
-                                        disabled={inCart}
+                                        disabled={inCart || (hasModelOptions && !selectedModel)}
                                         aria-pressed={inCart}
                                         aria-label={
                                             inCart ? "Товар уже в корзине" : "Добавить в корзину"
@@ -254,9 +299,9 @@ const ProductDetail: React.FC = () => {
                                     >
                                         {inCart
                                             ? "В корзине"
-                                            : product.inStock
-                                              ? "Добавить в корзину"
-                                              : "Заказать"}
+                                            : hasModelOptions && !selectedModel
+                                              ? "Выберите модель"
+                                              : "Добавить в корзину"}
                                     </button>
                                 </div>
                             )}

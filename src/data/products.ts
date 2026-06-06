@@ -18,6 +18,7 @@ import Vmu230Photo2 from "../assets/images/fans/VMU 230-16/Multeat_VMU230-16_2.j
 import Vmu230Photo3 from "../assets/images/fans/VMU 230-16/Multeat_VMU230-16_3.jpg"
 import Vmu230Photo4 from "../assets/images/fans/VMU 230-16/Multeat_VMU230-16_4.jpg"
 import Vmu230Photo5 from "../assets/images/fans/VMU 230-16/Multeat_VMU230-16_5.jpg"
+import { getCategoryLabel } from "../utils/categoryLabels"
 import { Product } from "./types/product"
 
 export const products: Product[] = [
@@ -189,6 +190,30 @@ export const products: Product[] = [
             "Расчет стоимости": "по выбранным элементам конструктора",
         },
     },
+    {
+        id: 6,
+        name: "MULTEAT CUB 40 Вентилятор",
+        category: "parts",
+        image: Vmu230Main,
+        images: [Vmu230Main, Vmu230Photo1, Vmu230Photo2],
+        imageDescriptions: [
+            "Вентилятор для комплектации отопителей MULTEAT.",
+            "Пример установки вентилятора на отопителе.",
+            "Комплект навесных вентиляторов для отопителя.",
+        ],
+        inStock: true,
+        warranty: "5 лет",
+        price: 5000,
+        description: "Запчасть с выбором модели отопителя",
+        fullDescription:
+            "Вентилятор добавляется в корзину с указанием модели отопителя. Перед добавлением выберите модель в списке.",
+        modelSelectLabel: "Выбрать модель",
+        modelOptions: ["MULTEAT CUB 40", "MULTEAT TEX 20", "MULTEAT NEXT 20", "MULTEAT NEXT 20P"],
+        specifications: {
+            "Тип карточки": "Карточка-запчасти",
+            "Параметр для заказа": "модель отопителя",
+        },
+    },
     // {
     //     id: 2,
     //     name: "Вентилятор ВК-12",
@@ -354,25 +379,25 @@ export const products: Product[] = [
 ]
 
 export const categories = [
-    { id: "all", name: "Все товары", count: products.length },
+    { id: "all", name: getCategoryLabel("all"), count: products.length },
     {
         id: "отопители",
-        name: "Отопители",
+        name: getCategoryLabel("отопители"),
         count: products.filter((p) => p.category === "отопители").length,
     },
     {
         id: "Вентиляторы",
-        name: "Вентиляторы",
+        name: getCategoryLabel("Вентиляторы"),
         count: products.filter((p) => p.category === "Вентиляторы").length,
     },
     {
         id: "Теплообменники",
-        name: "Теплообменники",
+        name: getCategoryLabel("Теплообменники"),
         count: products.filter((p) => p.category === "Теплообменники").length,
     },
     {
         id: "parts",
-        name: "Запчасти",
+        name: getCategoryLabel("parts"),
         count: products.filter((p) => p.category === "parts").length,
     },
 ]

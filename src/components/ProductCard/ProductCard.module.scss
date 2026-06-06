@@ -3,6 +3,7 @@
     color: inherit;
     display: block;
     height: 100%;
+    width: 100%;
 }
 
 .card {
@@ -15,42 +16,41 @@
     border: 1px solid rgba(0, 0, 0, 0.08);
     background: white;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    
+
     &:hover {
         transform: translateY(-4px);
         box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
-        border-color: #FFD700;
+        border-color: #ffd700;
     }
 }
 
 .imageWrapper {
-  position: relative;
-  overflow: hidden;
-  height: 240px;
-  background: #fff;
+    position: relative;
+    overflow: hidden;
+    height: 240px;
+    background: #fff;
 
-  &:hover .overlay {
-    opacity: 1;
-  }
+    &:hover .overlay {
+        opacity: 1;
+    }
 }
 
 .overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.55);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  color: #fff;
-  font-size: 1.1rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  cursor: pointer;
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    cursor: pointer;
 }
-
 
 .image {
     width: 100%;
@@ -59,7 +59,7 @@
     padding: 14px;
     box-sizing: border-box;
     transition: transform 0.3s ease;
-    
+
     .card:hover & {
         transform: scale(1.03);
     }
@@ -81,11 +81,11 @@
     font-size: 0.75rem;
     font-weight: 500;
     color: white;
-    
+
     &.inStock {
         background: linear-gradient(135deg, #4caf50 0%, #388e3c 100%);
     }
-    
+
     &.outOfStock {
         background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
     }
@@ -104,14 +104,23 @@
     margin-bottom: 8px;
     line-height: 1.3;
     color: #1a1a1a;
+    min-height: 2.95rem;
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
 }
 
 .description {
     margin-bottom: 16px;
     line-height: 1.5;
-    flex: 1;
     color: #666;
     font-size: 0.875rem;
+    min-height: 4rem;
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
 }
 
 .details {
@@ -119,6 +128,7 @@
     flex-direction: column;
     gap: 8px;
     margin-bottom: 16px;
+    min-height: 58px;
 }
 
 .warranty {
@@ -127,7 +137,7 @@
     gap: 6px;
     font-size: 0.875rem;
     color: #666;
-    
+
     svg {
         color: #4caf50;
     }
@@ -137,61 +147,65 @@
     display: flex;
     align-items: center;
     gap: 6px;
+    min-height: 26px;
     font-size: 1.25rem;
     font-weight: 600;
     color: #d8b000;
 }
 
-/* остальной файл без изменений */
 .actions {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-top: 8px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: auto;
 }
-
 
 .button {
-  width: 100%;
-  padding: 12px 16px;
-  background: linear-gradient(135deg, #d8b000 0%, #b8940a 100%);
-  border: none;
-  border-radius: 8px;
-  color: white;
-  font-weight: 500;
-  font-size: 0.875rem;
-  cursor: pointer;
-  transition: all 0.2s ease;
+    width: 100%;
+    min-height: 50px;
+    padding: 12px 16px;
+    background: linear-gradient(135deg, #d8b000 0%, #b8940a 100%);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    font-size: 0.875rem;
+    line-height: 1.2;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
 
-  &:hover {
-    background: linear-gradient(135deg, #b8940a 0%, #9a7c08 100%);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(216, 176, 0, 0.3);
-  }
+    &:hover {
+        background: linear-gradient(135deg, #b8940a 0%, #9a7c08 100%);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(216, 176, 0, 0.3);
+    }
 
-  &:active {
-    transform: translateY(0);
-  }
+    &:active {
+        transform: translateY(0);
+    }
 
-  /* 👇 добавь это */
-  &:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-    transform: none;
-    box-shadow: none;
-  }
+    /* 👇 добавь это */
+    &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+    }
 }
-
 
 @media (max-width: 768px) {
     .content {
         padding: 16px;
     }
-    
+
     .title {
         font-size: 1rem;
     }
-    
+
     .price {
         font-size: 1.125rem;
     }
