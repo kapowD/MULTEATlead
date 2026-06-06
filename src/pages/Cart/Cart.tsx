@@ -2,7 +2,7 @@ import { ArrowLeft, Minus, Plus, RussianRuble as Ruble, ShoppingBag, Trash2 } fr
 import React from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { PageMeta } from "@shared/ui/PageMeta/PageMeta" // ✅ мета-теги
-import { useCart } from "../../context/CartContext"
+import { CartItemKey, getCartItemKey, useCart } from "../../context/CartContext"
 import styles from "./Cart.module.scss"
 
 const Cart: React.FC = () => {
@@ -11,7 +11,7 @@ const Cart: React.FC = () => {
 
     const formatPrice = (price: number) => new Intl.NumberFormat("ru-RU").format(price)
 
-    const handleQuantityChange = (productId: number, newQuantity: number) => {
+    const handleQuantityChange = (productId: CartItemKey, newQuantity: number) => {
         if (newQuantity >= 1) {
             updateQuantity(productId, newQuantity)
         }
@@ -76,75 +76,95 @@ const Cart: React.FC = () => {
                         </div>
 
                         <div className={styles.itemsList}>
-                            {state.items.map((item) => (
-                                <div key={item.product.id} className={styles.cartItem}>
-                                    <div className={styles.itemImage}>
-                                        <img src={item.product.image} alt={item.product.name} />
-                                    </div>
+                            {state.items.map((item) => {
+                                const itemKey = getCartItemKey(item.product)
 
-                                    <div className={styles.itemInfo}>
-                                        <Link
-                                            to={`/product/${item.product.id}`}
-                                            className={styles.itemName}
-                                        >
-                                            {item.product.name}
-                                        </Link>
-                                        <p className={styles.itemDescription}>
-                                            {item.product.description}
-                                        </p>
-                                        <div className={styles.itemPrice}>
-                                            <Ruble size={18} />
-                                            <span>{formatPrice(item.product.price)}</span>
+                                return (
+                                    <div key={itemKey} className={styles.cartItem}>
+                                        <div className={styles.itemImage}>
+                                            <img src={item.product.image} alt={item.product.name} />
                                         </div>
-                                    </div>
 
-                                    <div className={styles.itemControls}>
-                                        <div className={styles.quantityControls}>
-                                            <button
-                                                onClick={() =>
-                                                    handleQuantityChange(
-                                                        item.product.id,
-                                                        item.quantity - 1
-                                                    )
-                                                }
-                                                className={styles.quantityButton}
-                                                disabled={item.quantity <= 1}
-                                                title="Уменьшить количество"
+                                        <div className={styles.itemInfo}>
+                                            <Link
+                                                to={`/product/${item.product.id}`}
+                                                className={styles.itemName}
                                             >
-                                                <Minus size={16} />
-                                            </button>
-                                            <span className={styles.quantity}>{item.quantity}</span>
+                                                {item.product.name}
+                                            </Link>
+                                            <p className={styles.itemDescription}>
+                                                {item.product.description}
+                                            </p>
+                                            {item.product.configuration && (
+                                                <dl className={styles.itemConfig}>
+                                                    {item.product.configuration.details.map(
+                                                        (detail) => (
+                                                            <div key={detail.name}>
+                                                                <dt>{detail.name}</dt>
+                                                                <dd>{detail.value}</dd>
+                                                            </div>
+                                                        )
+                                                    )}
+                                                </dl>
+                                            )}
+                                            <div className={styles.itemPrice}>
+                                                <Ruble size={18} />
+                                                <span>{formatPrice(item.product.price)}</span>
+                                            </div>
+                                        </div>
+
+                                        <div className={styles.itemControls}>
+                                            <div className={styles.quantityControls}>
+                                                <button
+                                                    onClick={() =>
+                                                        handleQuantityChange(
+                                                            itemKey,
+                                                            item.quantity - 1
+                                                        )
+                                                    }
+                                                    className={styles.quantityButton}
+                                                    disabled={item.quantity <= 1}
+                                                    title="Уменьшить количество"
+                                                >
+                                                    <Minus size={16} />
+                                                </button>
+                                                <span className={styles.quantity}>
+                                                    {item.quantity}
+                                                </span>
+                                                <button
+                                                    onClick={() =>
+                                                        handleQuantityChange(
+                                                            itemKey,
+                                                            item.quantity + 1
+                                                        )
+                                                    }
+                                                    className={styles.quantityButton}
+                                                    title="Увеличить количество"
+                                                >
+                                                    <Plus size={16} />
+                                                </button>
+                                            </div>
+
+                                            <div className={styles.itemTotal}>
+                                                <Ruble size={18} />
+                                                <span>
+                                                    {formatPrice(
+                                                        item.product.price * item.quantity
+                                                    )}
+                                                </span>
+                                            </div>
+
                                             <button
-                                                onClick={() =>
-                                                    handleQuantityChange(
-                                                        item.product.id,
-                                                        item.quantity + 1
-                                                    )
-                                                }
-                                                className={styles.quantityButton}
-                                                title="Увеличить количество"
+                                                onClick={() => removeItem(itemKey)}
+                                                className={styles.removeButton}
+                                                title="Удалить товар"
                                             >
-                                                <Plus size={16} />
+                                                <Trash2 size={18} />
                                             </button>
                                         </div>
-
-                                        <div className={styles.itemTotal}>
-                                            <Ruble size={18} />
-                                            <span>
-                                                {formatPrice(item.product.price * item.quantity)}
-                                            </span>
-                                        </div>
-
-                                        <button
-                                            onClick={() => removeItem(item.product.id)}
-                                            className={styles.removeButton}
-                                            title="Удалить товар"
-                                        >
-                                            <Trash2 size={18} />
-                                        </button>
                                     </div>
-                                </div>
-                            ))}
+                                )
+                            })}
                         </div>
                     </div>
 

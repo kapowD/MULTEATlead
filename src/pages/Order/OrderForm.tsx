@@ -2,7 +2,7 @@ import { ArrowLeft, Mail, Package, Phone, RussianRuble as Ruble, Upload, User } 
 import React, { useRef, useState } from "react"
 import ReCAPTCHA from "react-google-recaptcha"
 import { Link, useNavigate } from "react-router-dom"
-import { useCart } from "../../context/CartContext"
+import { getCartItemKey, useCart } from "../../context/CartContext"
 import { PageMeta } from "@shared/ui/PageMeta/PageMeta" // ✅ добавили
 import styles from "./OrderForm.module.scss"
 import { toast } from "sonner"
@@ -87,8 +87,8 @@ const OrderForm: React.FC = () => {
         }
 
         setErrors(newErrors)
-        const firstErrorField = (["contactName", "phone", "email"] as FieldName[]).find(
-            (field) => Boolean(newErrors[field])
+        const firstErrorField = (["contactName", "phone", "email"] as FieldName[]).find((field) =>
+            Boolean(newErrors[field])
         )
         if (firstErrorField) scrollToFieldWithError(firstErrorField)
 
@@ -107,6 +107,12 @@ const OrderForm: React.FC = () => {
         state.items.forEach((item, index) => {
             message += `${index + 1}. ${item.product.name}\n`
             message += `   Количество: ${item.quantity} шт.\n`
+            if (item.product.configuration) {
+                message += `   ${item.product.configuration.title}:\n`
+                item.product.configuration.details.forEach((detail) => {
+                    message += `      ${detail.name}: ${detail.value}\n`
+                })
+            }
             message += `   Цена за единицу: ${formatPrice(item.product.price)} ₽\n`
             message += `   Сумма: ${formatPrice(item.product.price * item.quantity)} ₽\n\n`
         })
@@ -345,12 +351,27 @@ const OrderForm: React.FC = () => {
 
                             <div className={styles.orderItems}>
                                 {state.items.map((item) => (
-                                    <div key={item.product.id} className={styles.orderItem}>
+                                    <div
+                                        key={getCartItemKey(item.product)}
+                                        className={styles.orderItem}
+                                    >
                                         <div className={styles.itemImage}>
                                             <img src={item.product.image} alt={item.product.name} />
                                         </div>
                                         <div className={styles.itemDetails}>
                                             <h4 className={styles.itemName}>{item.product.name}</h4>
+                                            {item.product.configuration && (
+                                                <dl className={styles.itemConfig}>
+                                                    {item.product.configuration.details.map(
+                                                        (detail) => (
+                                                            <div key={detail.name}>
+                                                                <dt>{detail.name}</dt>
+                                                                <dd>{detail.value}</dd>
+                                                            </div>
+                                                        )
+                                                    )}
+                                                </dl>
+                                            )}
                                             <div className={styles.itemQuantity}>
                                                 {item.quantity} шт. ×{" "}
                                                 {formatPrice(item.product.price)} ₽

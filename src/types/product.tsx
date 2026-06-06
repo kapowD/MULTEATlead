@@ -9,6 +9,21 @@ export type Product = {
     warranty: string
     price: number
     description: string
+    fullDescription?: string
+    specifications?: Record<string, string>
+    archiveUrl?: string
+    constructorType?: "chimney"
+    cartKey?: string
+    configuration?: ProductConfiguration
+}
+
+export type ProductConfiguration = {
+    type: "chimney"
+    title: string
+    details: {
+        name: string
+        value: string
+    }[]
 }
 
 export type ProductCategory = {

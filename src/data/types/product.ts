@@ -11,7 +11,19 @@ export type Product = {
     description: string
     fullDescription: string
     specifications?: Record<string, string>
-    archiveUrl?: string // ссылка на архив или undefined
+    archiveUrl?: string
+    constructorType?: "chimney"
+    cartKey?: string
+    configuration?: ProductConfiguration
+}
+
+export type ProductConfiguration = {
+    type: "chimney"
+    title: string
+    details: {
+        name: string
+        value: string
+    }[]
 }
 
 export type ProductCategory = {

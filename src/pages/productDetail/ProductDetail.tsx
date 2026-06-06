@@ -10,6 +10,7 @@ import {
 import WinIcon from "../../assets/images/icons/rar.png"
 import React, { useMemo, useState } from "react"
 import { Link, useParams } from "react-router-dom"
+import { ChimneyConstructor } from "../../components/ChimneyConstructor/ChimneyConstructor"
 import { QuantityControl } from "../../components/QuantityControl/QuantityControl"
 import { useCart } from "../../context/CartContext"
 import { products } from "../../data/products"
@@ -52,12 +53,13 @@ const ProductDetail: React.FC = () => {
     const formatPrice = (price: number) => new Intl.NumberFormat("ru-RU").format(price)
     const isPdfLink = (url: string) => /\.pdf($|\?)/i.test(url)
     const currentImageDescription =
-        product.imageDescriptions?.[currentImageIndex] ?? `${product.name}: фото ${currentImageIndex + 1}`
+        product.imageDescriptions?.[currentImageIndex] ??
+        `${product.name}: фото ${currentImageIndex + 1}`
     const expandedImageDescription =
         expandedImageIndex === null
             ? ""
-            : product.imageDescriptions?.[expandedImageIndex] ??
-              `${product.name}: фото ${expandedImageIndex + 1}`
+            : (product.imageDescriptions?.[expandedImageIndex] ??
+              `${product.name}: фото ${expandedImageIndex + 1}`)
 
     const nextImage = () => {
         setCurrentImageIndex((prev) => (prev === product.images.length - 1 ? 0 : prev + 1))
@@ -188,7 +190,11 @@ const ProductDetail: React.FC = () => {
                             <div className={styles.price}>
                                 {product.price > 0 && <Ruble size={24} />}
                                 <span>
-                                    {product.price > 0 ? formatPrice(product.price) : "Под заказ"}
+                                    {product.constructorType === "chimney"
+                                        ? "Расчет в конструкторе"
+                                        : product.price > 0
+                                          ? formatPrice(product.price)
+                                          : "Под заказ"}
                                 </span>
                             </div>
                             <div className={styles.warrantyWrapper}>
@@ -227,31 +233,33 @@ const ProductDetail: React.FC = () => {
                                 )}
                             </div>
 
-                            <div className={styles.buyRow}>
-                                <div className={styles.quantityWrap}>
-                                    <QuantityControl
-                                        quantity={displayQty}
-                                        onIncrease={increase}
-                                        onDecrease={decrease}
-                                        min={1}
-                                    />
+                            {product.constructorType !== "chimney" && (
+                                <div className={styles.buyRow}>
+                                    <div className={styles.quantityWrap}>
+                                        <QuantityControl
+                                            quantity={displayQty}
+                                            onIncrease={increase}
+                                            onDecrease={decrease}
+                                            min={1}
+                                        />
+                                    </div>
+                                    <button
+                                        className={styles.addToCartButton}
+                                        onClick={handleAddToCart}
+                                        disabled={inCart}
+                                        aria-pressed={inCart}
+                                        aria-label={
+                                            inCart ? "Товар уже в корзине" : "Добавить в корзину"
+                                        }
+                                    >
+                                        {inCart
+                                            ? "В корзине"
+                                            : product.inStock
+                                              ? "Добавить в корзину"
+                                              : "Заказать"}
+                                    </button>
                                 </div>
-                                <button
-                                    className={styles.addToCartButton}
-                                    onClick={handleAddToCart}
-                                    disabled={inCart}
-                                    aria-pressed={inCart}
-                                    aria-label={
-                                        inCart ? "Товар уже в корзине" : "Добавить в корзину"
-                                    }
-                                >
-                                    {inCart
-                                        ? "В корзине"
-                                        : product.inStock
-                                          ? "Добавить в корзину"
-                                          : "Заказать"}
-                                </button>
-                            </div>
+                            )}
                         </div>
 
                         <div className={styles.description}>
@@ -293,8 +301,11 @@ const ProductDetail: React.FC = () => {
                                     />
                                 </Link>
                             ))}
-
                     </div>
+
+                    {product.constructorType === "chimney" && (
+                        <ChimneyConstructor product={product} addItem={addItem} />
+                    )}
 
                     {product.specifications && (
                         <div className={styles.specifications}>
