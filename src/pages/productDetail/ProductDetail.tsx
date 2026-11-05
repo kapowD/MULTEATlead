@@ -1,9 +1,7 @@
 import {
-    Archive,
     ArrowLeft,
     ChevronLeft,
     ChevronRight,
-    Package,
     RussianRuble as Ruble,
     Shield,
 } from "lucide-react"
@@ -13,7 +11,8 @@ import { Link, useParams } from "react-router-dom"
 import { ChimneyConstructor } from "../../components/ChimneyConstructor/ChimneyConstructor"
 import { QuantityControl } from "../../components/QuantityControl/QuantityControl"
 import { getCartItemKey, useCart } from "../../context/CartContext"
-import { products } from "../../data/products"
+import { products } from "../../catalog/products"
+import { ProductVisual } from "../../shared/ui/ProductVisual/ProductVisual"
 import { getCategoryLabel } from "../../utils/categoryLabels"
 import { buildModelConfiguredProduct, getModelSelectLabel } from "../../utils/productOptions"
 import { PageMeta } from "@shared/ui/PageMeta/PageMeta"
@@ -115,85 +114,81 @@ const ProductDetail: React.FC = () => {
                     Вернуться к каталогу
                 </Link>
 
-                <div className={styles.productLayout}>
-                    <div className={styles.imageSection}>
-                        <div className={styles.mainImageWrapper}>
-                            <button
-                                type="button"
-                                className={styles.mainImageButton}
-                                onClick={() => setExpandedImageIndex(currentImageIndex)}
-                                aria-label="Открыть изображение крупнее"
-                            >
-                                <img
-                                    src={product.images[currentImageIndex]}
-                                    alt={currentImageDescription}
-                                    className={styles.mainImage}
-                                />
-                            </button>
+                <div
+                    className={`${styles.productLayout} ${
+                        product.constructorType === "chimney" ? styles.configuratorLayout : ""
+                    }`}
+                >
+                    {product.constructorType !== "chimney" && (
+                        <div className={styles.imageSection}>
+                            <div className={styles.mainImageWrapper}>
+                                <button
+                                    type="button"
+                                    className={styles.mainImageButton}
+                                    onClick={() => setExpandedImageIndex(currentImageIndex)}
+                                    aria-label="Открыть изображение крупнее"
+                                >
+                                    <ProductVisual
+                                        product={product}
+                                        alt={currentImageDescription}
+                                        imageClassName={styles.mainImage}
+                                    />
+                                </button>
+
+                                {product.images.length > 1 && (
+                                    <>
+                                        <button
+                                            className={`${styles.navButton} ${styles.prevButton}`}
+                                            onClick={prevImage}
+                                            title="Предыдущее изображение"
+                                            aria-label="Предыдущее изображение"
+                                        >
+                                            <ChevronLeft size={24} />
+                                        </button>
+                                        <button
+                                            className={`${styles.navButton} ${styles.nextButton}`}
+                                            onClick={nextImage}
+                                            title="Следующее изображение"
+                                            aria-label="Следующее изображение"
+                                        >
+                                            <ChevronRight size={24} />
+                                        </button>
+                                    </>
+                                )}
+
+                            </div>
+
+                            <p className={styles.imageCaption}>{currentImageDescription}</p>
 
                             {product.images.length > 1 && (
-                                <>
-                                    <button
-                                        className={`${styles.navButton} ${styles.prevButton}`}
-                                        onClick={prevImage}
-                                        title="Предыдущее изображение"
-                                        aria-label="Предыдущее изображение"
-                                    >
-                                        <ChevronLeft size={24} />
-                                    </button>
-                                    <button
-                                        className={`${styles.navButton} ${styles.nextButton}`}
-                                        onClick={nextImage}
-                                        title="Следующее изображение"
-                                        aria-label="Следующее изображение"
-                                    >
-                                        <ChevronRight size={24} />
-                                    </button>
-                                </>
-                            )}
-
-                            <div className={styles.statusBadge}>
-                                <span
-                                    className={`${styles.badge} ${
-                                        product.inStock ? styles.inStock : styles.outOfStock
-                                    }`}
-                                >
-                                    <Package size={16} />
-                                    {product.inStock ? "В наличии" : "Под заказ"}
-                                </span>
-                            </div>
-                        </div>
-
-                        <p className={styles.imageCaption}>{currentImageDescription}</p>
-
-                        {product.images.length > 1 && (
-                            <div className={styles.thumbnails}>
-                                {product.images.map((image, index) => (
-                                    <button
-                                        key={index}
-                                        className={`${styles.thumbnail} ${
-                                            index === currentImageIndex
-                                                ? styles.activeThumbnail
-                                                : ""
-                                        }`}
-                                        onClick={() => setCurrentImageIndex(index)}
-                                        aria-label={
-                                            product.imageDescriptions?.[index] ??
-                                            `${product.name}: фото ${index + 1}`
-                                        }
-                                    >
-                                        <img
-                                            src={image}
-                                            alt={
+                                <div className={styles.thumbnails}>
+                                    {product.images.map((image, index) => (
+                                        <button
+                                            key={index}
+                                            className={`${styles.thumbnail} ${
+                                                index === currentImageIndex
+                                                    ? styles.activeThumbnail
+                                                    : ""
+                                            }`}
+                                            onClick={() => setCurrentImageIndex(index)}
+                                            aria-label={
                                                 product.imageDescriptions?.[index] ??
-                                                `${product.name} ${index + 1}`
+                                                `${product.name}: фото ${index + 1}`
                                             }
-                                        />
-                                    </button>
-                                ))}
-                            </div>
-                        )}
-                    </div>
+                                        >
+                                            <img
+                                                src={image}
+                                                alt={
+                                                    product.imageDescriptions?.[index] ??
+                                                    `${product.name} ${index + 1}`
+                                                }
+                                            />
+                                        </button>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                    )}
 
                     <div className={styles.infoSection}>
                         <h1 className={styles.title}>{product.name}</h1>
@@ -203,82 +198,78 @@ const ProductDetail: React.FC = () => {
                                 {getCategoryLabel(product.category)}
                             </p>
                         )}
-                        <div className={styles.priceSection}>
-                            <div className={styles.price}>
-                                {product.constructorType === "chimney" ? (
-                                    <span>Расчет в конструкторе</span>
-                                ) : (
-                                    <>
-                                        {product.price > 0 && <Ruble size={24} />}
-                                        <span>
-                                            {product.price > 0
-                                                ? formatPrice(product.price)
-                                                : "Под заказ"}
-                                        </span>
-                                    </>
-                                )}
-                            </div>
-                            <div className={styles.warrantyWrapper}>
-                                <button
-                                    className={styles.warranty}
-                                    onClick={() => setWarrantyOpen((prev) => !prev)}
-                                    aria-expanded={isWarrantyOpen}
-                                    aria-controls="warranty-info"
-                                >
-                                    <Shield size={18} />
-                                    <span>Гарантия: {product.warranty}</span>
-                                </button>
+                        {product.constructorType !== "chimney" && (
+                            <div className={styles.priceSection}>
+                                <div className={styles.price}>
+                                    {product.price > 0 && <Ruble size={24} />}
+                                    <span>
+                                        {product.price > 0
+                                            ? formatPrice(product.price)
+                                            : "Под заказ"}
+                                    </span>
+                                </div>
+                                {product.warranty && (
+                                    <div className={styles.warrantyWrapper}>
+                                        <button
+                                            className={styles.warranty}
+                                            onClick={() => setWarrantyOpen((prev) => !prev)}
+                                            aria-expanded={isWarrantyOpen}
+                                            aria-controls="warranty-info"
+                                        >
+                                            <Shield size={18} />
+                                            <span>Гарантия: {product.warranty}</span>
+                                        </button>
 
-                                {isWarrantyOpen && (
-                                    <div id="warranty-info" className={styles.warrantyDropdown}>
-                                        <h4>Гарантийные обязательства</h4>
-                                        <p>
-                                            Производитель гарантирует работу прибора в течение
-                                            указанного срока со дня приобретения. Гарантийное
-                                            обслуживание осуществляется при условии правильной
-                                            установки и эксплуатации устройства, а также отсутствия
-                                            внешних повреждений.
-                                        </p>
-                                        <p className={styles.warning}>
-                                            На тарелки и дефлектор гарантия не распространяется!
-                                            Тарелку и дефлектор всегда можно заказать на сайте:
-                                            <a
-                                                href="https://www.multeat.ru"
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                            >
-                                                www.multeat.ru
-                                            </a>
-                                        </p>
+                                        {isWarrantyOpen && (
+                                            <div id="warranty-info" className={styles.warrantyDropdown}>
+                                                <h4>Гарантийные обязательства</h4>
+                                                <p>
+                                                    Производитель гарантирует работу прибора в течение
+                                                    указанного срока со дня приобретения. Гарантийное
+                                                    обслуживание осуществляется при условии правильной
+                                                    установки и эксплуатации устройства, а также отсутствия
+                                                    внешних повреждений.
+                                                </p>
+                                                <p className={styles.warning}>
+                                                    На тарелки и дефлектор гарантия не распространяется!
+                                                    Тарелку и дефлектор всегда можно заказать на сайте:
+                                                    <a
+                                                        href="https://www.multeat.ru"
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                    >
+                                                        www.multeat.ru
+                                                    </a>
+                                                </p>
+                                            </div>
+                                        )}
                                     </div>
                                 )}
-                            </div>
 
-                            {hasModelOptions && (
-                                <label className={styles.modelSelectWrap}>
-                                    <span className={styles.modelSelectLabel}>
-                                        {getModelSelectLabel(product)}
-                                    </span>
-                                    <span className={styles.modelSelectShell}>
-                                        <select
-                                            value={selectedModel}
-                                            onChange={(event) =>
-                                                setSelectedModel(event.target.value)
-                                            }
-                                            className={styles.modelSelect}
-                                        >
-                                            <option value="">Не выбрана</option>
-                                            {product.modelOptions?.map((option) => (
-                                                <option key={option} value={option}>
-                                                    {option}
-                                                </option>
-                                            ))}
-                                        </select>
-                                    </span>
-                                </label>
-                            )}
+                                {hasModelOptions && (
+                                    <label className={styles.modelSelectWrap}>
+                                        <span className={styles.modelSelectLabel}>
+                                            {getModelSelectLabel(product)}
+                                        </span>
+                                        <span className={styles.modelSelectShell}>
+                                            <select
+                                                value={selectedModel}
+                                                onChange={(event) =>
+                                                    setSelectedModel(event.target.value)
+                                                }
+                                                className={styles.modelSelect}
+                                            >
+                                                <option value="">Не выбрана</option>
+                                                {product.modelOptions?.map((option) => (
+                                                    <option key={option} value={option}>
+                                                        {option}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                        </span>
+                                    </label>
+                                )}
 
-                            {product.constructorType !== "chimney" && (
                                 <div className={styles.buyRow}>
                                     <div className={styles.quantityWrap}>
                                         <QuantityControl
@@ -300,16 +291,18 @@ const ProductDetail: React.FC = () => {
                                         {inCart
                                             ? "В корзине"
                                             : hasModelOptions && !selectedModel
-                                              ? "Выберите модель"
+                                              ? getModelSelectLabel(product)
                                               : "Добавить в корзину"}
                                     </button>
                                 </div>
-                            )}
-                        </div>
+                            </div>
+                        )}
 
                         <div className={styles.description}>
-                            <h3>Описание</h3>
-                            <p>{product.fullDescription}</p>
+                            {product.constructorType !== "chimney" && <h3>Описание</h3>}
+                            {product.fullDescription.split(/\n\s*\n/).map((paragraph, index) => (
+                                <p key={index}>{paragraph}</p>
+                            ))}
                         </div>
 
                         {product.archiveUrl &&
@@ -368,7 +361,7 @@ const ProductDetail: React.FC = () => {
                 </div>
             </div>
 
-            {expandedImageIndex !== null && (
+            {expandedImageIndex !== null && product.constructorType !== "chimney" && (
                 <div
                     className={styles.imageOverlay}
                     role="dialog"
@@ -385,10 +378,10 @@ const ProductDetail: React.FC = () => {
                         >
                             ×
                         </button>
-                        <img
-                            src={product.images[expandedImageIndex]}
+                        <ProductVisual
+                            product={product}
                             alt={expandedImageDescription}
-                            className={styles.expandedImage}
+                            imageClassName={styles.expandedImage}
                         />
                         <p className={styles.expandedImageCaption}>{expandedImageDescription}</p>
                     </div>

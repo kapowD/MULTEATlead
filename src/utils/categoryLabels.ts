@@ -1,9 +1,10 @@
-export const categoryLabels: Record<string, string> = {
+import type { ProductCategory } from "../types/product"
+
+const categoryLabels: Record<ProductCategory | "all", string> = {
     all: "Все товары",
-    отопители: "Отопители",
-    Вентиляторы: "Вентиляторы",
-    Теплообменники: "Теплообменники",
-    parts: "Запчасти",
+    heaters: "Отопители и баки",
+    fans: "Вентиляторы",
+    parts: "Запчасти и дымоходы",
 }
 
-export const getCategoryLabel = (category: string) => categoryLabels[category] ?? category
+export const getCategoryLabel = (category: ProductCategory | "all") => categoryLabels[category]

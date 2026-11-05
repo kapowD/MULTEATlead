@@ -66,30 +66,10 @@
     }
 }
 
-.statusBadge {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    z-index: 1;
-}
-
-.badge {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    padding: 6px 12px;
-    border-radius: 20px;
-    font-size: 0.75rem;
-    font-weight: 500;
-    color: white;
-
-    &.inStock {
-        background: linear-gradient(135deg, #4caf50 0%, #388e3c 100%);
-    }
-
-    &.outOfStock {
-        background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
-    }
+.configIcon {
+    width: 120px;
+    height: 120px;
+    stroke-width: 1.5;
 }
 
 .content {
@@ -113,7 +93,7 @@
 }
 
 .description {
-    display: none;
+    display: -webkit-box;
     margin-bottom: 16px;
     line-height: 1.5;
     color: #666;

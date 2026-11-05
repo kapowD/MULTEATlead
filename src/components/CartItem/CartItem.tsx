@@ -3,6 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { CartItem as CartItemType } from '../../context/CartContext';
+import { ProductVisual } from '../../shared/ui/ProductVisual/ProductVisual';
 import { Price } from '../Price/Price';
 import { QuantityControl } from '../QuantityControl/QuantityControl';
 import styles from './CartItem.module.scss';
@@ -35,10 +36,7 @@ export const CartItem: React.FC<CartItemProps> = ({
     return (
         <div className={styles.cartItem}>
             <div className={styles.itemImage}>
-                <img 
-                    src={item.product.image} 
-                    alt={item.product.name}
-                />
+                <ProductVisual product={item.product} />
             </div>
             
             <div className={styles.itemInfo}>

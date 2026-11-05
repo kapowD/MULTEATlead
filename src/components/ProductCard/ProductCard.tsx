@@ -1,8 +1,9 @@
-import { Package, RussianRuble as Ruble, Shield } from "lucide-react"
+import { RussianRuble as Ruble, Shield } from "lucide-react"
 import React from "react"
 import { Link, useNavigate } from "react-router-dom"
 
 import { useCart } from "../../context/CartContext"
+import { ProductVisual } from "../../shared/ui/ProductVisual/ProductVisual"
 import { Product } from "../../types/product"
 import styles from "./ProductCard.module.scss"
 
@@ -35,15 +36,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         <Link to={`/product/${product.id}`} className={styles.cardLink}>
             <div className={styles.card}>
                 <div className={styles.imageWrapper}>
-                    <img src={product.image} alt={product.name} className={styles.image} />
-                    <div className={styles.statusBadge}>
-                        <span
-                            className={`${styles.badge} ${product.inStock ? styles.inStock : styles.outOfStock}`}
-                        >
-                            <Package size={14} />
-                            {product.inStock ? "В наличии" : "Под заказ"}
-                        </span>
-                    </div>
+                    <ProductVisual
+                        product={product}
+                        imageClassName={styles.image}
+                        iconClassName={styles.configIcon}
+                    />
 
                     {/* Оверлей */}
                     <div className={styles.overlay}>Подробнее</div>
@@ -51,13 +48,15 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
                 <div className={styles.content}>
                     <h3 className={styles.title}>{product.name}</h3>
-                    {/* <p className={styles.description}>{product.description}</p> BORYA */}
+                    <p className={styles.description}>{product.description}</p>
 
                     <div className={styles.details}>
-                        <div className={styles.warranty}>
-                            <Shield size={16} />
-                            <span>Гарантия: {product.warranty}</span>
-                        </div>
+                        {product.warranty && (
+                            <div className={styles.warranty}>
+                                <Shield size={16} />
+                                <span>Гарантия: {product.warranty}</span>
+                            </div>
+                        )}
                         <div className={styles.price}>
                             {requiresConfiguration ? (
                                 <span>Конструктор</span>
@@ -83,7 +82,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                             {requiresConfiguration
                                 ? "Настроить"
                                 : hasModelOptions
-                                  ? "Выбрать модель"
+                                  ? product.modelSelectLabel?.replace(/^Выберите\s*/i, "Выбрать ") ??
+                                    "Выбрать модель"
                                   : inCart
                                     ? "В корзине"
                                     : "Добавить в корзину"}

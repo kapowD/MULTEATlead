@@ -3,6 +3,7 @@ import React from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { PageMeta } from "@shared/ui/PageMeta/PageMeta" // ✅ мета-теги
 import { CartItemKey, getCartItemKey, useCart } from "../../context/CartContext"
+import { ProductVisual } from "../../shared/ui/ProductVisual/ProductVisual"
 import styles from "./Cart.module.scss"
 
 const Cart: React.FC = () => {
@@ -82,7 +83,7 @@ const Cart: React.FC = () => {
                                 return (
                                     <div key={itemKey} className={styles.cartItem}>
                                         <div className={styles.itemImage}>
-                                            <img src={item.product.image} alt={item.product.name} />
+                                            <ProductVisual product={item.product} />
                                         </div>
 
                                         <div className={styles.itemInfo}>

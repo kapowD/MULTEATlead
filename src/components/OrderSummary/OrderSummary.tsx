@@ -2,6 +2,7 @@ import { Package } from "lucide-react"
 import React from "react"
 
 import { CartItem, getCartItemKey } from "../../context/CartContext"
+import { ProductVisual } from "../../shared/ui/ProductVisual/ProductVisual"
 import { Price } from "../Price/Price"
 import styles from "./OrderSummary.module.scss"
 
@@ -28,7 +29,7 @@ export const OrderSummary: React.FC<OrderSummaryProps> = ({ items, total, itemCo
                     {items.map((item) => (
                         <div key={getCartItemKey(item.product)} className={styles.orderItem}>
                             <div className={styles.itemImage}>
-                                <img src={item.product.image} alt={item.product.name} />
+                                <ProductVisual product={item.product} />
                             </div>
                             <div className={styles.itemDetails}>
                                 <h4 className={styles.itemName}>{item.product.name}</h4>

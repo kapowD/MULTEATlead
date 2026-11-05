@@ -1,12 +1,13 @@
+export type ProductCategory = "heaters" | "fans" | "parts"
+
 export type Product = {
     id: number
     name: string
-    category: "all" | "отопители" | "Вентиляторы" | "Теплообменники" | "parts"
+    category: ProductCategory
     image: string
     images: string[]
     imageDescriptions?: string[]
-    inStock: boolean
-    warranty: string
+    warranty?: string
     price: number
     description: string
     fullDescription: string
@@ -15,6 +16,7 @@ export type Product = {
     constructorType?: "chimney"
     modelOptions?: string[]
     modelSelectLabel?: string
+    modelOptionLabel?: string
     cartKey?: string
     configuration?: ProductConfiguration
 }
@@ -28,8 +30,8 @@ export type ProductConfiguration = {
     }[]
 }
 
-export type ProductCategory = {
-    id: string
+export type ProductCategoryOption = {
+    id: ProductCategory | "all"
     name: string
     count: number
 }

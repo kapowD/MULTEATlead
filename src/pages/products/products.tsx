@@ -1,89 +1,89 @@
 import React, { useMemo, useState } from "react"
-import heatSchemeOpen from "../../assets/images/1tep.jpg"
-import heatSchemeClosed from "../../assets/images/2tep.jpg"
+import { PageMeta } from "@shared/ui/PageMeta/PageMeta"
 import { ProductFilter } from "../../components/ProductFilter/ProductFilter"
 import { ProductGrid } from "../../components/ProductGrid/ProductGrid"
-import { products } from "../../data/products"
-import { PageMeta } from "@shared/ui/PageMeta/PageMeta" // ✅ добавлено
+import { products } from "../../catalog/products"
+import type { ProductCategory } from "../../types/product"
 import styles from "./products.module.scss"
 
-const categoryDetails = {
-    Вентиляторы: {
-        title: "Вентиляторы",
-        intro: "Вентиляторы предназначены для быстрого и равномерного прогрева воздуха в помещении.",
+const categoryDetails: Record<ProductCategory, { title: string; intro: string; items: string[] }> = {
+    heaters: {
+        title: "Отопители и топливные баки",
+        intro: "Автономные отопители MULTEAT для нежилых помещений и комплектующие к ним.",
         items: [
-            "Навесные вентиляторы располагаются непосредственно на отопителе и направленно подают разогретый воздух в помещение.",
-            "Потолочные вентиляторы устанавливаются в верхней части помещения на потолке и направляют самый горячий воздух сверху вниз.",
-            "В больших помещениях целесообразно ставить несколько потолочных вентиляторов, в самых холодных местах.",
+            "Модели TEX 20 и NEXT 20P рассчитаны на помещения объёмом до 200 м³.",
+            "Модели CUB 40 и BUC 40 рассчитаны на помещения объёмом до 800 м³.",
+            "Для TEX 20 и NEXT 20P можно отдельно заказать топливный бак MULTEAT 20.",
         ],
     },
-    Теплообменники: {
-        title: "Жаротрубные теплообменники",
-        intro: "Теплообменники предназначены для передачи части тепла от выхлопных газов теплогенератора к теплоносителю.",
+    fans: {
+        title: "Вентиляторы",
+        intro: "Вентиляторы помогают быстрее и равномернее прогревать воздух в помещении.",
         items: [
-            "В качестве теплогенератора может быть любая печь на любом виде топлива. В качестве теплоносителя используется вода или антифриз.",
-            "Универсальные теплообменники МЖТТ-20 и МЖТТ-40 адаптированы к автономным отопителям MULTEAT, но могут применяться и с другими устройствами.",
-            "У теплообменников два основных режима работы: при открытой шиберной заслонке газы проходят к выходу почти полностью, при закрытой проходят через жаровые трубы.",
+            "Навесной ВМУ 230-16 устанавливается непосредственно на отопитель.",
+            "Потолочный ВП 300-34 направляет скопившийся под потолком тёплый воздух вниз.",
+            "В больших помещениях можно установить несколько потолочных вентиляторов в холодных зонах.",
         ],
-        schemes: true,
     },
     parts: {
-        title: "Запчасти",
-        intro: "Раздел запчастей будет содержать отдельные страницы для простых товаров и комплектующих.",
+        title: "Запчасти и дымоходы",
+        intro: "Сменные детали для отопителей MULTEAT и элементы дымохода.",
         items: [
-            "Сюда будут вынесены тарелки, дефлекторы и другие сменные элементы.",
-            "Для части позиций позже появится выбор модели или конфигурации перед добавлением в корзину.",
+            "Для части запчастей перед добавлением в корзину нужно выбрать совместимую модель или деталь.",
+            "При заказе седла, подвески, рычага или заслонки укажите модель отопителя и год выпуска в комментарии.",
+            "Для дымохода указан материал AISI 430 толщиной 0,5 мм; состав и стоимость комплекта можно собрать в конструкторе.",
         ],
     },
 }
 
 const Products: React.FC = () => {
     const [selectedCategory, setSelectedCategory] = useState<string>("all")
-    const [searchTerm, setSearchTerm] = useState<string>("")
-    const [expandedScheme, setExpandedScheme] = useState<"open" | "closed" | null>(null)
+    const [searchTerm, setSearchTerm] = useState("")
 
     const filteredProducts = useMemo(() => {
-        let filtered = products
+        const normalizedTerm = searchTerm.trim().toLocaleLowerCase("ru-RU")
 
-        if (selectedCategory !== "all") {
-            filtered = filtered.filter((product) => product.category === selectedCategory)
-        }
+        return products.filter((product) => {
+            const matchesCategory =
+                selectedCategory === "all" || product.category === selectedCategory
+            if (!matchesCategory) return false
+            if (!normalizedTerm) return true
 
-        if (searchTerm.trim()) {
-            const term = searchTerm.toLowerCase().trim()
-            filtered = filtered.filter(
-                (product) =>
-                    product.name.toLowerCase().includes(term) ||
-                    product.description.toLowerCase().includes(term)
-            )
-        }
+            const searchableText = [
+                product.name,
+                product.description,
+                product.fullDescription,
+                ...Object.entries(product.specifications ?? {}).flat(),
+            ]
+                .join(" ")
+                .toLocaleLowerCase("ru-RU")
 
-        return filtered
+            return searchableText.includes(normalizedTerm)
+        })
     }, [selectedCategory, searchTerm])
 
-    const handleCategoryChange = (category: string) => setSelectedCategory(category)
-    const handleSearchChange = (term: string) => setSearchTerm(term)
-    const categoryInfo = categoryDetails[selectedCategory as keyof typeof categoryDetails]
+    const categoryInfo =
+        selectedCategory === "all"
+            ? undefined
+            : categoryDetails[selectedCategory as ProductCategory]
 
     return (
         <div className={styles.page}>
-            {/* ✅ Мета-теги */}
             <PageMeta
-                title="MULTEAT — Продукция"
-                description="Каталог продукции MULTEAT: топливные системы, фильтры, комплектующие и другие товары. Найдите нужную деталь по категории или названию."
+                title="MULTEAT — Каталог продукции"
+                description="Каталог отопителей MULTEAT, вентиляторов, топливных баков, запчастей и дымоходов."
             />
 
             <div className={styles.container}>
                 <div className={styles.header}>
                     <h1 className={styles.title}>Каталог</h1>
-                    {/* <p className={styles.subtitle}>Широкий ассортимент продукции MULTEAT</p> */}
                 </div>
 
                 <ProductFilter
                     selectedCategory={selectedCategory}
-                    onCategoryChange={handleCategoryChange}
+                    onCategoryChange={setSelectedCategory}
                     searchTerm={searchTerm}
-                    onSearchChange={handleSearchChange}
+                    onSearchChange={setSearchTerm}
                 />
 
                 {categoryInfo && (
@@ -97,76 +97,14 @@ const Products: React.FC = () => {
                                 ))}
                             </ul>
                         </div>
-
-                        {"schemes" in categoryInfo && categoryInfo.schemes && (
-                            <div
-                                className={styles.schemes}
-                                aria-label="Схемы работы теплообменника"
-                            >
-                                <button
-                                    type="button"
-                                    className={styles.schemeCard}
-                                    onClick={() => setExpandedScheme("open")}
-                                >
-                                    <span className={styles.schemeTitle}>Открытая заслонка</span>
-                                    <img
-                                        src={heatSchemeOpen}
-                                        alt="Схема теплообменника с открытой шиберной заслонкой"
-                                        className={styles.schemeImage}
-                                    />
-                                </button>
-                                <button
-                                    type="button"
-                                    className={styles.schemeCard}
-                                    onClick={() => setExpandedScheme("closed")}
-                                >
-                                    <span className={styles.schemeTitle}>Закрытая заслонка</span>
-                                    <img
-                                        src={heatSchemeClosed}
-                                        alt="Схема теплообменника с закрытой шиберной заслонкой"
-                                        className={styles.schemeImage}
-                                    />
-                                </button>
-                            </div>
-                        )}
                     </section>
                 )}
 
                 <div className={styles.results}>
-                    <h2 className={styles.resultCount}>
-                        Найдено товаров: {filteredProducts.length}
-                    </h2>
-
+                    <h2 className={styles.resultCount}>Найдено товаров: {filteredProducts.length}</h2>
                     <ProductGrid products={filteredProducts} />
                 </div>
             </div>
-
-            {expandedScheme && (
-                <button
-                    type="button"
-                    className={styles.schemeOverlay}
-                    onClick={() => setExpandedScheme(null)}
-                    aria-label="Закрыть схему"
-                >
-                    <span className={styles.schemeModal}>
-                        <span className={styles.schemeModalTitle}>
-                            {expandedScheme === "open"
-                                ? "Открытая шиберная заслонка"
-                                : "Закрытая шиберная заслонка"}
-                        </span>
-                        <img
-                            src={expandedScheme === "open" ? heatSchemeOpen : heatSchemeClosed}
-                            alt={
-                                expandedScheme === "open"
-                                    ? "Схема теплообменника с открытой шиберной заслонкой"
-                                    : "Схема теплообменника с закрытой шиберной заслонкой"
-                            }
-                            className={styles.schemeImageLarge}
-                        />
-                        <span className={styles.schemeHint}>Нажмите, чтобы закрыть</span>
-                    </span>
-                </button>
-            )}
         </div>
     )
 }

@@ -16,6 +16,6 @@ export const buildModelConfiguredProduct = (product: Product, model: string): Pr
     configuration: {
         type: "model",
         title: "Параметры запчасти",
-        details: [{ name: "Модель", value: model }],
+        details: [{ name: product.modelOptionLabel ?? "Модель", value: model }],
     },
 })

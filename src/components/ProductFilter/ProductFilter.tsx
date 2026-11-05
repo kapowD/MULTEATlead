@@ -1,7 +1,7 @@
 import { Search } from 'lucide-react';
 import React from 'react';
 
-import { categories } from '../../data/products';
+import { categories } from '../../catalog/products';
 import styles from './ProductFilter.module.scss';
 
 interface ProductFilterProps {
@@ -19,7 +19,7 @@ export const ProductFilter: React.FC<ProductFilterProps> = ({
 }) => {
     return (
         <div className={styles.container}>
-            {/* <div className={styles.searchSection}>
+            <div className={styles.searchSection}>
                 <h3 className={styles.sectionTitle}>
                     Поиск товаров
                 </h3>
@@ -31,9 +31,10 @@ export const ProductFilter: React.FC<ProductFilterProps> = ({
                         value={searchTerm}
                         onChange={(e) => onSearchChange(e.target.value)}
                         className={styles.searchInput}
+                        aria-label="Поиск товаров"
                     />
                 </div>
-            </div> */}
+            </div>
             
             <div className={styles.filterSection}>
                 <h3 className={styles.sectionTitle}>

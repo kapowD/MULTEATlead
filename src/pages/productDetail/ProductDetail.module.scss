@@ -62,6 +62,10 @@
     min-width: 0;
 }
 
+.configuratorLayout {
+    grid-template-columns: minmax(0, 1fr);
+}
+
 .imageSection {
     display: flex;
     flex-direction: column;
@@ -134,31 +138,6 @@
 
 .nextButton {
     right: 16px;
-}
-
-.statusBadge {
-    position: absolute;
-    top: 16px;
-    right: 16px;
-}
-
-.badge {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    padding: 8px 16px;
-    border-radius: 24px;
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: white;
-
-    &.inStock {
-        background: linear-gradient(135deg, #4caf50 0%, #388e3c 100%);
-    }
-
-    &.outOfStock {
-        background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
-    }
 }
 
 .thumbnails {
@@ -562,8 +541,8 @@
 }
 .specItem {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(96px, auto);
-    align-items: baseline;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: start;
     gap: 18px;
     min-height: 50px;
     padding: 14px 0;
@@ -577,7 +556,8 @@
     font-size: 0.95rem;
     line-height: 1.35;
     min-width: 0;
-    overflow-wrap: anywhere;
+    overflow-wrap: break-word;
+    word-break: normal;
 }
 
 .specValue {

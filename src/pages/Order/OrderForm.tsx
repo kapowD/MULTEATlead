@@ -3,6 +3,7 @@ import React, { useRef, useState } from "react"
 import ReCAPTCHA from "react-google-recaptcha"
 import { Link, useNavigate } from "react-router-dom"
 import { getCartItemKey, useCart } from "../../context/CartContext"
+import { ProductVisual } from "../../shared/ui/ProductVisual/ProductVisual"
 import { PageMeta } from "@shared/ui/PageMeta/PageMeta" // ✅ добавили
 import styles from "./OrderForm.module.scss"
 import { toast } from "sonner"
@@ -356,7 +357,7 @@ const OrderForm: React.FC = () => {
                                         className={styles.orderItem}
                                     >
                                         <div className={styles.itemImage}>
-                                            <img src={item.product.image} alt={item.product.name} />
+                                            <ProductVisual product={item.product} />
                                         </div>
                                         <div className={styles.itemDetails}>
                                             <h4 className={styles.itemName}>{item.product.name}</h4>
