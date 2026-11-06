@@ -1,9 +1,7 @@
-import React from "react"
 import { PageMeta } from "@shared/ui/PageMeta/PageMeta" // ✅ мета-теги
 
 import AboutUs from "../../components/AboutUs/AboutUs"
 import Archive from "../../components/Archive/Archive"
-import Footer from "../../components/Footer/Footer"
 import FuelSystem from "../../components/FuelSystem/FuelSystem"
 import Gallery from "../../components/Gallery/Gallery"
 import Banner from "../../components/PhoneBanner/Banner"

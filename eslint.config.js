@@ -1,5 +1,7 @@
 // eslint.config.js
 import js from "@eslint/js";
+import tsPlugin from "@typescript-eslint/eslint-plugin";
+import parser from "@typescript-eslint/parser";
 import prettier from "eslint-config-prettier";
 import importPlugin from "eslint-plugin-import";
 import jsxA11y from "eslint-plugin-jsx-a11y";
@@ -7,10 +9,9 @@ import react from "eslint-plugin-react";
 import reactHooks from "eslint-plugin-react-hooks";
 import simpleImportSort from "eslint-plugin-simple-import-sort";
 import globals from "globals";
-import parser from "@typescript-eslint/parser";
-import tsPlugin from "@typescript-eslint/eslint-plugin";
 
 export default [
+  { ignores: ["dist/**", ".vite/**", ".pnpm-store/**", "Первая версия/**"] },
   js.configs.recommended,
   {
     files: ["**/*.{js,jsx,ts,tsx}"],
@@ -52,9 +53,11 @@ export default [
         { argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
       ],
 
-      // Prettier интеграция
-      "prettier/prettier": "warn",
     },
+  },
+  {
+    files: ["*.config.{js,cjs,mjs,ts}", "scripts/**/*.{js,cjs,mjs}"],
+    languageOptions: { globals: globals.node },
   },
   prettier, // отключаем конфликтующие с Prettier правила
 ];

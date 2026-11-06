@@ -1,6 +1,6 @@
-import React from "react"
-import { useNavigate } from "react-router-dom"
 import { PageMeta } from "@shared/ui/PageMeta/PageMeta" // ✅ добавлено
+import { useNavigate } from "react-router-dom"
+
 import styles from "./how-to-buy.module.scss"
 
 const HowToBuy = () => {

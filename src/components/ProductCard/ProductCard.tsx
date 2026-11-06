@@ -3,9 +3,9 @@ import React from "react"
 import { Link, useNavigate } from "react-router-dom"
 
 import { useCart } from "../../context/CartContext"
+import { showCartAdded } from "../../shared/ui/CartAddedNotice/CartAddedNotice"
 import { ProductVisual } from "../../shared/ui/ProductVisual/ProductVisual"
 import { Product } from "../../types/product"
-import { showCartAdded } from "../../shared/ui/CartAddedNotice/CartAddedNotice"
 import styles from "./ProductCard.module.scss"
 
 interface ProductCardProps {
@@ -23,7 +23,6 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, imageLoading 
     const formatPrice = (n: number) => new Intl.NumberFormat("ru-RU").format(n)
 
     const handleAddToCart = (e: React.MouseEvent) => {
-        // т.к. карточка — это Link, гасим клик у кнопки
         e.preventDefault()
         e.stopPropagation()
         if (requiresConfiguration || hasModelOptions) {
@@ -61,20 +60,21 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, imageLoading 
                     </h3>
                     <p className={styles.description}>{product.description}</p>
 
-                    {product.specifications?.["Тепловая мощность"] && (
-                        <p className={styles.specification}>
-                            Мощность: <strong>{product.specifications["Тепловая мощность"]}</strong>
-                        </p>
-                    )}
-
-                    <div className={styles.details}>
+                    <div className={styles.features}>
+                        {product.specifications?.["Тепловая мощность"] && (
+                            <p className={styles.specification}>
+                                Мощность: <strong>{product.specifications["Тепловая мощность"]}</strong>
+                            </p>
+                        )}
                         {product.warranty && (
                             <div className={styles.warranty}>
                                 <Shield size={16} />
                                 <span>Гарантия: {product.warranty}</span>
                             </div>
                         )}
-                        <div className={styles.price}>
+                    </div>
+
+                    <div className={styles.price}>
                             {requiresConfiguration ? (
                                 <span>Конструктор</span>
                             ) : (
@@ -87,7 +87,6 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, imageLoading 
                                     </span>
                                 </>
                             )}
-                        </div>
                     </div>
 
                     <div className={styles.actions}>

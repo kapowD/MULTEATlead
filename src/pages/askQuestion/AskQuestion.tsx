@@ -1,10 +1,11 @@
-import { ArrowLeft, Mail, MessageSquare, Phone, User, Upload } from "lucide-react"
-import { Link } from "react-router-dom"
+import { PageMeta } from "@shared/ui/PageMeta/PageMeta" // ✅ мета-теги
+import { ArrowLeft, Mail, MessageSquare, Phone, Upload,User } from "lucide-react"
 import React, { useRef, useState } from "react"
 import ReCAPTCHA from "react-google-recaptcha"
+import { Link } from "react-router-dom"
 import { useNavigate } from "react-router-dom"
 import { toast } from "sonner"
-import { PageMeta } from "@shared/ui/PageMeta/PageMeta" // ✅ мета-теги
+
 import styles from "../Order/OrderForm.module.scss"
 
 const AskQuestion: React.FC = () => {
@@ -68,11 +69,6 @@ const AskQuestion: React.FC = () => {
     }
 
     const handleCaptchaChange = (token: string | null) => setCaptchaToken(token)
-
-    const handleBack = () => {
-        if (window.history.length > 2) navigate(-1)
-        else navigate("/")
-    }
 
     // --- Валидация ---
     const validateFields = (): boolean => {
@@ -181,11 +177,12 @@ const AskQuestion: React.FC = () => {
 
                             {/* Имя */}
                             <div className={styles.formGroup}>
-                                <label className={styles.label}>
+                                <label htmlFor="question-name" className={styles.label}>
                                     <User size={18} /> Имя*
                                 </label>
                                 <input
                                     type="text"
+                                    id="question-name"
                                     name="contactName"
                                     value={formData.contactName}
                                     onChange={handleInputChange}
@@ -202,11 +199,12 @@ const AskQuestion: React.FC = () => {
 
                             {/* Телефон */}
                             <div className={styles.formGroup}>
-                                <label className={styles.label}>
+                                <label htmlFor="question-phone" className={styles.label}>
                                     <Phone size={18} /> Телефон
                                 </label>
                                 <input
                                     type="tel"
+                                    id="question-phone"
                                     name="phone"
                                     value={formData.phone}
                                     onChange={(e) => {
@@ -227,11 +225,12 @@ const AskQuestion: React.FC = () => {
 
                             {/* Email */}
                             <div className={styles.formGroup}>
-                                <label className={styles.label}>
+                                <label htmlFor="question-email" className={styles.label}>
                                     <Mail size={18} /> Email*
                                 </label>
                                 <input
                                     type="email"
+                                    id="question-email"
                                     name="email"
                                     value={formData.email}
                                     onChange={handleInputChange}
@@ -246,9 +245,10 @@ const AskQuestion: React.FC = () => {
 
                             {/* Тема */}
                             <div className={styles.formGroup}>
-                                <label className={styles.label}>Тема</label>
+                                <label htmlFor="question-subject" className={styles.label}>Тема</label>
                                 <input
                                     type="text"
+                                    id="question-subject"
                                     name="subject"
                                     value={formData.subject}
                                     onChange={handleInputChange}
@@ -259,10 +259,11 @@ const AskQuestion: React.FC = () => {
 
                             {/* Сообщение */}
                             <div className={styles.formGroup}>
-                                <label className={styles.label}>
+                                <label htmlFor="question-message" className={styles.label}>
                                     <MessageSquare size={18} /> Сообщение*
                                 </label>
                                 <textarea
+                                    id="question-message"
                                     name="message"
                                     value={formData.message}
                                     onChange={handleInputChange}
@@ -275,9 +276,9 @@ const AskQuestion: React.FC = () => {
 
                             {/* Файл */}
                             <div className={styles.formGroup}>
-                                <label className={styles.label}>
+                                <span className={styles.label}>
                                     <Upload size={18} /> Прикрепить файл
-                                </label>
+                                </span>
                                 <div className={styles.fileUpload}>
                                     <input
                                         type="file"

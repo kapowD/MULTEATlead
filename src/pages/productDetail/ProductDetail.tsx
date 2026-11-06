@@ -1,3 +1,4 @@
+import { PageMeta } from "@shared/ui/PageMeta/PageMeta"
 import {
     ArrowLeft,
     ChevronLeft,
@@ -5,18 +6,19 @@ import {
     RussianRuble as Ruble,
     Shield,
 } from "lucide-react"
-import WinIcon from "../../assets/images/icons/rar.png"
 import React, { useEffect, useMemo, useRef, useState } from "react"
 import { Link, useParams } from "react-router-dom"
+
+import WinIcon from "../../assets/images/icons/rar.png"
+import { products } from "../../catalog/products"
 import { ChimneyConstructor } from "../../components/ChimneyConstructor/ChimneyConstructor"
+import Modal from "../../components/Modal/Modal"
 import { QuantityControl } from "../../components/QuantityControl/QuantityControl"
 import { getCartItemKey, useCart } from "../../context/CartContext"
-import { products } from "../../catalog/products"
+import { showCartAdded } from "../../shared/ui/CartAddedNotice/CartAddedNotice"
 import { ProductVisual } from "../../shared/ui/ProductVisual/ProductVisual"
 import { getCategoryLabel } from "../../utils/categoryLabels"
 import { buildModelConfiguredProduct, getModelSelectLabel } from "../../utils/productOptions"
-import { showCartAdded } from "../../shared/ui/CartAddedNotice/CartAddedNotice"
-import { PageMeta } from "@shared/ui/PageMeta/PageMeta"
 import styles from "./ProductDetail.module.scss"
 
 const ProductDetail: React.FC = () => {
@@ -407,42 +409,14 @@ const ProductDetail: React.FC = () => {
             </div>
 
             {expandedImageIndex !== null && product.constructorType !== "chimney" && (
-                <div
-                    className={styles.imageOverlay}
-                    role="dialog"
-                    aria-modal="true"
-                    aria-label="Просмотр изображения товара"
-                    onClick={() => setExpandedImageIndex(null)}
+                <Modal
+                    open
+                    onClose={() => setExpandedImageIndex(null)}
+                    label="Просмотр изображения товара"
+                    onPrev={product.images.length > 1 ? () => moveExpandedImage(-1) : undefined}
+                    onNext={product.images.length > 1 ? () => moveExpandedImage(1) : undefined}
                 >
-                    <div className={styles.imageModal} onClick={(event) => event.stopPropagation()}>
-                        <button
-                            type="button"
-                            className={styles.imageModalClose}
-                            onClick={() => setExpandedImageIndex(null)}
-                            aria-label="Закрыть изображение"
-                        >
-                            ×
-                        </button>
-                        {product.images.length > 1 && (
-                            <>
-                                <button
-                                    type="button"
-                                    className={`${styles.navButton} ${styles.modalNavButton} ${styles.modalPrevButton}`}
-                                    onClick={() => moveExpandedImage(-1)}
-                                    aria-label="Предыдущее изображение"
-                                >
-                                    <ChevronLeft size={24} />
-                                </button>
-                                <button
-                                    type="button"
-                                    className={`${styles.navButton} ${styles.modalNavButton} ${styles.modalNextButton}`}
-                                    onClick={() => moveExpandedImage(1)}
-                                    aria-label="Следующее изображение"
-                                >
-                                    <ChevronRight size={24} />
-                                </button>
-                            </>
-                        )}
+                    <div className={styles.imageModalContent}>
                         <ProductVisual
                             product={{
                                 ...product,
@@ -454,7 +428,7 @@ const ProductDetail: React.FC = () => {
                         />
                         <p className={styles.expandedImageCaption}>{expandedImageDescription}</p>
                     </div>
-                </div>
+                </Modal>
             )}
         </div>
     )

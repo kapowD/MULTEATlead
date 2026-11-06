@@ -1,5 +1,5 @@
 import { Box, Container, Typography } from "@mui/material"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
 import aboutsertification from "../../assets/documents/index_aboutsertification.jpg"
 import inn from "../../assets/documents/index_inn.jpg"
@@ -54,27 +54,6 @@ const Gallery = () => {
         })
     }
 
-    // Обработчик нажатий клавиш стрелок
-    const handleKeyDown = (event: KeyboardEvent) => {
-        if (event.key === "ArrowRight") {
-            nextImage()
-        } else if (event.key === "ArrowLeft") {
-            prevImage()
-        }
-    }
-
-    // Добавление и удаление слушателя события
-    useEffect(() => {
-        if (selectedImage) {
-            window.addEventListener("keydown", handleKeyDown)
-        } else {
-            window.removeEventListener("keydown", handleKeyDown)
-        }
-        return () => {
-            window.removeEventListener("keydown", handleKeyDown)
-        }
-    }, [selectedImage, currentImageIndex])
-
     return (
         <Box className={styles.gallery}>
             <Container>
@@ -88,8 +67,10 @@ const Gallery = () => {
                 </Typography>
                 <div className={styles.grid}>
                     {documents.map((doc, index) => (
-                        <div
+                        <button
                             key={doc.id}
+                            type="button"
+                            aria-label={`Открыть документ ${index + 1}`}
                             className={styles.documentItem}
                             onClick={() => openModal(index)}
                         >
@@ -99,7 +80,7 @@ const Gallery = () => {
                                 loading="lazy"
                                 className={styles.image}
                             />
-                        </div>
+                        </button>
                     ))}
                 </div>
                 <Modal

@@ -1,14 +1,14 @@
 import { RouteObject } from "react-router-dom"
 
-// Импорты страниц
-import Home from "../pages/home/home"
-import Products from "../pages/products/products"
-import ProductDetail from "../pages/productDetail/ProductDetail"
-import HowToBuy from "../pages/how-to-buy/how-to-buy"
 import Archive from "../pages/archive/Archive"
 import AskQuestion from "../pages/askQuestion/AskQuestion"
 import Cart from "../pages/Cart/Cart"
+// Импорты страниц
+import Home from "../pages/home/home"
+import HowToBuy from "../pages/how-to-buy/how-to-buy"
 import OrderForm from "../pages/Order/OrderForm"
+import ProductDetail from "../pages/productDetail/ProductDetail"
+import Products from "../pages/products/products"
 import VideoSection from "../pages/videos/ui/videos"
 
 // Тип маршрута с метаданными
@@ -57,7 +57,7 @@ export const routes: AppRoute[] = [
     {
         path: "/ask",
         element: <AskQuestion />,
-        title: " MULTEAT — Задать вопрос",
+        title: "MULTEAT — Задать вопрос",
         description: "Форма для обратной связи и вопросов.",
     },
     {
@@ -69,7 +69,7 @@ export const routes: AppRoute[] = [
     {
         path: "/order",
         element: <OrderForm />,
-        title: "MULTEATl — Оформление заказа",
+        title: "MULTEAT — Оформление заказа",
         description: "Форма оформления заказа и контактных данных.",
     },
 ]

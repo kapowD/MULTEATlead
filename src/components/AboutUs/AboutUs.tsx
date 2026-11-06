@@ -1,4 +1,5 @@
 import { Container, Divider } from "@mui/material"
+
 import styles from "./AboutUs.module.scss"
 // import ReactPlayer from "react-player";
 
@@ -38,6 +39,7 @@ const AboutUs = () => {
                             controls
                         /> */}
                         <iframe
+                            title="Видео о продукции MULTEAT"
                             width="720"
                             height="405"
                             src="https://rutube.ru/play/embed/562e82f7a2bb045f1870d323378c5680/"

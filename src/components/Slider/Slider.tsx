@@ -1,5 +1,6 @@
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { useEffect, useState } from "react"
+
 import sliderImageOne from "../../assets/images/slaid1.png"
 import styles from "./Slider.module.scss"
 

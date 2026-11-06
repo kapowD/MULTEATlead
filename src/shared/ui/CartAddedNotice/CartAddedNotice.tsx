@@ -2,6 +2,7 @@ import { CheckCircle2, X } from "lucide-react"
 import { useEffect, useRef, useState } from "react"
 import { Link } from "react-router-dom"
 import { toast } from "sonner"
+
 import styles from "./CartAddedNotice.module.scss"
 
 const DISPLAY_TIME = 6000

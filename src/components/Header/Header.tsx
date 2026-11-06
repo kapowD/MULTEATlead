@@ -1,8 +1,8 @@
 import { AppBar, Container, Toolbar } from "@mui/material"
+import { Link } from "react-router-dom"
 
 import logo from "../../assets/images/GalleryLogo.png"
 import styles from "./Header.module.scss"
-import { Link } from "react-router-dom"
 
 const Header = () => {
     return (

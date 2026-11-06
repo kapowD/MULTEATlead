@@ -1,8 +1,9 @@
-import React, { useMemo, useState } from "react"
 import { PageMeta } from "@shared/ui/PageMeta/PageMeta"
+import React, { useMemo, useState } from "react"
+
+import { products } from "../../catalog/products"
 import { ProductFilter } from "../../components/ProductFilter/ProductFilter"
 import { ProductGrid } from "../../components/ProductGrid/ProductGrid"
-import { products } from "../../catalog/products"
 import type { ProductCategory } from "../../types/product"
 import styles from "./products.module.scss"
 
@@ -78,6 +79,7 @@ const Products: React.FC = () => {
             <div className={styles.container}>
                 <div className={styles.header}>
                     <h1 className={styles.title}>Каталог</h1>
+                    <p className={styles.subtitle}>Отопители, вентиляторы и комплектующие MULTEAT</p>
                 </div>
 
                 <ProductFilter

@@ -1,4 +1,3 @@
-import { Container } from "@mui/material"
 import { createTheme } from "@mui/material/styles"
 
 const theme = createTheme({
@@ -40,5 +39,3 @@ const theme = createTheme({
 })
 
 export default theme
-
-// add theme file as PrimeStyle

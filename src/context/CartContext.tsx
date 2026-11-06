@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useEffect, useReducer, ReactNode } from "react"
+import React, { createContext, ReactNode,useContext, useEffect, useReducer } from "react"
+
 import { Product } from "../types/product"
 
 export type CartItemKey = number | string
@@ -114,7 +115,9 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
                 try {
                     const { items } = JSON.parse(e.newValue) as { items?: CartItem[] }
                     if (Array.isArray(items)) dispatch({ type: "SET_ITEMS", payload: items })
-                } catch {}
+                } catch {
+                    // Игнорируем повреждённые данные другой вкладки.
+                }
             }
         }
         window.addEventListener("storage", onStorage)

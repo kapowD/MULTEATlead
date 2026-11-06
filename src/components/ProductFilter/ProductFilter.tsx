@@ -20,12 +20,11 @@ export const ProductFilter: React.FC<ProductFilterProps> = ({
     return (
         <div className={styles.container}>
             <div className={styles.searchSection}>
-                <h3 className={styles.sectionTitle}>Поиск товаров</h3>
                 <div className={styles.searchWrapper}>
                     <Search size={20} className={styles.searchIcon} />
                     <input
                         type="text"
-                        placeholder="Найти товар..."
+                        placeholder="Найти товар или модель"
                         value={searchTerm}
                         onChange={(e) => onSearchChange(e.target.value)}
                         className={styles.searchInput}
@@ -35,8 +34,7 @@ export const ProductFilter: React.FC<ProductFilterProps> = ({
             </div>
 
             <div className={styles.filterSection}>
-                <h3 className={styles.sectionTitle}>Категории</h3>
-                <div className={styles.categories}>
+                <div className={styles.categories} role="group" aria-label="Категории товаров">
                     {categories.map((category) => (
                         <button
                             key={category.id}
@@ -47,7 +45,7 @@ export const ProductFilter: React.FC<ProductFilterProps> = ({
                                 selectedCategory === category.id ? styles.active : ""
                             }`}
                         >
-                            {category.name} ({category.count})
+                            {category.name} <span className={styles.count}>{category.count}</span>
                         </button>
                     ))}
                 </div>

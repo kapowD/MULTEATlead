@@ -1,5 +1,5 @@
-import { VideoBlockProps } from "./types"
 import styles from "./styles.module.scss"
+import { VideoBlockProps } from "./types"
 
 const VideoBlock = ({ videoUrl, title, description }: VideoBlockProps) => (
     <article className={styles.videoBlock}>

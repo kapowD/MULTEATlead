@@ -1,4 +1,3 @@
-import React from "react"
 import { videoData } from "@components/VideoSection/data"
 import VideoSectionBox from "@components/VideoSection/VideoSectionBox"
 import { PageMeta } from "@shared/ui/PageMeta/PageMeta"

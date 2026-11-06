@@ -1,7 +1,8 @@
 import { Check, Minus, Plus, ShoppingCart, Trash2 } from "lucide-react"
 import React, { useMemo, useState } from "react"
-import { Product } from "../../types/product"
+
 import { showCartAdded } from "../../shared/ui/CartAddedNotice/CartAddedNotice"
+import { Product } from "../../types/product"
 import styles from "./ChimneyConstructor.module.scss"
 
 type Diameter = 120 | 140

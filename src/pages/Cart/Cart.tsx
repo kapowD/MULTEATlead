@@ -1,7 +1,8 @@
+import { PageMeta } from "@shared/ui/PageMeta/PageMeta" // ✅ мета-теги
 import { ArrowLeft, Minus, Plus, RussianRuble as Ruble, ShoppingBag, Trash2 } from "lucide-react"
 import React from "react"
 import { Link, useNavigate } from "react-router-dom"
-import { PageMeta } from "@shared/ui/PageMeta/PageMeta" // ✅ мета-теги
+
 import { CartItemKey, getCartItemKey, useCart } from "../../context/CartContext"
 import { ProductVisual } from "../../shared/ui/ProductVisual/ProductVisual"
 import styles from "./Cart.module.scss"

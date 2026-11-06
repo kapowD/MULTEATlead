@@ -1,111 +1,93 @@
-import { Box, IconButton } from "@mui/material"
-import { X, ChevronLeft, ChevronRight } from "lucide-react"
+import { Box, IconButton, Modal as MuiModal } from "@mui/material"
+import { ChevronLeft, ChevronRight, X } from "lucide-react"
+import type { ReactNode } from "react"
 
 interface ModalProps {
     open: boolean
     onClose: () => void
     onNext?: () => void
     onPrev?: () => void
-    children: React.ReactNode
+    label?: string
+    children: ReactNode
 }
 
-const Modal = ({ open, onClose, onNext, onPrev, children }: ModalProps) => {
-    if (!open) return null
+const iconStyle = {
+    position: "absolute",
+    color: "white",
+    backgroundColor: "rgba(0,0,0,.5)",
+    zIndex: 1,
+    "&:hover": { backgroundColor: "rgba(0,0,0,.7)" },
+} as const
 
-    return (
+const Modal = ({
+    open,
+    onClose,
+    onNext,
+    onPrev,
+    label = "Просмотр изображения",
+    children,
+}: ModalProps) => (
+    <MuiModal
+        open={open}
+        onClose={onClose}
+        sx={{ display: "flex", alignItems: "center", justifyContent: "center", padding: 2 }}
+    >
         <Box
-            onClick={onClose}
+            role="dialog"
+            aria-modal="true"
+            aria-label={label}
+            tabIndex={-1}
+            onKeyDown={(event) => {
+                if (event.key === "ArrowRight" && onNext) {
+                    event.preventDefault()
+                    onNext()
+                }
+                if (event.key === "ArrowLeft" && onPrev) {
+                    event.preventDefault()
+                    onPrev()
+                }
+            }}
             sx={{
-                position: "fixed",
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-                backgroundColor: "rgba(0, 0, 0, 0.7)",
+                position: "relative",
+                backgroundColor: "white",
+                padding: 2,
+                borderRadius: 1,
+                maxWidth: "100%",
+                maxHeight: "100%",
+                outline: 0,
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                zIndex: 1300,
-                opacity: 0,
-                transition: "background-color 0.3s ease-in-out, opacity 0.3s ease-in-out",
-                animation: "fadeIn 0.3s ease-in-out forwards",
-                "@keyframes fadeIn": {
-                    "0%": { backgroundColor: "rgba(0, 0, 0, 0)", opacity: 0 },
-                    "100%": { backgroundColor: "rgba(0, 0, 0, 0.7)", opacity: 1 },
-                },
             }}
         >
-            <Box
-                onClick={(e) => e.stopPropagation()}
-                sx={{
-                    position: "relative",
-                    backgroundColor: "white",
-                    padding: 2,
-                    borderRadius: 1,
-                    transform: "scale(0.9)",
-                    opacity: 0,
-                    animation: "scaleIn 0.3s ease-in-out forwards",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    "@keyframes scaleIn": {
-                        "0%": { transform: "scale(0.9)", opacity: 0 },
-                        "100%": { transform: "scale(1)", opacity: 1 },
-                    },
-                }}
+            <IconButton
+                aria-label="Закрыть изображение"
+                onClick={onClose}
+                sx={{ ...iconStyle, right: 8, top: 8 }}
             >
-                {/* Закрыть */}
+                <X />
+            </IconButton>
+            {onPrev && (
                 <IconButton
-                    onClick={onClose}
-                    sx={{
-                        position: "absolute",
-                        right: 8,
-                        top: 8,
-                        color: "white",
-                        backgroundColor: "rgba(0, 0, 0, 0.5)",
-                        transition: "background-color 0.2s ease-in-out",
-                        "&:hover": { backgroundColor: "rgba(0, 0, 0, 0.7)" },
-                    }}
+                    aria-label="Предыдущее изображение"
+                    onClick={onPrev}
+                    sx={{ ...iconStyle, left: 16 }}
                 >
-                    <X />
+                    <ChevronLeft size={28} />
                 </IconButton>
-
-                {/* Стрелка влево */}
-                {onPrev && (
-                    <IconButton
-                        onClick={onPrev}
-                        sx={{
-                            position: "absolute",
-                            left: 16,
-                            color: "white",
-                            backgroundColor: "rgba(0,0,0,0.4)",
-                            "&:hover": { backgroundColor: "rgba(0,0,0,0.6)" },
-                        }}
-                    >
-                        <ChevronLeft size={28} />
-                    </IconButton>
-                )}
-
-                {children}
-
-                {/* Стрелка вправо */}
-                {onNext && (
-                    <IconButton
-                        onClick={onNext}
-                        sx={{
-                            position: "absolute",
-                            right: 16,
-                            color: "white",
-                            backgroundColor: "rgba(0,0,0,0.4)",
-                            "&:hover": { backgroundColor: "rgba(0,0,0,0.6)" },
-                        }}
-                    >
-                        <ChevronRight size={28} />
-                    </IconButton>
-                )}
-            </Box>
+            )}
+            {children}
+            {onNext && (
+                <IconButton
+                    aria-label="Следующее изображение"
+                    onClick={onNext}
+                    sx={{ ...iconStyle, right: 16 }}
+                >
+                    <ChevronRight size={28} />
+                </IconButton>
+            )}
         </Box>
-    )
-}
+    </MuiModal>
+)
 
 export default Modal

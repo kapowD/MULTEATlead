@@ -1,5 +1,6 @@
 import { Settings } from "lucide-react"
 import type { FC } from "react"
+
 import { getProductImageSources, type ProductImageVariant } from "../../../catalog/productImages"
 import type { Product } from "../../../types/product"
 import styles from "./ProductVisual.module.scss"
