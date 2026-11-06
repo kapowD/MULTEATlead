@@ -25,6 +25,7 @@
 }
 
 .imageWrapper {
+    display: block;
     position: relative;
     overflow: hidden;
     height: 240px;
@@ -90,7 +91,12 @@
     overflow: hidden;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
+
+    a { color: inherit; text-decoration: none; }
+    a:hover { text-decoration: underline; }
 }
+
+.specification { margin: 0 0 6px; font-size: .875rem; color: #393939; }
 
 .description {
     display: -webkit-box;
@@ -131,7 +137,8 @@
     min-height: 24px;
     font-size: 1.2rem;
     font-weight: 600;
-    color: #d8b000;
+    color: #272727;
+    font-variant-numeric: tabular-nums;
 }
 
 .actions {
@@ -145,14 +152,14 @@
     width: 100%;
     min-height: 40px;
     padding: 8px 14px;
-    background: linear-gradient(135deg, #d8b000 0%, #b8940a 100%);
+    background: #e5c232;
     border: none;
     border-radius: 8px;
-    color: white;
+    color: #1a1a1a;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-weight: 500;
+    font-weight: 700;
     font-size: 0.875rem;
     line-height: 1.2;
     text-align: center;
@@ -160,7 +167,7 @@
     transition: all 0.2s ease;
 
     &:hover {
-        background: linear-gradient(135deg, #b8940a 0%, #9a7c08 100%);
+        background: #d8b000;
         transform: translateY(-1px);
         box-shadow: 0 4px 12px rgba(216, 176, 0, 0.3);
     }
@@ -168,6 +175,7 @@
     &:active {
         transform: translateY(0);
     }
+    &:focus-visible { outline: 3px solid #333; outline-offset: 3px; }
 
     /* 👇 добавь это */
     &:disabled {

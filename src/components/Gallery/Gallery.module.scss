@@ -13,7 +13,7 @@
     }
 
     @media (max-width: $breakpoint-sm) {
-        padding: 8px 0; // телефоны — минимальный вертикальный отступ
+        padding: 8px 12px;
     }
 }
 
@@ -40,7 +40,8 @@
     }
 
     @media (max-width: $breakpoint-sm) {
-        padding: 0 8px; // на телефонах минимум, но не впритык
+        padding: 0;
+        gap: 8px;
     }
 }
 

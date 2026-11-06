@@ -34,9 +34,13 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, imageLoading 
     }
 
     return (
-        <Link to={`/product/${product.id}`} className={styles.cardLink}>
+        <div className={styles.cardLink}>
             <div className={styles.card}>
-                <div className={styles.imageWrapper}>
+                <Link
+                    to={`/product/${product.id}`}
+                    className={styles.imageWrapper}
+                    aria-label={`Подробнее: ${product.name}`}
+                >
                     <ProductVisual
                         product={product}
                         imageClassName={styles.image}
@@ -47,11 +51,19 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, imageLoading 
 
                     {/* Оверлей */}
                     <div className={styles.overlay}>Подробнее</div>
-                </div>
+                </Link>
 
                 <div className={styles.content}>
-                    <h3 className={styles.title}>{product.name}</h3>
+                    <h3 className={styles.title}>
+                        <Link to={`/product/${product.id}`}>{product.name}</Link>
+                    </h3>
                     <p className={styles.description}>{product.description}</p>
+
+                    {product.specifications?.["Тепловая мощность"] && (
+                        <p className={styles.specification}>
+                            Мощность: <strong>{product.specifications["Тепловая мощность"]}</strong>
+                        </p>
+                    )}
 
                     <div className={styles.details}>
                         {product.warranty && (
@@ -85,8 +97,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, imageLoading 
                             {requiresConfiguration
                                 ? "Настроить"
                                 : hasModelOptions
-                                  ? product.modelSelectLabel?.replace(/^Выберите\s*/i, "Выбрать ") ??
-                                    "Выбрать модель"
+                                  ? (product.modelSelectLabel?.replace(
+                                        /^Выберите\s*/i,
+                                        "Выбрать "
+                                    ) ?? "Выбрать модель")
                                   : inCart
                                     ? "В корзине"
                                     : "Добавить в корзину"}
@@ -94,6 +108,6 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, imageLoading 
                     </div>
                 </div>
             </div>
-        </Link>
+        </div>
     )
 }

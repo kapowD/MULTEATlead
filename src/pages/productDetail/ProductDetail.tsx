@@ -320,22 +320,24 @@ const ProductDetail: React.FC = () => {
                                             min={1}
                                         />
                                     </div>
-                                    <button
-                                        className={styles.addToCartButton}
-                                        onClick={handleAddToCart}
-                                        disabled={inCart || (hasModelOptions && !selectedModel)}
-                                        aria-pressed={inCart}
-                                        aria-label={
-                                            inCart ? "Товар уже в корзине" : "Добавить в корзину"
-                                        }
-                                    >
-                                        {inCart
-                                            ? "В корзине"
-                                            : hasModelOptions && !selectedModel
-                                              ? getModelSelectLabel(product)
-                                              : "Добавить в корзину"}
-                                    </button>
+                                    {inCart ? (
+                                        <Link to="/cart" className={`${styles.addToCartButton} ${styles.cartLink}`}>
+                                            Перейти в корзину
+                                        </Link>
+                                    ) : (
+                                        <button
+                                            type="button"
+                                            className={styles.addToCartButton}
+                                            onClick={handleAddToCart}
+                                            disabled={hasModelOptions && !selectedModel}
+                                        >
+                                            {hasModelOptions && !selectedModel
+                                                ? getModelSelectLabel(product)
+                                                : "Добавить в корзину"}
+                                        </button>
+                                    )}
                                 </div>
+                                {inCart && <p className={styles.cartQuantityHint}>Товар в корзине. Количество можно изменить здесь.</p>}
                             </div>
                         )}
 

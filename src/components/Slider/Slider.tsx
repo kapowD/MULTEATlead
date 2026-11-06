@@ -1,121 +1,43 @@
-import { Box, Container, IconButton, Typography } from "@mui/material";
-import { useEffect, useMemo, useState } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react"
+import { useEffect, useState } from "react"
+import sliderImageOne from "../../assets/images/slaid1.png"
+import styles from "./Slider.module.scss"
 
-import sliderImageTwo from "../../assets/images/as2_1-800x800-product_popup.jpg";
-import sliderImageThree from "../../assets/images/mini1.jpg";
-import sliderImageOne from "../../assets/images/slaid1.png";
-import styles from "./Slider.module.scss";
+const productImage = (...segments: string[]) =>
+    `${import.meta.env.BASE_URL}images/products/${segments.map(encodeURIComponent).join("/")}`
 
-interface Slide {
-  image: string;
-  title: string;
-  description?: string;
-}
+const sliderImageTwo = productImage("Отопители", "NEXT 20P", "MULTEAT_NEXT 20P_kamera sgoranya v sbore.jpg")
+const sliderImageThree = productImage("Отопители", "BUC40", "MULTEAT_BUC 40_ryad1.jpg")
 
-const slides: Slide[] = [
-  {
-    image: sliderImageOne,
-    title:
-      "Проектирование и производство теплогенераторов, работающих на отработанном масле",
-    description: "sample text",
-  },
-  {
-    image: sliderImageTwo,
-    title: "Техподдержка всех выпущенных моделей",
-    description: "sample text",
-  },
-  {
-    image: sliderImageThree,
-    title: "Покупаем отработанное масло в Новосибирске",
-    description: "8-913-928-79-84",
-  },
-];
+const slides = [
+    { image: sliderImageOne, title: "Проектирование и производство теплогенераторов, работающих на отработанном масле" },
+    { image: sliderImageTwo, title: "Техподдержка всех выпущенных моделей" },
+    { image: sliderImageThree, title: "Покупаем отработанное масло в Новосибирске" },
+]
 
 const Slider = () => {
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [loadedSlides, setLoadedSlides] = useState<number[]>([0]);
+    const [current, setCurrent] = useState(0)
+    const [paused, setPaused] = useState(false)
 
-  const prevIndex = (currentSlide - 1 + slides.length) % slides.length;
-  const nextIndex = (currentSlide + 1) % slides.length;
+    useEffect(() => {
+        if (paused || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+        const timer = window.setTimeout(() => setCurrent((value) => (value + 1) % slides.length), 5000)
+        return () => window.clearTimeout(timer)
+    }, [current, paused])
 
-  const visibleSlides = useMemo(
-    () => new Set([currentSlide, prevIndex, nextIndex]),
-    [currentSlide, prevIndex, nextIndex]
-  );
-
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % slides.length);
-  };
-
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
-  };
-
-  useEffect(() => {
-    const interval = setInterval(nextSlide, 5000);
-    return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    setLoadedSlides((prev) => {
-      const next = new Set(prev);
-      next.add(currentSlide);
-      next.add(prevIndex);
-      next.add(nextIndex);
-      return Array.from(next);
-    });
-  }, [currentSlide, prevIndex, nextIndex]);
-
-  return (
-    <Box className={styles.slider}>
-      {slides.map((slide, index) => (
-        <Box
-          key={index}
-          className={styles.slide}
-          sx={{
-            transform: `translate3d(${(index - currentSlide) * 100}%, 0, 0)`,
-            backgroundImage: loadedSlides.includes(index)
-              ? `url(${slide.image})`
-              : "none",
-            opacity: visibleSlides.has(index) ? 1 : 0,
-          }}
-        >
-          <Container className={styles.slideContent}>
-            <Typography sx={{ fontWeight: "bold", fontSize: 22,  margin: 1}}>
-              {slide.title}
-            </Typography>
-          </Container>
-        </Box>
-      ))}
-
-      {/* Стрелки */}
-
-      <IconButton
-        className={`${styles.arrow} ${styles.left}`}
-        onClick={prevSlide}
-      >
-        {/* <ChevronLeft color="deepskyblue" size={40} /> */}
-      </IconButton>
-      <IconButton
-        className={`${styles.arrow} ${styles.right}`}
-        onClick={nextSlide}
-      >
-        {/* <ChevronRight color="deepskyblue" size={40} /> */}
-      </IconButton>
-      {/* Точки */}
-      <Box className={styles.dots}>
-        {slides.map((_, index) => (
-          <Box
-            key={index}
-            className={`${styles.dot} ${
-              currentSlide === index ? styles.active : ""
-            }`}
-            onClick={() => setCurrentSlide(index)}
-          />
-        ))}
-      </Box>
-    </Box>
-  );
-};
-
-export default Slider;
+    return (
+        <section className={styles.slider} aria-label="О компании MULTEAT" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} onFocus={() => setPaused(true)} onBlur={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setPaused(false) }}>
+            {slides.map((slide, index) => (
+                <div key={slide.title} className={styles.slide} aria-hidden={index !== current} style={{ backgroundImage: `url(${slide.image})`, transform: `translateX(${(index - current) * 100}%)` }}>
+                    <div className={styles.slideContent}><h1>{slide.title}</h1></div>
+                </div>
+            ))}
+            <button type="button" className={`${styles.arrow} ${styles.left}`} onClick={() => setCurrent((current + slides.length - 1) % slides.length)} aria-label="Предыдущий слайд"><ChevronLeft size={30} /></button>
+            <button type="button" className={`${styles.arrow} ${styles.right}`} onClick={() => setCurrent((current + 1) % slides.length)} aria-label="Следующий слайд"><ChevronRight size={30} /></button>
+            <div className={styles.dots} aria-label="Выбор слайда">
+                {slides.map((slide, index) => <button type="button" key={slide.title} className={`${styles.dot} ${index === current ? styles.active : ""}`} onClick={() => setCurrent(index)} aria-label={`Слайд ${index + 1}: ${slide.title}`} aria-current={index === current ? "true" : undefined} />)}
+            </div>
+        </section>
+    )
+}
+export default Slider

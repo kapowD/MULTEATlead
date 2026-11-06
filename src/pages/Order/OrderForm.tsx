@@ -1,4 +1,13 @@
-import { ArrowLeft, Mail, Package, Phone, RussianRuble as Ruble, Upload, User } from "lucide-react"
+import {
+    ArrowLeft,
+    Mail,
+    Package,
+    Phone,
+    RussianRuble as Ruble,
+    ShieldCheck,
+    Upload,
+    User,
+} from "lucide-react"
 import React, { useRef, useState } from "react"
 import ReCAPTCHA from "react-google-recaptcha"
 import { Link, useNavigate } from "react-router-dom"
@@ -28,6 +37,7 @@ const OrderForm: React.FC = () => {
         contactName?: string
     }>({})
     const [isSubmitting, setIsSubmitting] = useState(false)
+    const [submitted, setSubmitted] = useState(false)
     const [captchaToken, setCaptchaToken] = useState<string | null>(null)
     type FieldName = "contactName" | "phone" | "email"
 
@@ -162,8 +172,7 @@ const OrderForm: React.FC = () => {
                 clearCart()
                 recaptchaRef.current?.reset()
                 setCaptchaToken(null)
-                toast.success(" Заявка успешно отправлена!")
-                navigate("/")
+                setSubmitted(true)
             } else {
                 console.error("Server response:", result)
                 toast.error("❌ Ошибка при отправке: " + result)
@@ -174,6 +183,26 @@ const OrderForm: React.FC = () => {
         } finally {
             setIsSubmitting(false)
         }
+    }
+
+    if (submitted) {
+        return (
+            <div className={styles.page}>
+                <div className={styles.container}>
+                    <div className={styles.confirmation} role="status">
+                        <ShieldCheck size={40} />
+                        <h1>Заявка отправлена</h1>
+                        <p>
+                            Спасибо! Мы получили информацию о вашем заказе и свяжемся с вами по
+                            указанным контактам.
+                        </p>
+                        <Link to="/products" className={styles.backButton}>
+                            Вернуться в каталог
+                        </Link>
+                    </div>
+                </div>
+            </div>
+        )
     }
 
     if (state.items.length === 0) {
@@ -213,12 +242,18 @@ const OrderForm: React.FC = () => {
 
                                 {/* Имя */}
                                 <div className={styles.formGroup}>
-                                    <label className={styles.label}>
+                                    <label htmlFor="contactName" className={styles.label}>
                                         <User size={18} /> Контактное лицо*
                                     </label>
                                     <input
                                         type="text"
+                                        id="contactName"
                                         name="contactName"
+                                        autoComplete="name"
+                                        aria-invalid={Boolean(errors.contactName)}
+                                        aria-describedby={
+                                            errors.contactName ? "contactName-error" : undefined
+                                        }
                                         value={formData.contactName}
                                         onChange={handleInputChange}
                                         placeholder="Иван Иванов"
@@ -228,18 +263,24 @@ const OrderForm: React.FC = () => {
                                         required
                                     />
                                     {errors.contactName && (
-                                        <p className={styles.errorText}>{errors.contactName}</p>
+                                        <p id="contactName-error" className={styles.errorText}>
+                                            {errors.contactName}
+                                        </p>
                                     )}
                                 </div>
 
                                 {/* Телефон */}
                                 <div className={styles.formGroup}>
-                                    <label className={styles.label}>
+                                    <label htmlFor="phone" className={styles.label}>
                                         <Phone size={18} /> Телефон*
                                     </label>
                                     <input
                                         type="tel"
+                                        id="phone"
                                         name="phone"
+                                        autoComplete="tel"
+                                        aria-invalid={Boolean(errors.phone)}
+                                        aria-describedby={errors.phone ? "phone-error" : undefined}
                                         value={formData.phone}
                                         onChange={(e) => {
                                             const formatted = formatPhoneNumber(e.target.value)
@@ -256,18 +297,24 @@ const OrderForm: React.FC = () => {
                                         required
                                     />
                                     {errors.phone && (
-                                        <p className={styles.errorText}>{errors.phone}</p>
+                                        <p id="phone-error" className={styles.errorText}>
+                                            {errors.phone}
+                                        </p>
                                     )}
                                 </div>
 
                                 {/* Email */}
                                 <div className={styles.formGroup}>
-                                    <label className={styles.label}>
+                                    <label htmlFor="email" className={styles.label}>
                                         <Mail size={18} /> Email*
                                     </label>
                                     <input
                                         type="email"
+                                        id="email"
                                         name="email"
+                                        autoComplete="email"
+                                        aria-invalid={Boolean(errors.email)}
+                                        aria-describedby={errors.email ? "email-error" : undefined}
                                         value={formData.email}
                                         onChange={handleInputChange}
                                         placeholder="example@mail.ru"
@@ -277,29 +324,40 @@ const OrderForm: React.FC = () => {
                                         required
                                     />
                                     {errors.email && (
-                                        <p className={styles.errorText}>{errors.email}</p>
+                                        <p id="email-error" className={styles.errorText}>
+                                            {errors.email}
+                                        </p>
                                     )}
                                 </div>
 
                                 {/* Сообщение */}
                                 <div className={styles.formGroup}>
-                                    <label className={styles.label}>Сообщение*</label>
+                                    <label htmlFor="message" className={styles.label}>
+                                        Информация для заказа*
+                                    </label>
+                                    <p id="message-hint" className={styles.fieldHint}>
+                                        Укажите адрес доставки, желаемую транспортную компанию и
+                                        другие детали заказа. Стандартный способ доставки описан в
+                                        разделе «Как купить».
+                                    </p>
                                     <textarea
+                                        id="message"
                                         name="message"
+                                        aria-describedby="message-hint"
                                         value={formData.message}
                                         onChange={handleInputChange}
                                         className={styles.textarea}
                                         rows={6}
                                         required
-                                        placeholder="- Напишите здесь адрес доставки, желаемую транспортную компанию и прочую информацию, которая относится к заявке. О том, какая транспортная компания используется стандартно для доставки указано в разделе «Как купить»"
+                                        placeholder="Адрес доставки, транспортная компания и детали заказа"
                                     />
                                 </div>
 
                                 {/* Файл */}
                                 <div className={styles.formGroup}>
-                                    <label className={styles.label}>
+                                    <span className={styles.label}>
                                         <Upload size={18} /> Прикрепить файл
-                                    </label>
+                                    </span>
                                     <div className={styles.fileUpload}>
                                         <input
                                             type="file"
@@ -321,15 +379,25 @@ const OrderForm: React.FC = () => {
 
                                 {/* reCAPTCHA */}
                                 <div className={styles.captchaContainer}>
-                                    <ReCAPTCHA
-                                        ref={recaptchaRef}
-                                        sitekey={
-                                            import.meta.env.VITE_RECAPTCHA_SITE_KEY ||
-                                            "YOUR_RECAPTCHA_SITE_KEY"
-                                        }
-                                        onChange={handleCaptchaChange}
-                                        theme="light"
-                                    />
+                                    <div className={styles.captchaHeading}>
+                                        <ShieldCheck size={21} />
+                                        <div>
+                                            <strong>Подтверждение безопасности</strong>
+                                            <p>Пройдите проверку перед отправкой заявки.</p>
+                                        </div>
+                                    </div>
+                                    <div className={styles.captchaWidget}>
+                                        <ReCAPTCHA
+                                            ref={recaptchaRef}
+                                            sitekey={
+                                                import.meta.env.VITE_RECAPTCHA_SITE_KEY ||
+                                                "YOUR_RECAPTCHA_SITE_KEY"
+                                            }
+                                            onChange={handleCaptchaChange}
+                                            onExpired={() => setCaptchaToken(null)}
+                                            theme="light"
+                                        />
+                                    </div>
                                 </div>
 
                                 <button
@@ -337,7 +405,7 @@ const OrderForm: React.FC = () => {
                                     className={styles.submitButton}
                                     disabled={isSubmitting || !captchaToken}
                                 >
-                                    {isSubmitting ? "ОТПРАВЛЯЕТСЯ..." : "ОТПРАВИТЬ"}
+                                    {isSubmitting ? "Отправляем заявку..." : "Отправить заявку"}
                                 </button>
                             </form>
                         </div>
@@ -357,7 +425,10 @@ const OrderForm: React.FC = () => {
                                         className={styles.orderItem}
                                     >
                                         <div className={styles.itemImage}>
-                                            <ProductVisual product={item.product} variant="thumbnail" />
+                                            <ProductVisual
+                                                product={item.product}
+                                                variant="thumbnail"
+                                            />
                                         </div>
                                         <div className={styles.itemDetails}>
                                             <h4 className={styles.itemName}>{item.product.name}</h4>

@@ -1,21 +1,17 @@
-import { AppBar, Container, Toolbar, Typography } from "@mui/material"
+import { AppBar, Container, Toolbar } from "@mui/material"
 
 import logo from "../../assets/images/GalleryLogo.png"
 import styles from "./Header.module.scss"
-import { useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 
 const Header = () => {
-    const navigate = useNavigate()
-
-    const goHome = () => {
-        navigate("/")
-    }
-
     return (
         <AppBar position="static" className={styles.header} elevation={0}>
             <Container className={styles.container}>
                 <Toolbar className={styles.toolbar}>
-                    <img src={logo} alt="Logo" className={styles.logo} onClick={goHome} />
+                    <Link to="/" aria-label="MULTEAT — на главную">
+                        <img src={logo} alt="" className={styles.logo} />
+                    </Link>
                 </Toolbar>
             </Container>
         </AppBar>

@@ -77,8 +77,17 @@
     top: 50%;
     transform: translateY(-50%);
     text-decoration: none !important;
-    outline: none !important;
     -webkit-tap-highlight-color: transparent;
+}
+
+.cartButtonWrapper.navButton {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+
+    &:hover {
+        transform: translateY(-50%);
+    }
 }
 
 .cartButtonHasItems {
@@ -133,10 +142,9 @@
         transform: translateY(-1px);
     }
 
-    &:focus,
     &:focus-visible {
-        outline: none !important;
-        box-shadow: none !important;
+        outline: 3px solid #fff !important;
+        outline-offset: 3px;
     }
 }
 
@@ -179,7 +187,7 @@
     color: #d8b000;
     background: transparent;
     border: none;
-    outline: none;
+    &:focus-visible { outline: 3px solid #fff; outline-offset: -4px; }
     cursor: pointer;
     text-align: left;
 

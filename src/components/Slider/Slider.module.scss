@@ -1,78 +1,15 @@
-@import "../../styles/variables/_index.scss";
-
-.slider {
-  // border: 2px dashed red;
-  position: relative;
-  min-height: 300px;
-  overflow: hidden;
-  width: 100%;
-  display: block; /* Изменено с flex на block */
-}
-
-.slide {
-  position: absolute;
-  min-width: 100%;
-  height: 100%;
-  transition: transform 0.5s ease-in-out;
-  will-change: transform;
-  background-size: cover;
-  background-position: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.slideContent {
-  background-color: $secondary-color;
-  text-align: center;
-  padding-top: 20px;
-  padding: 1rem 2rem;
-  border-radius: 6px;
-}
-
-.arrow {
-  border: 2px solid blue;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 10;
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 50%;
-  padding: 0.4rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.left {
-  left: 10px;
-}
-
-.right {
-  right: 10px;
-}
-
-.dots {
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 10px;
-  z-index: 10;
-}
-
-.dot {
-  width: 12px;
-  height: 12px;
-  background-color: rgba(255, 255, 255, 0.4);
-  border-radius: 50%;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.dot.active {
-  width: 30px;
-  border-radius: 8px;
-  background-color: white;
-}
+.slider { position: relative; height: 300px; overflow: hidden; width: 100%; background: #333; }
+.slide { position: absolute; inset: 0; transition: transform .5s ease-in-out; background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center; }
+.slideContent { width: min(1200px, calc(100% - 112px)); padding: 1rem 2rem; background: #d8b000; text-align: center; border-radius: 6px; }
+.slideContent h1 { margin: 8px; color: #111; font-size: 22px; line-height: 1.25; font-weight: 700; }
+.arrow { position: absolute; top: 50%; z-index: 2; transform: translateY(-50%); display: grid; place-items: center; width: 48px; height: 48px; border: 1px solid rgba(255,255,255,.5); border-radius: 50%; background: rgba(20,20,20,.25); color: white; cursor: pointer; }
+.arrow:hover { background: rgba(20,20,20,.55); }
+.arrow:focus-visible, .dot:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+.left { left: 10px; }
+.right { right: 10px; }
+.dots { position: absolute; bottom: 14px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 4px; }
+.dot { position: relative; width: 28px; height: 30px; border: 0; background: transparent; cursor: pointer; }
+.dot::after { content: ""; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 10px; height: 10px; background: rgba(255,255,255,.65); border-radius: 50%; }
+.active::after { width: 22px; border-radius: 8px; background: white; }
+@media (max-width: 600px) { .slideContent { width: calc(100% - 110px); padding: 12px; } .slideContent h1 { font-size: 18px; } }
+@media (prefers-reduced-motion: reduce) { .slide { transition: none; } }

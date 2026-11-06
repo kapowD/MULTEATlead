@@ -36,8 +36,8 @@ export const QuantityControl: React.FC<QuantityControlProps> = ({
         onClick={handleDecClick}
         className={styles.quantityButton}
         disabled={quantity <= min}
-        title="Decrease quantity"
-        aria-label="Decrease quantity"
+        title="Уменьшить количество"
+        aria-label="Уменьшить количество"
       >
         <Minus size={16} />
       </button>
@@ -46,8 +46,8 @@ export const QuantityControl: React.FC<QuantityControlProps> = ({
         onClick={handleIncClick}
         className={styles.quantityButton}
         disabled={max ? quantity >= max : false}
-        title="Increase quantity"
-        aria-label="Increase quantity"
+        title="Увеличить количество"
+        aria-label="Увеличить количество"
       >
         <Plus size={16} />
       </button>

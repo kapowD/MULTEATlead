@@ -15,12 +15,11 @@
     margin: 0;
     color: #f7f7f7;
     font-family: $font-family-heading;
-    font-size: clamp(26px, 4vw, 40px);
-    font-weight: 800;
+    font-size: 3rem;
+    font-weight: $font-weight-heading;
     line-height: 1.1;
     letter-spacing: 0;
     text-align: center;
-    text-transform: uppercase;
 
     &::after {
         content: "";
@@ -154,11 +153,15 @@
 
 @media (max-width: 768px) {
     .section {
-        padding: 28px 0 34px;
+        padding: 28px 12px 34px;
     }
 
     .title::after {
         margin: 18px auto 14px;
+    }
+
+    .title {
+        font-size: 2.4rem;
     }
 
     .row {
@@ -174,6 +177,12 @@
 
     .panel {
         padding: 14px 14px 16px;
+    }
+}
+
+@media (max-width: 576px) {
+    .title {
+        font-size: 2rem;
     }
 }
 

@@ -43,6 +43,8 @@ const Navigation = ({ scrollToFooter }: { scrollToFooter: () => void }) => {
                             startIcon={open ? <X /> : <Menu />}
                             onClick={handleToggle}
                             className={styles.navButton}
+                            aria-expanded={open}
+                            aria-controls="mobile-navigation"
                         >
                             {open ? "Закрыть" : "Меню"}
                         </Button>
@@ -50,15 +52,16 @@ const Navigation = ({ scrollToFooter }: { scrollToFooter: () => void }) => {
                         <nav className={styles.menu}>
                             {buttons.map((btn) =>
                                 btn.link ? (
-                                    <Link to={btn.link} key={btn.label}>
-                                        <Button
-                                            variant="contained"
-                                            className={styles.button}
-                                            startIcon={btn.icon}
-                                        >
-                                            {btn.label}
-                                        </Button>
-                                    </Link>
+                                    <Button
+                                        component={Link}
+                                        to={btn.link}
+                                        key={btn.label}
+                                        variant="contained"
+                                        className={styles.button}
+                                        startIcon={btn.icon}
+                                    >
+                                        {btn.label}
+                                    </Button>
                                 ) : (
                                     <Button
                                         key={btn.label}
@@ -76,23 +79,27 @@ const Navigation = ({ scrollToFooter }: { scrollToFooter: () => void }) => {
                 </div>
 
                 {/* === Корзина === */}
-                <Link to="/cart" className={styles.cartButtonWrapper}>
-                    <Button
-                        variant="outlined"
-                        className={`${styles.navButton} ${
-                            count > 0 ? styles.cartButtonHasItems : ""
-                        }`}
-                        startIcon={<ShoppingCart />}
-                    >
-                        Корзина
-                        {count > 0 && <span className={styles.cartBadge}>{count}</span>}
-                    </Button>
-                </Link>
+                <Button
+                    component={Link}
+                    to="/cart"
+                    variant="outlined"
+                    className={`${styles.cartButtonWrapper} ${styles.navButton} ${
+                        count > 0 ? styles.cartButtonHasItems : ""
+                    }`}
+                    startIcon={<ShoppingCart />}
+                >
+                    Корзина
+                    {count > 0 && <span className={styles.cartBadge}>{count}</span>}
+                </Button>
             </Container>
 
             {/* === МОБИЛЬНАЯ ШТОРКА === */}
-            {isMobile && (
-                <div className={`${styles.mobileMenu} ${open ? styles.open : ""}`}>
+            {isMobile && open && (
+                <nav
+                    id="mobile-navigation"
+                    aria-label="Основная навигация"
+                    className={`${styles.mobileMenu} ${styles.open}`}
+                >
                     {buttons.map((btn) =>
                         btn.link ? (
                             <Link
@@ -118,7 +125,7 @@ const Navigation = ({ scrollToFooter }: { scrollToFooter: () => void }) => {
                             </button>
                         )
                     )}
-                </div>
+                </nav>
             )}
         </div>
     )

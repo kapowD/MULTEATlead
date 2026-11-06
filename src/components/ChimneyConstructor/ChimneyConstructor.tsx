@@ -110,7 +110,7 @@ export const ChimneyConstructor: React.FC<ChimneyConstructorProps> = ({ product,
     }
 
     return (
-        <section className={styles.constructor} aria-label="Конструктор дымохода">
+        <section className={styles.configurator} aria-label="Конструктор дымохода">
             <div className={styles.configPanel}>
                 <div className={styles.header}>
                     <div>
@@ -131,6 +131,7 @@ export const ChimneyConstructor: React.FC<ChimneyConstructorProps> = ({ product,
                                         diameter === value ? styles.active : ""
                                     }`}
                                     onClick={() => setDiameter(value)}
+                                    aria-pressed={diameter === value}
                                 >
                                     {value} мм
                                 </button>
@@ -147,17 +148,17 @@ export const ChimneyConstructor: React.FC<ChimneyConstructorProps> = ({ product,
                     </div>
                 </div>
 
-                <div className={styles.tableCaption}>
-                    <span>2. Элемент</span>
-                    <strong>Цена, руб. за 1 шт.</strong>
-                </div>
                 <div className={styles.priceTableWrap}>
                     <table className={styles.priceTable}>
                         <thead>
                             <tr>
-                                <th>Наименование</th>
+                                <th scope="col">2. Элемент</th>
+                                <th scope="colgroup" colSpan={2}>Цена за 1 шт., ₽</th>
+                            </tr>
+                            <tr>
+                                <th scope="col">Наименование</th>
                                 {DIAMETERS.map((value) => (
-                                    <th key={value}>{value} мм</th>
+                                    <th scope="col" key={value}>{value} мм</th>
                                 ))}
                             </tr>
                         </thead>
@@ -171,6 +172,7 @@ export const ChimneyConstructor: React.FC<ChimneyConstructorProps> = ({ product,
                                                 selectedPartId === part.id ? styles.active : ""
                                             }`}
                                             onClick={() => setSelectedPartId(part.id)}
+                                            aria-pressed={selectedPartId === part.id}
                                         >
                                             {selectedPartId === part.id && <Check size={16} />}
                                             {part.name}
@@ -189,6 +191,8 @@ export const ChimneyConstructor: React.FC<ChimneyConstructorProps> = ({ product,
                                                     setSelectedPartId(part.id)
                                                     setDiameter(value)
                                                 }}
+                                                aria-label={`${part.name}, ${value} мм, ${formatPrice(part.prices[value])} рублей`}
+                                                aria-pressed={selectedPartId === part.id && diameter === value}
                                             >
                                                 {formatPrice(part.prices[value])}
                                             </button>
