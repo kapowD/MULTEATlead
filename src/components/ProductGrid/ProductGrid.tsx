@@ -36,9 +36,9 @@ export const ProductGrid: React.FC<ProductGridProps> = ({ products, loading = fa
 
     return (
         <div className={styles.grid}>
-            {products.map((product) => (
+            {products.map((product, index) => (
                 <div key={product.id} className={styles.gridItem}>
-                    <ProductCard product={product} />
+                    <ProductCard product={product} imageLoading={index < 3 ? "eager" : "lazy"} />
                 </div>
             ))}
         </div>

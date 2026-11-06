@@ -9,9 +9,10 @@ import styles from "./ProductCard.module.scss"
 
 interface ProductCardProps {
     product: Product
+    imageLoading?: "eager" | "lazy"
 }
 
-export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+export const ProductCard: React.FC<ProductCardProps> = ({ product, imageLoading = "lazy" }) => {
     const { addItem, hasItem } = useCart()
     const navigate = useNavigate()
     const requiresConfiguration = product.constructorType === "chimney"
@@ -40,6 +41,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                         product={product}
                         imageClassName={styles.image}
                         iconClassName={styles.configIcon}
+                        variant="card"
+                        loading={imageLoading}
                     />
 
                     {/* Оверлей */}

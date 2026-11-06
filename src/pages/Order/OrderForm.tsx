@@ -357,7 +357,7 @@ const OrderForm: React.FC = () => {
                                         className={styles.orderItem}
                                     >
                                         <div className={styles.itemImage}>
-                                            <ProductVisual product={item.product} />
+                                            <ProductVisual product={item.product} variant="thumbnail" />
                                         </div>
                                         <div className={styles.itemDetails}>
                                             <h4 className={styles.itemName}>{item.product.name}</h4>

@@ -29,7 +29,7 @@ export const OrderSummary: React.FC<OrderSummaryProps> = ({ items, total, itemCo
                     {items.map((item) => (
                         <div key={getCartItemKey(item.product)} className={styles.orderItem}>
                             <div className={styles.itemImage}>
-                                <ProductVisual product={item.product} />
+                                <ProductVisual product={item.product} variant="thumbnail" />
                             </div>
                             <div className={styles.itemDetails}>
                                 <h4 className={styles.itemName}>{item.product.name}</h4>

@@ -83,7 +83,7 @@ const Cart: React.FC = () => {
                                 return (
                                     <div key={itemKey} className={styles.cartItem}>
                                         <div className={styles.itemImage}>
-                                            <ProductVisual product={item.product} />
+                                            <ProductVisual product={item.product} variant="thumbnail" />
                                         </div>
 
                                         <div className={styles.itemInfo}>

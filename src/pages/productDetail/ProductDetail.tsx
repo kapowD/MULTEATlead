@@ -6,7 +6,7 @@ import {
     Shield,
 } from "lucide-react"
 import WinIcon from "../../assets/images/icons/rar.png"
-import React, { useMemo, useState } from "react"
+import React, { useEffect, useMemo, useRef, useState } from "react"
 import { Link, useParams } from "react-router-dom"
 import { ChimneyConstructor } from "../../components/ChimneyConstructor/ChimneyConstructor"
 import { QuantityControl } from "../../components/QuantityControl/QuantityControl"
@@ -25,8 +25,28 @@ const ProductDetail: React.FC = () => {
     const [isWarrantyOpen, setWarrantyOpen] = useState(false)
     const [expandedImageIndex, setExpandedImageIndex] = useState<number | null>(null)
     const [selectedModel, setSelectedModel] = useState("")
+    const thumbnailsRef = useRef<HTMLDivElement>(null)
+    const thumbnailButtonRefs = useRef<Array<HTMLButtonElement | null>>([])
 
     const product = products.find((p) => p.id === Number(id))
+    useEffect(() => {
+        setCurrentImageIndex(0)
+        setExpandedImageIndex(null)
+    }, [id])
+    useEffect(() => {
+        const track = thumbnailsRef.current
+        const activeThumbnail = thumbnailButtonRefs.current[currentImageIndex]
+        if (!track || !activeThumbnail) return
+
+        const trackRect = track.getBoundingClientRect()
+        const thumbnailRect = activeThumbnail.getBoundingClientRect()
+        if (thumbnailRect.left < trackRect.left) {
+            track.scrollBy({ left: thumbnailRect.left - trackRect.left - 8, behavior: "smooth" })
+        } else if (thumbnailRect.right > trackRect.right) {
+            track.scrollBy({ left: thumbnailRect.right - trackRect.right + 8, behavior: "smooth" })
+        }
+    }, [currentImageIndex])
+
     const hasModelOptions = Boolean(product?.modelOptions?.length)
     const configuredProduct =
         product && hasModelOptions && selectedModel
@@ -66,6 +86,10 @@ const ProductDetail: React.FC = () => {
     const currentImageDescription =
         product.imageDescriptions?.[currentImageIndex] ??
         `${product.name}: фото ${currentImageIndex + 1}`
+    const currentImageProduct = {
+        ...product,
+        image: product.images[currentImageIndex] ?? product.image,
+    }
     const expandedImageDescription =
         expandedImageIndex === null
             ? ""
@@ -78,6 +102,13 @@ const ProductDetail: React.FC = () => {
 
     const prevImage = () => {
         setCurrentImageIndex((prev) => (prev === 0 ? product.images.length - 1 : prev - 1))
+    }
+    const moveExpandedImage = (direction: -1 | 1) => {
+        if (expandedImageIndex === null || product.images.length < 2) return
+        const nextIndex =
+            (expandedImageIndex + direction + product.images.length) % product.images.length
+        setExpandedImageIndex(nextIndex)
+        setCurrentImageIndex(nextIndex)
     }
 
     const increase = () => {
@@ -129,15 +160,18 @@ const ProductDetail: React.FC = () => {
                                     aria-label="Открыть изображение крупнее"
                                 >
                                     <ProductVisual
-                                        product={product}
+                                        product={currentImageProduct}
                                         alt={currentImageDescription}
                                         imageClassName={styles.mainImage}
+                                        variant="detail"
+                                        loading="eager"
                                     />
                                 </button>
 
                                 {product.images.length > 1 && (
                                     <>
                                         <button
+                                            type="button"
                                             className={`${styles.navButton} ${styles.prevButton}`}
                                             onClick={prevImage}
                                             title="Предыдущее изображение"
@@ -146,6 +180,7 @@ const ProductDetail: React.FC = () => {
                                             <ChevronLeft size={24} />
                                         </button>
                                         <button
+                                            type="button"
                                             className={`${styles.navButton} ${styles.nextButton}`}
                                             onClick={nextImage}
                                             title="Следующее изображение"
@@ -161,10 +196,14 @@ const ProductDetail: React.FC = () => {
                             <p className={styles.imageCaption}>{currentImageDescription}</p>
 
                             {product.images.length > 1 && (
-                                <div className={styles.thumbnails}>
+                                <div className={styles.thumbnails} ref={thumbnailsRef}>
                                     {product.images.map((image, index) => (
                                         <button
                                             key={index}
+                                            type="button"
+                                            ref={(element) => {
+                                                thumbnailButtonRefs.current[index] = element
+                                            }}
                                             className={`${styles.thumbnail} ${
                                                 index === currentImageIndex
                                                     ? styles.activeThumbnail
@@ -176,12 +215,14 @@ const ProductDetail: React.FC = () => {
                                                 `${product.name}: фото ${index + 1}`
                                             }
                                         >
-                                            <img
-                                                src={image}
+                                            <ProductVisual
+                                                product={{ ...product, image }}
                                                 alt={
                                                     product.imageDescriptions?.[index] ??
                                                     `${product.name} ${index + 1}`
                                                 }
+                                                variant="thumbnail"
+                                                loading={index < 5 ? "eager" : "lazy"}
                                             />
                                         </button>
                                     ))}
@@ -378,10 +419,34 @@ const ProductDetail: React.FC = () => {
                         >
                             ×
                         </button>
+                        {product.images.length > 1 && (
+                            <>
+                                <button
+                                    type="button"
+                                    className={`${styles.navButton} ${styles.modalNavButton} ${styles.modalPrevButton}`}
+                                    onClick={() => moveExpandedImage(-1)}
+                                    aria-label="Предыдущее изображение"
+                                >
+                                    <ChevronLeft size={24} />
+                                </button>
+                                <button
+                                    type="button"
+                                    className={`${styles.navButton} ${styles.modalNavButton} ${styles.modalNextButton}`}
+                                    onClick={() => moveExpandedImage(1)}
+                                    aria-label="Следующее изображение"
+                                >
+                                    <ChevronRight size={24} />
+                                </button>
+                            </>
+                        )}
                         <ProductVisual
-                            product={product}
+                            product={{
+                                ...product,
+                                image: product.images[expandedImageIndex] ?? product.image,
+                            }}
                             alt={expandedImageDescription}
                             imageClassName={styles.expandedImage}
+                            loading="eager"
                         />
                         <p className={styles.expandedImageCaption}>{expandedImageDescription}</p>
                     </div>

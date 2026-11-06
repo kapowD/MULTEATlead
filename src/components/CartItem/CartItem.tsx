@@ -36,7 +36,7 @@ export const CartItem: React.FC<CartItemProps> = ({
     return (
         <div className={styles.cartItem}>
             <div className={styles.itemImage}>
-                <ProductVisual product={item.product} />
+                <ProductVisual product={item.product} variant="thumbnail" />
             </div>
             
             <div className={styles.itemInfo}>
