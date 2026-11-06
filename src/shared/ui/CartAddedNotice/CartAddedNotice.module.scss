@@ -1,0 +1,16 @@
+.notice { width: 100%; max-width: 440px; overflow: hidden; background: #fff; border: 1px solid #d3d3d3; border-radius: 8px; box-shadow: 0 8px 28px rgba(0, 0, 0, .2); font-family: Tahoma, Arial, sans-serif; }
+.content { display: flex; gap: 10px; align-items: flex-start; padding: 14px; }
+.icon { color: #6c5900; flex-shrink: 0; }
+.body { flex: 1; min-width: 0; }
+.title { display: block; color: #202020; font-size: 1rem; }
+.product { margin: 4px 0 10px; color: #444; font-size: .9rem; font-weight: 400; overflow-wrap: anywhere; }
+.actions { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; }
+.cartLink { display: inline-flex; align-items: center; justify-content: center; min-height: 40px; padding: 8px 12px; border-radius: 5px; background: #ffd600; color: #1a1a1a; text-decoration: none; font-size: .875rem; font-weight: 700; }
+.cartLink:hover { background: #e9c400; }
+.continue, .close { padding: 4px; border: 0; background: transparent; color: #444; cursor: pointer; font: inherit; }
+.continue { font-size: .85rem; text-decoration: underline; text-underline-offset: 3px; }
+.close { display: grid; place-items: center; margin: -4px -4px 0 0; }
+.cartLink:focus-visible, .continue:focus-visible, .close:focus-visible { outline: 3px solid #947a00; outline-offset: 2px; }
+.progressTrack { height: 4px; background: #ececec; }
+.progress { height: 100%; background: #d8b000; transform-origin: left; transition: transform .1s linear; }
+@media (prefers-reduced-motion: reduce) { .progress { transition: none; } }

@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { useCart } from "../../context/CartContext"
 import { ProductVisual } from "../../shared/ui/ProductVisual/ProductVisual"
 import { Product } from "../../types/product"
+import { showCartAdded } from "../../shared/ui/CartAddedNotice/CartAddedNotice"
 import styles from "./ProductCard.module.scss"
 
 interface ProductCardProps {
@@ -31,6 +32,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, imageLoading 
         }
         if (inCart) return
         addItem(product)
+        showCartAdded(product.name, 1)
     }
 
     return (

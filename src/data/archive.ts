@@ -21,9 +21,4 @@ export const pdfArchive: PdfDoc[] = [
     title: "Документ МЖТТ-20",
     file: MzhTT20Document,
   },
-  {
-    id: "multeat-mul-me-per-2017",
-    title: "PDF-инструкция MULTEAT MUL ME ПЕР(РЕВ 27.09.17)",
-    year: 2024,
-  },
 ];

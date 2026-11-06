@@ -1,6 +1,7 @@
 import { Check, Minus, Plus, ShoppingCart, Trash2 } from "lucide-react"
 import React, { useMemo, useState } from "react"
 import { Product } from "../../types/product"
+import { showCartAdded } from "../../shared/ui/CartAddedNotice/CartAddedNotice"
 import styles from "./ChimneyConstructor.module.scss"
 
 type Diameter = 120 | 140
@@ -84,6 +85,8 @@ export const ChimneyConstructor: React.FC<ChimneyConstructorProps> = ({ product,
     }
 
     const sendToCart = () => {
+        if (!selectedParts.length) return
+        const totalQuantity = selectedParts.reduce((sum, item) => sum + item.quantity, 0)
         selectedParts.forEach((item) => {
             const configuredProduct: Product = {
                 ...product,
@@ -106,6 +109,10 @@ export const ChimneyConstructor: React.FC<ChimneyConstructorProps> = ({ product,
                 addItem(configuredProduct)
             }
         })
+        const label = selectedParts.length === 1
+            ? `Дымоход: ${selectedParts[0].name}, ${selectedParts[0].diameter} мм`
+            : `Элементы дымохода: ${selectedParts.length} поз.`
+        showCartAdded(label, totalQuantity)
         setSelectedParts([])
     }
 

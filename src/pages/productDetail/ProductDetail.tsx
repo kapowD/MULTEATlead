@@ -15,6 +15,7 @@ import { products } from "../../catalog/products"
 import { ProductVisual } from "../../shared/ui/ProductVisual/ProductVisual"
 import { getCategoryLabel } from "../../utils/categoryLabels"
 import { buildModelConfiguredProduct, getModelSelectLabel } from "../../utils/productOptions"
+import { showCartAdded } from "../../shared/ui/CartAddedNotice/CartAddedNotice"
 import { PageMeta } from "@shared/ui/PageMeta/PageMeta"
 import styles from "./ProductDetail.module.scss"
 
@@ -127,6 +128,7 @@ const ProductDetail: React.FC = () => {
         if (inCart) return
         addItem(configuredProduct)
         if (localQty > 1) updateQuantity(getCartItemKey(configuredProduct), localQty)
+        showCartAdded(configuredProduct.name, localQty)
     }
 
     return (
